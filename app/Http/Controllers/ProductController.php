@@ -50,7 +50,7 @@ class ProductController extends Controller
         }
 
         $fileName = $request->file('img')->hashName();
-        $request->file('img')->storeAs('public/images/products',$fileName);
+        $request->file('img')->storeAs('images/products',$fileName,'public');
 
 
         $product = product::create([
@@ -119,7 +119,7 @@ class ProductController extends Controller
         $fileName = $product->img_src;
         if ($request->file('img_src')){
             $fileName = $request->file('img')->hashName();
-            $request->file('img')->storeAs('public/images/products',$fileName);
+            $request->file('img')->storeAs('public/images/products',$fileName,'public');
 
         }
 

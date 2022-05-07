@@ -8,7 +8,7 @@
         <div class="col-lg-4">
             <h4>{{$product->title}}</h4>
             <a href="{{route('product.show',$product)}}">
-                <img class=" img-thumbnail" src="{{asset('storage/images/products/'.$product->img_src)}}" alt="{{$product->title}}">
+                <img class=" img-thumbnail" src="{{asset('uploads/images/products/'.$product->img_src)}}" alt="{{$product->title}}">
             </a>
             <p>{{$product->description}}</p>
 
