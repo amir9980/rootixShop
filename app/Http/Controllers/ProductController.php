@@ -19,7 +19,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = product::all();
-        return view('admin.products.index',['products'=>$products]);
+        $cart = \Illuminate\Support\Facades\Auth::user()->cart;
+        return view('admin.products.index',['products'=>$products,'cart'=>$cart]);
     }
 
     /**
