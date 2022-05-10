@@ -227,12 +227,35 @@
                     </button>
                   </div>
                   <div class="modal-body">
+                    @if(count($cart)>0)
                     <form action="{{route('basket.store')}}" method="post">
                       @csrf
                       <p>آیا از خرید اطمینان دارید؟</p>
+                      <table class="table table-bordered table-striped">
+                        <tr>
+                          <th>عنوان محصول</th>
+                          <th>تعداد</th>
+                          <th>قیمت</th>
+                        </tr>
+                        @php $sum = 0 @endphp
+                        @foreach($cart as $item)
+                            <tr>
+                              <td>{{$item->product->title}}</td>
+                              <td>{{$item->count}}</td>
+                              <td>{{$item->product->price}}تومان&nbsp;</td>
+                            </tr>
+                          @php $sum += $item->product->price @endphp
+                          @endforeach
+                        <tr>
+                          <td colspan="3">مبلغ پرداختی:&nbsp;@php echo $sum; @endphp تومان</td>
+                        </tr>
+                      </table>
 
                       <input type="submit" class="btn btn-primary" name="sumbit" value="پرداخت">
                     </form>
+                      @else
+                        <p>شما محصولی در سبد خرید خود ندارید!</p>
+                      @endif
                   </div>
 
                 </div>
