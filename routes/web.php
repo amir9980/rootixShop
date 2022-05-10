@@ -60,7 +60,7 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function (){
 Route::get('product/{product}',[ProductController::class,'show'])->name('product.show');
 
 Route::post('cart/{product}',[CartController::class,'store'])->middleware('auth')->name('cart.store');
-Route::post('basket/{user}/store',[BasketController::class,'store'])->middleware('auth')->name('basket.store');
+Route::post('basket/store',[BasketController::class,'store'])->middleware('auth')->name('basket.store');
 
 
 

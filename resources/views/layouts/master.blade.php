@@ -82,7 +82,16 @@
             <span class="float-left text-muted text-sm">{{$item->count}} عدد</span>
           </a>
           @endforeach
-          <a href="#" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
+          <div class="dropdown-item dropdown-footer">
+          <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#basketModal">
+خرید
+          </button>
+          </div>
+
+
+
+
+
         </div>
       </li>
         @endauth
@@ -201,6 +210,31 @@
               </div>
 
             @endif
+
+
+            {{--Basket Modal--}}
+            <div class="modal fade" id="basketModal" tabindex="-1" role="dialog" aria-labelledby="basketModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLongTitle">تایید سبد خرید</h5>
+                    <button type="button" class="close mr-auto ml-0" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{route('basket.store')}}" method="post">
+                      @csrf
+                      <p>آیا از خرید اطمینان دارید؟</p>
+
+                      <input type="submit" class="btn btn-primary" name="sumbit" value="پرداخت">
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            {{--Basket Modal--}}
 
 
             @yield('content')
