@@ -25,6 +25,7 @@ class BasketController extends Controller
         $basket = basket::create([
             'user_id'=>$request->user()->id,
             'products'=>(string)$productList,
+            'total_price'=>$request->price
         ]);
 
         $basket->save();

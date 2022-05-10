@@ -244,7 +244,7 @@
                               <td>{{$item->count}}</td>
                               <td>{{$item->product->price}}تومان&nbsp;</td>
                             </tr>
-                          @php $sum += $item->product->price @endphp
+                          @php $sum += $item->product->price*$item->count @endphp
                           @endforeach
                         <tr>
                           <td colspan="3">مبلغ پرداختی:&nbsp;@php echo $sum; @endphp تومان</td>
@@ -252,6 +252,7 @@
                       </table>
 
                       <input type="submit" class="btn btn-primary" name="sumbit" value="پرداخت">
+                      <input type="hidden" name="price" value="@php echo $sum; @endphp">
                     </form>
                       @else
                         <p>شما محصولی در سبد خرید خود ندارید!</p>
