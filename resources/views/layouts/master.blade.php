@@ -66,6 +66,7 @@
     <ul class="navbar-nav mr-auto">
 
       @auth
+        @if(isset($cart))
       <!-- Cart Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -93,6 +94,9 @@
 
 
         </div>
+
+        @endif
+
       </li>
         @endauth
 

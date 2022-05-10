@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\basket;
 use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BasketController extends Controller
@@ -27,6 +28,8 @@ class BasketController extends Controller
         ]);
 
         $basket->save();
+
+        DB::table('carts')->where('user_id','=',$request->user()->id)->delete();
 
         return redirect()->back()->with('message','سبد خرید با موفقیت اضافه شد!');
     }

@@ -67,7 +67,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect(route('product.index'))->with('message','Product stored seccesfully!');
+        return redirect(route('product.index'))->with('message','محصول با موفقیت ایجاد شد!');
 
 
     }
