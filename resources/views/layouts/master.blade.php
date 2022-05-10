@@ -138,7 +138,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="charts/flot.html" class="nav-link">
+                  <a href="{{route('product.create')}}" class="nav-link">
                     <i class="fa fa-circle-o nav-icon"></i>
                     <p>ایجاد محصول</p>
                   </a>

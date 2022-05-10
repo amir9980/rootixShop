@@ -29,7 +29,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.createProduct');
+        $cart = \Illuminate\Support\Facades\Auth::user()->cart;
+        return view('admin.products.createProduct',['cart'=>$cart]);
     }
 
     /**
