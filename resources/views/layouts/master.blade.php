@@ -1,195 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>@yield('title')</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{{asset('assets/css/blog-home.css')}}" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>@yield('title')</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/iCheck/flat/blue.css')}}">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/morris/morris.css')}}">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/datepicker/datepicker3.css')}}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker-bs3.css')}}">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- bootstrap rtl -->
+  <link rel="stylesheet" href="{{asset('assets/dist/css/bootstrap-rtl.min.css')}}">
+  <!-- template rtl version -->
+  <link rel="stylesheet" href="{{asset('assets/dist/css/custom-style.css')}}">
 
 </head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
 
-<body>
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('home')}}" class="nav-link">خانه</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">تماس</a>
+      </li>
+    </ul>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{{route('home')}}">Home</a>
-                    </li>
-                    <li>
-                        <a href="{{route('admin')}}">Admin</a>
-                    </li>
-                    @guest
-                    <li>
-                        <a href="{{route('login')}}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{{route('register')}}">Register</a>
-                    </li>
-                    @endguest
-
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                    @auth
-                        <li>
-                            <form action="{{route('logout')}}" method="post">
-                                @csrf
-                                <input type="submit" value="Logout">
-                            </form>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="جستجو" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
         </div>
-        <!-- /.container -->
-    </nav>
-    <!-- Page Content -->
-    <div class="container">
+      </div>
+    </form>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav mr-auto">
+
+      @auth
+      <!-- Cart Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          <span class="badge badge-warning navbar-badge">{{count($cart)}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
+          <span class="dropdown-item dropdown-header">{{count($cart)}} محصول در سبد شما وجود دارد</span>
+          @foreach($cart as $item)
+          <div class="dropdown-divider"></div>
+          <a href="{{route('product.show',$item->product)}}" class="dropdown-item">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+            {{$item->product->title}}
+            <span class="float-left text-muted text-sm">{{$item->count}} عدد</span>
+          </a>
+          @endforeach
+          <a href="#" class="dropdown-item dropdown-footer">مشاهده همه نوتیفیکیشن</a>
+        </div>
+      </li>
+        @endauth
+
+
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{{asset('assets/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">پنل مدیریت</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar" style="direction: ltr">
+      <div style="direction: rtl">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g" class="img-circle elevation-2" alt="User Image">
+          </div>
+          @auth
+          <div class="info">
+            <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
+          </div>
+            @endauth
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            @auth
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="fa fa-shopping-bag" aria-hidden="true">&nbsp;</i>
+                <p>
+                  محصولات
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                  <a href="{{route('product.index')}}" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>نمایش محصولات</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="charts/flot.html" class="nav-link">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>ایجاد محصول</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+              @endauth
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">داشبورد</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="#">خانه</a></li>
+              <li class="breadcrumb-item active">داشبورد ورژن 2</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
         <div class="row">
 
-            <!-- Blog Entries Column -->
-            <div class="col-md-9">
+          @if($errors->any())
+            <div class="alert alert-danger col-sm-12 col-lg-6">
+              <ul>
+            @foreach($errors->all() as $error)
+              <li>{{$error}}</li>
+              @endforeach
+              </ul>
+              </div>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+          @endif
 
-                @endif
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        <ul>
-                            <li>{{ session('message') }}</li>
+            @if(session('message'))
+              <div class="alert alert-success col-sm-12 col-lg-6">
+                <ul>
+                    <li>{{session('message')}}</li>
 
-                        </ul>
-                    </div>
-                @endif
+                </ul>
+              </div>
 
-                @yield('content')
+            @endif
 
 
-
-            </div>
-
-            <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-3">
-
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-
-                @auth
-                <!-- Cart Well -->
-                <div class="well">
-                    <h4>Cart</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-
-                            <form action="#" method="post">
-                                <ul>
-                                @foreach($cart as $c)
-                                <li>
-                                    <a href="{{route('product.show',$c->product_id)}}">{{$c->product->title}}</a>
-                                    <span>count: {{$c->count}}</span>
-                                </li>
-
-                            <input type="hidden" name="products[]" value="{{$c->product->id}}">
-                            <input type="hidden" name="counts[]" value="{{$c->count}}">
-                                    @endforeach
-                                </ul>
-                                <input class="btn btn-success" type="submit" name="submit" value="Send Cart">
-                            </form>
-                        </div>
-
-                    </div>
-                    <!-- /.row -->
-                </div>
-                @endauth
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
-
-            </div>
+            @yield('content')
 
         </div>
-        <!-- /.row -->
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>CopyLeft &copy; 2018 <a href="http://github.com/hesammousavi/">حسام موسوی</a>.</strong>
+  </footer>
 
-        <hr>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </footer>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="{{asset('assets/js/jquery.js')}}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-
+<!-- jQuery -->
+<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="{{asset('assets/plugins/morris/morris.min.js')}}"></script>
+<!-- Sparkline -->
+<script src="{{asset('assets/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
+<!-- jvectormap -->
+<script src="{{asset('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
+<script src="{{asset('assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{asset('assets/plugins/knob/jquery.knob.js')}}"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="{{asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- datepicker -->
+<script src="{{asset('assets/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+<!-- Slimscroll -->
+<script src="{{asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+<!-- FastClick -->
+<script src="{{asset('assets/plugins/fastclick/fastclick.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('assets/dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('assets/dist/js/demo.js')}}"></script>
 </body>
-
 </html>

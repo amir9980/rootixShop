@@ -50,14 +50,14 @@ class CartController extends Controller
         if ($ifExistsInCart){
             $existedCart->count = $existedCart->count + 1;
             $existedCart->save();
-            return redirect()->back()->with('message','product added one more time!');
+            return redirect()->back()->with('message','محصول مجددا به سبد خرید اضافه شد!');
         }else{
             cart::create([
                 'user_id'=>$request->user()->id,
                 'product_id'=>$productId,
                 'count'=>1
             ]);
-            return redirect()->back()->with('message','product added to your Cart!');
+            return redirect()->back()->with('message','محصول موردنظر به سبد خرید شما اضافه شد!');
 
         }
 

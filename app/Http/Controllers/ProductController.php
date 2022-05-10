@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use function PHPSTORM_META\type;
 
 class ProductController extends Controller
 {
@@ -16,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = product::all();
-        return view('admin.products.showProducts',['products'=>$products]);
+        return view('admin.products.index',['products'=>$products]);
     }
 
     /**
@@ -50,7 +53,7 @@ class ProductController extends Controller
         }
 
         $fileName = $request->file('img')->hashName();
-        $request->file('img')->storeAs('images/products',$fileName,'public');
+        $request->file('img')->storeAs('images/products',$fileName);
 
 
         $product = product::create([
@@ -108,6 +111,8 @@ class ProductController extends Controller
             'title'=> 'required',
             'description'=> 'required',
             'price'=> 'required',
+            'old_price'=> 'required',
+            'status'=> 'required|numeric',
             'img'=>'mimes:png,jpg,jpeg|max:2048'
         ]);
 
@@ -115,13 +120,16 @@ class ProductController extends Controller
             return redirect()->back()->withInput()->withErrors($validated);
         }
 
-
         $fileName = $product->img_src;
-        if ($request->file('img_src')){
+
+        if ($request->has('img')){
+            Storage::delete('images/products/'.$fileName);
             $fileName = $request->file('img')->hashName();
-            $request->file('img')->storeAs('public/images/products',$fileName,'public');
+            $request->file('img')->storeAs('images/products',$fileName);
 
         }
+
+
 
 
         $product->update([
@@ -129,12 +137,13 @@ class ProductController extends Controller
             'description'=>$request['description'],
             'price'=>$request['price'],
             'old_price'=>$request['old_price'],
+            'status'=>(int)$request['status'],
             'img_src'=>$fileName
         ]);
 
 
 
-        return redirect(route('product.index'))->with('message','Product Updated seccesfully!');
+        return redirect(route('product.index'))->with('message','محصول با موفقیت ویرایش شد!');
     }
 
     /**
@@ -143,12 +152,27 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product $product)
+    public function destroy(Request $request,product $product)
     {
-        if (product::destroy($product->id)){
-            return redirect()->back()->with('message','product deleted succesfully!');
-        }else{
-            return redirect()->back()->with('message','product did not deleted!');
-        }
+            $validated = Validator::make($request->all(),[
+               'reason'=>'required|max:255'
+            ]);
+            if ($validated->fails()){
+                return redirect()->back()->withErrors($validated);
+
+            }
+
+            $p = product::find($product->id);
+            $p->status = 3; //status 3 means 'deleted'
+            $p->delete_reason = $request->reason;
+            $p->save();
+            return redirect()->back()->with('message','محصول با موفقیت حذف شد!');
+
+    }
+
+
+    public function status(Request $request,product $product){
+
+
     }
 }

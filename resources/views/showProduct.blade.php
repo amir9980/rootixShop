@@ -8,7 +8,7 @@
         <div class="col-lg-12">
             <h2>{{$product->title}}</h2>
             <a href="{{route('product.show',$product)}}">
-                <img class="img-responsive" src="{{asset('storage/images/products/'.$product->img_src)}}" alt="{{$product->title}}">
+                <img class="img-responsive" src="{{route('images',$product->img_src)}}" alt="{{$product->title}}">
             </a>
             <p>{{$product->description}}</p>
             @auth
