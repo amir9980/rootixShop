@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title','محصولات')
+@section('title','محصولات | جستجو')
 
 @section('content')
 
@@ -19,29 +19,29 @@
                             <div class="row">
                                 <label for="title">عنوان:</label>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" name="title" >
+                                    <input type="text" class="form-control" name="title" value="{{$inputs['title']}}">
                                 </div>
                                 <label for="price">قیمت:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="از" name="from_price">
-                                        <input type="number" class="form-control" placeholder="تا" name="to_price">
+                                        <input type="number" class="form-control" placeholder="از" name="from_price" value="{{$inputs['from_price']}}">
+                                        <input type="number" class="form-control" placeholder="تا" name="to_price" value="{{$inputs['to_price']}}">
                                     </div>
                                 </div>
                                 <label for="date">تاریخ:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="date" class="form-control" placeholder="از" name="from_date">
-                                        <input type="date" class="form-control" placeholder="تا" name="to_date">
+                                        <input type="date" class="form-control" placeholder="از" name="from_date" value="{{$inputs['from_date']}}">
+                                        <input type="date" class="form-control" placeholder="تا" name="to_date" value="{{$inputs['to_date']}}">
                                     </div>
                                 </div>
                                 <label for="status">وضعیت:</label>
                                 <div class="col-md-2">
-                                    <select class="form-control" name="status">
+                                    <select class="form-control" name="status" >
                                         <option value="">انتخاب کنید...</option>
-                                        <option value="1">فعال</option>
-                                        <option value="2">غیرفعال</option>
-                                        <option value="3">حذف شده</option>
+                                        <option value="1" @if ($inputs['status'] == 1) selected @endif>فعال</option>
+                                        <option value="2" @if ($inputs['status'] == 2) selected @endif>غیرفعال</option>
+                                        <option value="3" @if ($inputs['status'] == 3) selected @endif>حذف شده</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">

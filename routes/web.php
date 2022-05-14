@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BasketController;
@@ -48,10 +49,19 @@ Route::prefix('admin')->middleware(['auth','is_admin'])->group(function (){
    })->name('admin');
 
     Route::resource('product',ProductController::class)->except(['show','update','delete']);
-    Route::resource('user',UserController::class)->except(['show','update','delete']);
+    Route::resource('user',UserController::class);
+
     Route::post('product/{product}/update',[ProductController::class,'update'])->name('product.update');
     Route::post('product/{product}/delete',[ProductController::class,'destroy'])->name('product.destroy');
     Route::post('product/{product}/status',[ProductController::class,'status'])->name('product.status');
+    Route::get('product/search',[ProductController::class,'search'])->name('product.search');
+
+
+
+    Route::get('basket/index',[BasketController::class,'index'])->name('basket.index');
+    Route::get('basket/{basket}/show',[BasketController::class,'show'])->name('basket.show');
+
+
 
 
 });

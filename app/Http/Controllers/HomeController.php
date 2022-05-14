@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
             $cart = null;
         }
 
-        $products = \App\Models\product::all();
+        $products = product::where('status','=',1)->paginate(15);
 
         return view('index',[
             'products'=>$products,

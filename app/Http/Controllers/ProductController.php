@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -18,9 +19,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = product::all();
+        $products = product::paginate(15);
+        $iteration = ($products->currentPage()-1)*$products->perPage();
         $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.products.index',['products'=>$products,'cart'=>$cart]);
+        return view('admin.products.index',['products'=>$products,'cart'=>$cart,'iteration'=>$iteration]);
     }
 
     /**
@@ -125,7 +127,9 @@ class ProductController extends Controller
         $fileName = $product->img_src;
 
         if ($request->has('img')){
-            Storage::delete('images/products/'.$fileName);
+            if ($fileName !== 'default.png'){
+                Storage::delete('images/products/'.$fileName);
+            }
             $fileName = $request->file('img')->hashName();
             $request->file('img')->storeAs('images/products',$fileName);
 
@@ -176,5 +180,61 @@ class ProductController extends Controller
     public function status(Request $request,product $product){
 
 
+    }
+
+    public function search(Request $request){
+
+        $validated = Validator::make($request->all(),[
+            'title'=>'max:255',
+            'status'=>'numeric',
+            ///
+
+        ]);
+
+        // if fails...
+
+        $resault = DB::table('products');
+
+
+
+        if ($request->title){
+            $resault = $resault->where('title','LIKE','%'.$request->title.'%');
+        }
+
+        if ($request->status){
+            $resault = $resault->where('status','=',$request->status);
+        }
+
+        if ($request->from_price){
+            $resault = $resault->where('price','>=',$request->from_price);
+        }
+
+        if ($request->to_price){
+            $resault = $resault->where('price','<=',$request->to_price);
+        }
+        if ($request->from_date){
+            $resault = $resault->where('created_at','>=',$request->from_date);
+        }
+        if ($request->to_date){
+            $resault = $resault->where('created_at','<=',$request->to_date);
+        }
+
+        $resault = $resault->paginate(15)->withQueryString();;
+
+
+        $iteration = ($resault->currentPage()-1)*$resault->perPage();
+
+        $inputs = [
+            'title'=>$request->title,
+            'status'=>$request->status,
+            'from_price'=>$request->from_price,
+            'to_price'=>$request->to_price,
+            'from_date'=>$request->from_date,
+            'to_date'=>$request->to_date,
+
+        ];
+
+
+        return view('admin.products.search',['products'=>$resault,'iteration'=>$iteration,'inputs'=>$inputs]);
     }
 }

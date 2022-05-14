@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
 @section('title', 'online shop')
+@section('page title', 'محصولات')
 
 @section('content')
 
-    <div class="row">
+<div class="row justify-content-around">
+
     @foreach($products as $product)
-        <div class="card col-sm-6 col-md-4 col-lg-3 mx-3">
+
+        <div class="card col-sm-6 col-md-4 col-lg-3 m-2">
             <a href="#">
             <img src="{{route('images',$product->img_src)}}" alt="تصویر محصول" class="card-img-top">
             </a>
@@ -33,7 +36,12 @@
         </div>
 
     @endforeach
+</div>
+
+    <div class="row justify-content-center">
+        {{$products->links()}}
     </div>
+
 
 
 

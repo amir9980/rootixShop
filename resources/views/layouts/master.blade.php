@@ -31,6 +31,8 @@
   <!-- template rtl version -->
   <link rel="stylesheet" href="{{asset('assets/dist/css/custom-style.css')}}">
 
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -48,6 +50,22 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">تماس</a>
       </li>
+      @guest
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{{route('login')}}" class="nav-link">ورود</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="{{route('register')}}" class="nav-link">عضویت</a>
+        </li>
+      @endguest
+      @auth
+      <li class="nav-item d-none d-sm-inline-block ">
+        <form action="{{route('logout')}}" method="post">
+          @csrf
+          <button type="submit" class="list-group-item border-0 m-1">خروج</button>
+        </form>
+      </li>
+        @endauth
     </ul>
 
     <!-- SEARCH FORM -->
@@ -104,7 +122,8 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-
+  @auth
+@if(\Illuminate\Support\Facades\Auth::user()->is_admin == 1)
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -122,11 +141,11 @@
           <div class="image">
             <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g" class="img-circle elevation-2" alt="User Image">
           </div>
-          @auth
+
           <div class="info">
             <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
           </div>
-            @endauth
+
         </div>
 
         <!-- Sidebar Menu -->
@@ -134,7 +153,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-            @auth
+
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="fa fa-shopping-bag" aria-hidden="true">&nbsp;</i>
@@ -159,15 +178,41 @@
 
               </ul>
             </li>
-              @endauth
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-user-circle" aria-hidden="true">&nbsp;</i>
+
+                  <p>
+                    خرید ها
+                    <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+
+                  <li class="nav-item">
+                    <a href="{{route('basket.index')}}" class="nav-link">
+                      <i class="fa fa-circle-o nav-icon"></i>
+                      <p>سبد های ثبت شده</p>
+                    </a>
+                  </li>
+
+
+
+                </ul>
+              </li>
+
+
+
 
           </ul>
         </nav>
-        <!-- /.sidebar-menu -->
+      <!-- /.sidebar-menu -->
       </div>
     </div>
-    <!-- /.sidebar -->
+  <!-- /.sidebar -->
   </aside>
+@endif
+@endauth
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -176,12 +221,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">داشبورد</h1>
+            <h1 class="m-0 text-dark">@yield('page title')</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="#">خانه</a></li>
-              <li class="breadcrumb-item active">داشبورد ورژن 2</li>
+              <li class="breadcrumb-item"><a href="{{route('home')}}">خانه</a></li>
+              <li class="breadcrumb-item active">@yield('page title')</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -191,8 +236,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
+      <div class="container-fluid ">
 
           @if($errors->any())
             <div class="alert alert-danger col-sm-12 col-lg-6">
@@ -207,7 +251,12 @@
 
             @if(session('message'))
               <div class="alert alert-success col-sm-12 col-lg-6">
-                <ul>
+                <ul class="list-inline">
+                  <li>
+                  <button type="button" class="close float-left" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  </li>
                     <li>{{session('message')}}</li>
 
                 </ul>
@@ -215,7 +264,7 @@
 
             @endif
 
-
+            @if(isset($cart))
             {{--Basket Modal--}}
             <div class="modal fade" id="basketModal" tabindex="-1" role="dialog" aria-labelledby="basketModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -263,11 +312,12 @@
               </div>
             </div>
             {{--Basket Modal--}}
+            @endif
 
 
             @yield('content')
 
-        </div>
+
       </div>
     </section>
     <!-- /.content -->
@@ -322,5 +372,8 @@
 <script src="{{asset('assets/dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+
+
+
 </body>
 </html>

@@ -18,4 +18,8 @@ class user extends Authenticatable
     public function cart(){
         return $this->hasMany(cart::class,'user_id');
     }
+
+    public function basket(){
+        return $this->hasMany(basket::class,'user_id','id');
+    }
 }
