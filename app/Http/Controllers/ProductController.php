@@ -20,12 +20,12 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $validated = Validator::make($request->all(), [
-            'title' => 'present|max:255',
-            'from_price' => 'present|numeric',
-            'to_price' => 'present|numeric',
-            'from_date' => 'present',
-            'from_date' => 'present',
-            'status' => 'present',
+            'title' => 'nullable|max:255',
+            'from_price' => 'nullable|numeric',
+            'to_price' => 'nullable|numeric',
+            'from_date' => 'nullable',
+            'from_date' => 'nullable',
+            'status' => 'nullable',
 
         ]);
         if ($validated->fails()) {

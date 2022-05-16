@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -17,12 +18,11 @@ class HomeController extends Controller
         }
 
         $validated = Validator::make($request->all(), [
-            'title' => 'present|max:255',
-            'from_price' => 'present|numeric',
-            'to_price' => 'present|numeric',
-            'from_date' => 'present',
-            'from_date' => 'present',
-            'status' => 'present',
+            'title' => 'nullable|max:255',
+            'from_price' => 'nullable|numeric',
+            'to_price' => 'nullable|numeric',
+            'from_date' => 'nullable',
+            'from_date' => 'nullable',
 
         ]);
         if ($validated->fails()) {
