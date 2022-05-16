@@ -21,8 +21,8 @@ class HomeController extends Controller
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
-            'from_date' => 'nullable',
-            'from_date' => 'nullable',
+            'from_date' => 'nullable|date',
+            'from_date' => 'nullable|date',
 
         ]);
         if ($validated->fails()) {

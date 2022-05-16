@@ -23,9 +23,9 @@ class ProductController extends Controller
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
-            'from_date' => 'nullable',
-            'from_date' => 'nullable',
-            'status' => 'nullable',
+            'from_date' => 'nullable|date',
+            'from_date' => 'nullable|date',
+            'status' => 'nullable|digits_between:1,3',
 
         ]);
         if ($validated->fails()) {
