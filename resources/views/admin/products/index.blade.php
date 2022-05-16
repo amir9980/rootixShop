@@ -20,30 +20,40 @@
                             <div class="row">
                                 <label for="title">عنوان:</label>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" name="title" value="{{request()->query('title')}}">
+                                    <input type="text" class="form-control" name="title"
+                                           value="{{request()->query('title')}}">
                                 </div>
                                 <label for="price">قیمت:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="از" name="from_price" value="{{request()->query('from_price')}}">
-                                        <input type="number" class="form-control" placeholder="تا" name="to_price" value="{{request()->query('to_price')}}">
+                                        <input type="number" class="form-control" placeholder="از" name="from_price"
+                                               value="{{request()->query('from_price')}}">
+                                        <input type="number" class="form-control" placeholder="تا" name="to_price"
+                                               value="{{request()->query('to_price')}}">
                                     </div>
                                 </div>
                                 <label for="date">تاریخ:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="date" class="form-control" placeholder="از" name="from_date" value="{{request()->query('from_date')}}">
-                                        <input type="date" class="form-control" placeholder="تا" name="to_date" value="{{request()->query('to_date')}}">
-                                        <input type="text" class="jalaliDatePicker">
+
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="از"
+                                               title="از" name="from_date"
+                                               value="{{request()->query('from_date')}}">
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="تا"
+                                               title="از" name="to_date"
+                                               value="{{request()->query('to_date')}}">
                                     </div>
                                 </div>
                                 <label for="status">وضعیت:</label>
                                 <div class="col-md-2">
                                     <select class="form-control" name="status">
                                         <option value="">انتخاب کنید...</option>
-                                        <option value="1" @if(request()->query('status')==1) selected @endif>فعال</option>
-                                        <option value="2" @if(request()->query('status')==2) selected @endif>غیرفعال</option>
-                                        <option value="3" @if(request()->query('status')==3) selected @endif>حذف شده</option>
+                                        <option value="1" @if(request()->query('status')==1) selected @endif>فعال
+                                        </option>
+                                        <option value="2" @if(request()->query('status')==2) selected @endif>غیرفعال
+                                        </option>
+                                        <option value="3" @if(request()->query('status')==3) selected @endif>حذف شده
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">

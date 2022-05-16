@@ -35,11 +35,13 @@
                                 <label for="date">تاریخ:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="date" class="form-control" placeholder="از" name="from_date"
+
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="از"
+                                               title="از" name="from_date"
                                                value="{{request()->query('from_date')}}">
-                                        <input type="date" class="form-control" placeholder="تا" name="to_date"
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="تا"
+                                               title="از" name="to_date"
                                                value="{{request()->query('to_date')}}">
-                                        <input type="text" class="jalaliDatePicker">
                                     </div>
                                 </div>
                                 <div class="col-md-2">

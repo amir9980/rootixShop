@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{asset('assets/dist/css/bootstrap-rtl.min.css')}}">
     <!-- template rtl version -->
     <link rel="stylesheet" href="{{asset('assets/dist/css/custom-style.css')}}">
+    {{-- Persian Date Picker --}}
+    <link rel="stylesheet" href="{{asset('assets/dist/css/persian-datepicker.min.css')}}"/>
 
 
 </head>
@@ -366,9 +368,20 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('assets/dist/js/demo.js')}}"></script>
 
+{{-- Persian Date Picker --}}
+<script src="{{asset('assets/dist/js/persian-date.min.js')}}"></script>
+<script src="{{asset('assets/dist/js/persian-datepicker.min.js')}}"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".jalaliDatePicker").pDatepicker();
+        $(".jalaliDatePicker").pDatepicker({
+            initialValue: false,
+            autoClose: true,
+
+            formatter: function(unix){
+                return unix;
+            }
+        });
     });
 </script>
 
