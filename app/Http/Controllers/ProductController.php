@@ -52,12 +52,10 @@ class ProductController extends Controller
             $products = $products->where('price', '<=', $request->to_price);
         }
         if ($request->has('from_date') && !empty($request->from_date)) {
-//            $request['from_date'] = Carbon::createFromTimestampMs($request->from_date)->format('Y-m-d H:i:s');
-            $products = $products->where('created_at', '>=', Carbon::createFromTimestampMs($request->from_date)->format('Y-m-d H:i:s'));
+            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->from_date) . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-//            $request['to_date'] = Carbon::createFromTimestampMs($request->to_date)->format('Y-m-d H:i:s');
-            $products = $products->where('created_at', '<=', Carbon::createFromTimestampMs($request->to_date)->format('Y-m-d H:i:s'));
+            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->to_date) . ' 23:59:59'));
         }
 
         $products = $products->paginate(15)->withQueryString();;

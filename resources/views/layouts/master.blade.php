@@ -378,9 +378,7 @@
             initialValue: false,
             autoClose: true,
 
-            formatter: function(unix){
-                return unix;
-            }
+            format: 'YYYY/MM/DD',
         });
     });
 </script>

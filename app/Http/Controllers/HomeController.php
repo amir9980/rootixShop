@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Morilog\Jalali\Jalalian;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
-//
+
+
         if (\Illuminate\Support\Facades\Auth::user()) {
             $cart = \Illuminate\Support\Facades\Auth::user()->cart;
         } else {
@@ -20,13 +22,12 @@ class HomeController extends Controller
         }
 
 
-
         $validated = Validator::make($request->all(), [
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
-            'to_price' => 'nullable|numeric',
-            'from_date' => 'nullable|digits:13',
-            'to_date' => 'nullable|digits:13',
+//            'to_price' => 'nullable|numeric',
+//            'from_date' => 'nullable|digits:13',
+//            'to_date' => 'nullable|digits:13',
 
         ]);
 
@@ -49,12 +50,10 @@ class HomeController extends Controller
             $products = $products->where('price', '<=', $request->to_price);
         }
         if ($request->has('from_date') && !empty($request->from_date)) {
-//            $request['from_date'] = Carbon::createFromTimestampMs($request->from_date)->format('Y-m-d H:i:s');
-            $products = $products->where('created_at', '>=', Carbon::createFromTimestampMs($request->from_date)->format('Y-m-d H:i:s'));
+            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->from_date) . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-//            $request['to_date'] = Carbon::createFromTimestampMs($request->to_date)->format('Y-m-d H:i:s');
-            $products = $products->where('created_at', '<=', Carbon::createFromTimestampMs($request->to_date)->format('Y-m-d H:i:s'));
+            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->to_date) . ' 23:59:59'));
         }
 
 
@@ -66,4 +65,15 @@ class HomeController extends Controller
         ]);
     }
 
+    public function convert($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١', '٠'];
+
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+
+        return $englishNumbersOnly;
+    }
 }
