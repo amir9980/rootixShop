@@ -5,7 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\BasketController;
+use App\Http\Controllers\FactorController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
@@ -19,58 +19,55 @@ use Illuminate\Support\Facades\Response;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/image/{fileName}',function ($fileName){
+Route::get('/image/{fileName}', function ($fileName) {
 
-   $path = storage_path('app/images/products/'.$fileName);
+    $path = storage_path('app/images/products/' . $fileName);
 
 
 //dd($path);
 
-   if (!File::exists($path)){
-       abort(404);
-   }
+    if (!File::exists($path)) {
+        abort(404);
+    }
 
-   $file = File::get($path);
-   $type = File::mimeType($path);
+    $file = File::get($path);
+    $type = File::mimeType($path);
 
-   $response = Response::make($file,200,['Content-Type'=>$type]);
+    $response = Response::make($file, 200, ['Content-Type' => $type]);
 
-   return $response;
+    return $response;
 })->name('images');
 
 Auth::routes();
 
 
-Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware(['auth','is_admin'])->group(function (){
-   Route::get('/',function (){
-       return view('admin/index');
-   })->name('admin');
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/', function () {
+        return view('admin/index');
+    })->name('admin');
 
-    Route::resource('product',ProductController::class)->except(['show','update','delete']);
-    Route::resource('user',UserController::class);
+    Route::resource('product', ProductController::class)->except(['show', 'update', 'delete']);
+    Route::resource('user', UserController::class);
 
-    Route::post('product/{product}/update',[ProductController::class,'update'])->name('product.update');
-    Route::post('product/{product}/delete',[ProductController::class,'destroy'])->name('product.destroy');
-    Route::post('product/{product}/status',[ProductController::class,'status'])->name('product.status');
-    Route::get('product/search',[ProductController::class,'search'])->name('product.search');
-
-
-
-    Route::get('basket/index',[BasketController::class,'index'])->name('basket.index');
-    Route::get('basket/{basket}/show',[BasketController::class,'show'])->name('basket.show');
-
-
+    Route::post('product/{product}/update', [ProductController::class, 'update'])->name('product.update');
+    Route::post('product/{product}/delete', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::post('product/{product}/status', [ProductController::class, 'status'])->name('product.status');
 
 
 });
 
 
-Route::get('product/{product}',[ProductController::class,'show'])->name('product.show');
+Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::post('cart/{product}',[CartController::class,'store'])->middleware('auth')->name('cart.store');
-Route::post('basket/store',[BasketController::class,'store'])->middleware('auth')->name('basket.store');
+Route::post('cart/{product}', [CartController::class, 'store'])->middleware('auth')->name('cart.store');
+
+Route::post('factor/store', [FactorController::class, 'store'])->middleware('auth')->name('factor.store');
+Route::get('factor/index', [FactorController::class, 'index'])->name('factor.index');
+Route::get('factor/{factor}/show', [FactorController::class, 'show'])->name('factor.show');
+
+
 
 
 

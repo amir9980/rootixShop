@@ -30,7 +30,7 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,24 +40,24 @@ class CartController extends Controller
         $ifExistsInCart = false;
         $existedCart = null;
 
-        foreach ($request->user()->cart as $c){
-            if ($c->product_id == $productId){
+        foreach ($request->user()->cart as $c) {
+            if ($c->product_id == $productId) {
                 $ifExistsInCart = true;
                 $existedCart = $c;
             }
         }
 
-        if ($ifExistsInCart){
+        if ($ifExistsInCart) {
             $existedCart->count = $existedCart->count + 1;
             $existedCart->save();
-            return redirect()->back()->with('message','محصول مجددا به سبد خرید اضافه شد!');
-        }else{
+            return redirect()->back()->with('message', 'محصول مجددا به سبد خرید اضافه شد!');
+        } else {
             cart::create([
-                'user_id'=>$request->user()->id,
-                'product_id'=>$productId,
-                'count'=>1
+                'user_id' => $request->user()->id,
+                'product_id' => $productId,
+                'count' => 1
             ]);
-            return redirect()->back()->with('message','محصول موردنظر به سبد خرید شما اضافه شد!');
+            return redirect()->back()->with('message', 'محصول موردنظر به سبد خرید شما اضافه شد!');
 
         }
 
@@ -67,7 +67,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -78,7 +78,7 @@ class CartController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -89,8 +89,8 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -101,7 +101,7 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

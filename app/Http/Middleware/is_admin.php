@@ -18,7 +18,7 @@ class is_admin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->is_admin !== 1){
-            return redirect()->back()->withErrors(['شما مدیر ارشد نیستید!']);
+            return redirect()->back()->withErrors(['شما اجازه دسترسی به صفحه موردنظر را ندارید!']);
         }
         return $next($request);
     }

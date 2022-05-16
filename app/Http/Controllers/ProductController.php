@@ -17,12 +17,50 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = product::paginate(15);
-        $iteration = ($products->currentPage()-1)*$products->perPage();
+        $validated = Validator::make($request->all(), [
+            'title' => 'present|max:255',
+            'from_price' => 'present|numeric',
+            'to_price' => 'present|numeric',
+            'from_date' => 'present',
+            'from_date' => 'present',
+            'status' => 'present',
+
+        ]);
+        if ($validated->fails()) {
+            return redirect()->back()->withInput()->withErrors($validated);
+        }
+
+        $products = product::query();
+
+        if ($request->has('title') && !empty($request->title)) {
+            $products = $products->where('title', 'LIKE', '%' . $request->title . '%');
+        }
+
+        if ($request->has('status') && !empty($request->status)) {
+            $products = $products->where('status', '=', $request->status);
+        }
+
+        if ($request->has('from_price') && !empty($request->from_price)) {
+            $products = $products->where('price', '>=', $request->from_price);
+        }
+
+        if ($request->has('to_price') && !empty($request->to_price)) {
+            $products = $products->where('price', '<=', $request->to_price);
+        }
+        if ($request->has('from_date') && !empty($request->from_date)) {
+            $products = $products->where('created_at', '>=', $request->from_date);
+        }
+        if ($request->has('to_date') && !empty($request->to_date)) {
+            $products = $products->where('created_at', '<=', $request->to_date);
+        }
+
+        $products = $products->paginate(15)->withQueryString();;
+
+        $iteration = ($products->currentPage() - 1) * $products->perPage();
         $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.products.index',['products'=>$products,'cart'=>$cart,'iteration'=>$iteration]);
+        return view('admin.products.index', ['products' => $products, 'cart' => $cart, 'iteration' => $iteration]);
     }
 
     /**
@@ -33,44 +71,44 @@ class ProductController extends Controller
     public function create()
     {
         $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.products.createProduct',['cart'=>$cart]);
+        return view('admin.products.createProduct', ['cart' => $cart]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
-        $validated = Validator::make(request()->all(),[
-            'title'=> 'required',
-            'description'=> 'required',
-            'price'=> 'required',
-            'img'=>'required|mimes:png,jpg,jpeg|max:2048'
+        $validated = Validator::make(request()->all(), [
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'price' => 'required',
+            'img' => 'required|mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        if ($validated->fails()){
+        if ($validated->fails()) {
             return redirect()->back()->withInput()->withErrors($validated);
         }
 
         $fileName = $request->file('img')->hashName();
-        $request->file('img')->storeAs('images/products',$fileName);
+        $request->file('img')->storeAs('images/products', $fileName);
 
 
         $product = product::create([
-            'title'=>$request['title'],
-            'description'=>$request['description'],
-            'price'=>$request['price'],
-            'old_price'=>$request['old_price'],
-            'img_src'=>$fileName
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'price' => $request['price'],
+            'old_price' => $request['old_price'],
+            'img_src' => $fileName
         ]);
 
         $product->save();
 
-        return redirect(route('product.index'))->with('message','محصول با موفقیت ایجاد شد!');
+        return redirect(route('product.index'))->with('message', 'محصول با موفقیت ایجاد شد!');
 
 
     }
@@ -79,162 +117,107 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\product  $product
+     * @param  \App\Models\product $product
      * @return \Illuminate\Http\Response
      */
     public function edit(product $product)
     {
         $p = product::find($product->id);
-        return view('admin.products.editProducts',['product'=>$p]);
+        return view('admin.products.editProducts', ['product' => $p]);
     }
 
-    public function show(product $product){
+    public function show(product $product)
+    {
 
-        if (\Illuminate\Support\Facades\Auth::user()){
+        if (\Illuminate\Support\Facades\Auth::user()) {
             $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        }else{
+        } else {
             $cart = null;
         }
 
         $p = product::find($product->id);
 
-        return view('showProduct',['product'=>$p,'cart'=>$cart]);
+        return view('showProduct', ['product' => $p, 'cart' => $cart]);
 
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\product  $product
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\product $product
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, product $product)
     {
-        $validated = Validator::make(request()->all(),[
-            'title'=> 'required',
-            'description'=> 'required',
-            'price'=> 'required',
-            'old_price'=> 'required',
-            'status'=> 'required|numeric',
-            'img'=>'mimes:png,jpg,jpeg|max:2048'
+        $validated = Validator::make(request()->all(), [
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'old_price' => 'required',
+            'status' => 'required|numeric',
+            'img' => 'mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        if ($validated->fails()){
+        if ($validated->fails()) {
             return redirect()->back()->withInput()->withErrors($validated);
         }
 
         $fileName = $product->img_src;
 
-        if ($request->has('img')){
-            if ($fileName !== 'default.png'){
-                Storage::delete('images/products/'.$fileName);
+        if ($request->has('img')) {
+            if ($fileName !== 'default.png') {
+                Storage::delete('images/products/' . $fileName);
             }
             $fileName = $request->file('img')->hashName();
-            $request->file('img')->storeAs('images/products',$fileName);
+            $request->file('img')->storeAs('images/products', $fileName);
 
         }
 
 
-
-
         $product->update([
-            'title'=>$request['title'],
-            'description'=>$request['description'],
-            'price'=>$request['price'],
-            'old_price'=>$request['old_price'],
-            'status'=>(int)$request['status'],
-            'img_src'=>$fileName
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'price' => $request['price'],
+            'old_price' => $request['old_price'],
+            'status' => (int)$request['status'],
+            'img_src' => $fileName
         ]);
 
 
-
-        return redirect(route('product.index'))->with('message','محصول با موفقیت ویرایش شد!');
+        return redirect(route('product.index'))->with('message', 'محصول با موفقیت ویرایش شد!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\product  $product
+     * @param  \App\Models\product $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,product $product)
+    public function destroy(Request $request, product $product)
     {
-            $validated = Validator::make($request->all(),[
-               'reason'=>'required|max:255'
-            ]);
-            if ($validated->fails()){
-                return redirect()->back()->withErrors($validated);
-
-            }
-
-            $p = product::find($product->id);
-            $p->status = 3; //status 3 means 'deleted'
-            $p->delete_reason = $request->reason;
-            $p->save();
-            return redirect()->back()->with('message','محصول با موفقیت حذف شد!');
-
-    }
-
-
-    public function status(Request $request,product $product){
-
-
-    }
-
-    public function search(Request $request){
-
-        $validated = Validator::make($request->all(),[
-            'title'=>'max:255',
-            'status'=>'numeric',
-            ///
-
+        $validated = Validator::make($request->all(), [
+            'reason' => 'required|max:255'
         ]);
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated);
 
-        // if fails...
-
-        $resault = DB::table('products');
-
-
-
-        if ($request->title){
-            $resault = $resault->where('title','LIKE','%'.$request->title.'%');
         }
 
-        if ($request->status){
-            $resault = $resault->where('status','=',$request->status);
-        }
+        $p = product::find($product->id);
+        $p->status = 3; //status 3 means 'deleted'
+        $p->delete_reason = $request->reason;
+        $p->save();
+        return redirect()->back()->with('message', 'محصول با موفقیت حذف شد!');
 
-        if ($request->from_price){
-            $resault = $resault->where('price','>=',$request->from_price);
-        }
-
-        if ($request->to_price){
-            $resault = $resault->where('price','<=',$request->to_price);
-        }
-        if ($request->from_date){
-            $resault = $resault->where('created_at','>=',$request->from_date);
-        }
-        if ($request->to_date){
-            $resault = $resault->where('created_at','<=',$request->to_date);
-        }
-
-        $resault = $resault->paginate(15)->withQueryString();;
-
-
-        $iteration = ($resault->currentPage()-1)*$resault->perPage();
-
-        $inputs = [
-            'title'=>$request->title,
-            'status'=>$request->status,
-            'from_price'=>$request->from_price,
-            'to_price'=>$request->to_price,
-            'from_date'=>$request->from_date,
-            'to_date'=>$request->to_date,
-
-        ];
-
-
-        return view('admin.products.search',['products'=>$resault,'iteration'=>$iteration,'inputs'=>$inputs]);
     }
+
+
+    public function status(Request $request, product $product)
+    {
+
+
+    }
+
+
 }

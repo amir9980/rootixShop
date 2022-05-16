@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('img_src')->nullable();
             $table->unsignedInteger('price');
             $table->unsignedInteger('old_price')->nullable();
+            $table->string('shop')->default('rootixShop');
             $table->timestamps();
         });
     }

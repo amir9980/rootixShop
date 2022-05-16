@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('title','محصولات')
+@section('page title','مشاهده محصولات')
 
 @section('content')
 
@@ -14,34 +15,35 @@
                         <h4 class="card-title">فیلتر</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('product.search')}}" method="get">
+                        <form action="#" method="get">
 
                             <div class="row">
                                 <label for="title">عنوان:</label>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" name="title" >
+                                    <input type="text" class="form-control" name="title" value="{{request()->query('title')}}">
                                 </div>
                                 <label for="price">قیمت:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="از" name="from_price">
-                                        <input type="number" class="form-control" placeholder="تا" name="to_price">
+                                        <input type="number" class="form-control" placeholder="از" name="from_price" value="{{request()->query('from_price')}}">
+                                        <input type="number" class="form-control" placeholder="تا" name="to_price" value="{{request()->query('to_price')}}">
                                     </div>
                                 </div>
                                 <label for="date">تاریخ:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="date" class="form-control" placeholder="از" name="from_date">
-                                        <input type="date" class="form-control" placeholder="تا" name="to_date">
+                                        <input type="date" class="form-control" placeholder="از" name="from_date" value="{{request()->query('from_date')}}">
+                                        <input type="date" class="form-control" placeholder="تا" name="to_date" value="{{request()->query('to_date')}}">
+                                        <input type="text" class="jalaliDatePicker">
                                     </div>
                                 </div>
                                 <label for="status">وضعیت:</label>
                                 <div class="col-md-2">
                                     <select class="form-control" name="status">
                                         <option value="">انتخاب کنید...</option>
-                                        <option value="1">فعال</option>
-                                        <option value="2">غیرفعال</option>
-                                        <option value="3">حذف شده</option>
+                                        <option value="1" @if(request()->query('status')==1) selected @endif>فعال</option>
+                                        <option value="2" @if(request()->query('status')==2) selected @endif>غیرفعال</option>
+                                        <option value="3" @if(request()->query('status')==3) selected @endif>حذف شده</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
@@ -85,6 +87,9 @@
                                         aria-label="توضیحات: activate to sort column ascending">توضیحات
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                        aria-label="قیمت: activate to sort column ascending">قیمت
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
                                         aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
@@ -104,12 +109,15 @@
                                             <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
                                             <td class="sorting_1">{{$product->title}}</td>
                                             <td>{{ \Illuminate\Support\Str::limit($product->description,15) }}</td>
+                                            <td>{{ $product->price }}&nbsp;تومان</td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($product->created_at)->format('%A, %d %B %y')}}</td>
                                             <td>
                                                 @if($product->status == 1)
                                                     <span class="badge badge-success">فعال</span>
                                                 @elseif($product->status == 2)
                                                     <span class="badge badge-primary">غیرفعال</span>
+                                                @elseif($product->status == 3)
+                                                    <span class="badge badge-danger">حذف شده</span>
 
                                                 @endif
                                             </td>
@@ -168,6 +176,7 @@
                                     <th rowspan="1" colspan="1">ردیف</th>
                                     <th rowspan="1" colspan="1">عنوان</th>
                                     <th rowspan="1" colspan="1">توضیحات</th>
+                                    <th rowspan="1" colspan="1">قیمت</th>
                                     <th rowspan="1" colspan="1">تاریخ ثبت</th>
                                     <th rowspan="1" colspan="1">وضعیت</th>
                                     <th rowspan="1" colspan="1">عملیات</th>

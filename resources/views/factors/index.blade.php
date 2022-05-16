@@ -50,23 +50,23 @@
                                 </thead>
                                 <tbody>
 
-                                @if(count($baskets)>0)
-                                    @foreach($baskets as $basket)
+                                @if(count($factors)>0)
+                                    @foreach($factors as $factor)
 
                                         <tr role="row" class="even">
                                             <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
-                                            <td class="sorting_1">{{$basket->user->username}}</td>
-                                            <td>{{\Morilog\Jalali\Jalalian::forge($basket->created_at)->format('%A, %d %B %y')}}</td>
-                                            <td>{{$basket->total_price}}&nbsp;تومان</td>
+                                            <td class="sorting_1">{{$factor->user->username}}</td>
+                                            <td>{{\Morilog\Jalali\Jalalian::forge($factor->created_at)->format('%A, %d %B %y')}}</td>
+                                            <td>{{$factor->total_price}}&nbsp;تومان</td>
                                             <td>
-                                                @if($basket->is_paid == 1)
+                                                @if($factor->is_paid == 1)
                                                     <span class="badge badge-success">پرداخت شده</span>
                                                 @else
                                                     <span class="badge badge-danger">پرداخت نشده</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{route('basket.show',$basket->id)}}"
+                                                <a href="{{route('factor.show',$factor->id)}}"
                                                    class="btn btn-sm btn-info"><i class="fa fa-list-ul d-block" aria-hidden="true"></i>مشاهده
                                                 </a>
 
@@ -100,7 +100,7 @@
             </div>
 
             <div class="d-flex card-footer justify-content-center">
-                {{$baskets->links()}}
+                {{$factors->links()}}
             </div>
 
         </div>
