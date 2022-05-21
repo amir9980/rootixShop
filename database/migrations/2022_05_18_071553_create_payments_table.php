@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFactorMastersTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateFactorMastersTable extends Migration
      */
     public function up()
     {
-        Schema::create('factor_masters', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->comment('User who ordered this factor.');
-            $table->boolean('is_paid')->default(true)->comment('Checks if this order has paid or not.');
-            $table->unsignedFloat('total_price')->comment('This order total price in Tomans.');
+            $table->integer('user_id');
+            $table->unsignedFloat('value');
+            $table->string('doorway')->default('AsanPardakht');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateFactorMastersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('factor_masters');
+        Schema::dropIfExists('payments');
     }
 }

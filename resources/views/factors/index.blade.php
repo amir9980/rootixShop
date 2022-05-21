@@ -7,6 +7,60 @@
 
     <div class="col-12">
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">فیلتر</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="#" method="get">
+
+                            <div class="row">
+
+                                <label for="price">قیمت کل:</label>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="قیمت کل" name="total_price"
+                                               value="{{request()->query('total_price')}}">
+
+                                    </div>
+                                </div>
+                                <label for="date">تاریخ:</label>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="از"
+                                               title="از" name="from_date"
+                                               value="{{request()->query('from_date')}}">
+                                        <input type="text" class="jalaliDatePicker form-control" placeholder="تا"
+                                               title="از" name="to_date"
+                                               value="{{request()->query('to_date')}}">
+                                    </div>
+                                </div>
+                                <label for="status">وضعیت پرداخت:</label>
+                                <div class="col-md-2">
+                                    <select class="form-control" name="status">
+                                        <option value="">انتخاب کنید...</option>
+                                        <option value="paid" @if(request()->query('status')=='paid') selected @endif>پرداخت شده
+                                        </option>
+                                        <option value="not_paid" @if(request()->query('status')=='not_paid') selected @endif>پرداحت نشده
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn-primary btn" type="submit">فیلتر</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
 
 
         <div class="card">
@@ -57,7 +111,7 @@
                                             <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
                                             <td class="sorting_1">{{$factor->user->username}}</td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($factor->created_at)->format('%A, %d %B %y')}}</td>
-                                            <td>{{$factor->total_price}}&nbsp;تومان</td>
+                                            <td>{{\Illuminate\Support\Str::of($factor->total_price)->reverse()->substrReplace(',',3,0)->reverse()}}&nbsp;تومان</td>
                                             <td>
                                                 @if($factor->is_paid == 1)
                                                     <span class="badge badge-success">پرداخت شده</span>
@@ -76,7 +130,10 @@
 
 
                                     @endforeach
-
+                                    @else
+                                    <tr>
+                                        <td colspan="6">فاکتوری یافت نشد!</td>
+                                    </tr>
                                 @endif
 
                                 </tbody>

@@ -31,7 +31,9 @@ class HomeController extends Controller
 
         ]);
 
+$request->validate([
 
+]);
         if ($validated->fails()) {
             return redirect()->back()->withInput()->withErrors($validated);
         }

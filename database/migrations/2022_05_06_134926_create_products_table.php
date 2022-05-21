@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('img_src')->nullable();
-            $table->unsignedInteger('price');
-            $table->unsignedInteger('old_price')->nullable();
+            $table->unsignedFloat('price');
+            $table->unsignedFloat('old_price')->nullable();
             $table->string('shop')->default('rootixShop');
             $table->timestamps();
         });

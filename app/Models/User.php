@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class user extends Authenticatable
 {
 
-    protected $fillable = ['username', 'password', 'email', 'is_admin'];
+    protected $fillable = ['username', 'password', 'email', 'is_admin','profile_pic'];
 
 
     public function productsInCart()

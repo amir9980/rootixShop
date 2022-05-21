@@ -39,73 +39,7 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{route('home')}}" class="nav-link">خانه</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">تماس</a>
-            </li>
-            @guest
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{route('login')}}" class="nav-link">ورود</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{route('register')}}" class="nav-link">عضویت</a>
-                </li>
-            @endguest
-            @auth
-                <li class="nav-item d-none d-sm-inline-block ">
-                    <form action="{{route('logout')}}" method="post">
-                        @csrf
-                        <button type="submit" class="list-group-item border-0 m-1">خروج</button>
-                    </form>
-                </li>
-            @endauth
-        </ul>
-
-        <!-- Right navbar links -->
-        <ul class="navbar-nav mr-auto">
-
-        @auth
-            @if(isset($cart))
-                <!-- Cart Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="badge badge-warning navbar-badge">{{count($cart)}}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-                            <span class="dropdown-item dropdown-header">{{count($cart)}} محصول در سبد شما وجود دارد</span>
-                            @foreach($cart as $item)
-                                <div class="dropdown-divider"></div>
-                                <a href="{{route('product.show',$item->product)}}" class="dropdown-item">
-                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                                    {{$item->product->title}}
-                                    <span class="float-left text-muted text-sm">{{$item->count}} عدد</span>
-                                </a>
-                            @endforeach
-                            <div class="dropdown-item dropdown-footer">
-                                <button type="button" class="btn btn-warning " data-toggle="modal"
-                                        data-target="#cartModal">
-                                    خرید
-                                </button>
-                            </div>
-
-
-                        </div>
-
-                        @endif
-
-                    </li>
-                @endauth
-
-
-        </ul>
-    </nav>
+    @include('includes.navbar')
     <!-- /.navbar -->
 @auth
 
@@ -125,79 +59,23 @@
                     <!-- Sidebar user panel (optional) -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="https://www.gravatar.com/avatar/52f0fbcbedee04a121cba8dad1174462?s=200&d=mm&r=g"
+                            <img src="{{route('images.user',\Illuminate\Support\Facades\Auth::user()->profile_pic)}}"
                                  class="img-circle elevation-2" alt="User Image">
                         </div>
 
                         <div class="info">
-                            <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
+                            <a href="{{route('users.profile')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
                         </div>
 
                     </div>
 
                     <!-- Sidebar Menu -->
-                    <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                            data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
-                            @if(request()->user()->is_admin == 1)
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-shopping-bag" aria-hidden="true">&nbsp;</i>
-                                        <p>
-                                            محصولات
-                                            <i class="right fa fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview" style="display: none;">
-                                        <li class="nav-item">
-                                            <a href="{{route('product.index')}}" class="nav-link">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>نمایش محصولات</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('product.create')}}" class="nav-link">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>ایجاد محصول</p>
-                                            </a>
-                                        </li>
+                    @if(request()->user()->is_admin == 1)
+                        @include('admin.includes.sidebarMenu')
+                        @else
+                        @include('includes.sidebarMenu')
 
-                                    </ul>
-                                </li>
-                                <li class="nav-item has-treeview">
-                                    <a href="#" class="nav-link">
-                                        <i class="fa fa-user-circle" aria-hidden="true">&nbsp;</i>
-
-                                        <p>
-                                            خرید ها
-                                            <i class="right fa fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview" style="display: none;">
-
-                                        <li class="nav-item">
-                                            <a href="{{route('factor.index')}}" class="nav-link">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>سبد های ثبت شده</p>
-                                            </a>
-                                        </li>
-
-
-                                    </ul>
-                                </li>
-
-                            @endif
-                            <li class="nav nav-item">
-                                <a href="{{route('factor.index')}}" class="nav-link">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <p>خرید های انجام شده</p>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </nav>
+                @endif
                     <!-- /.sidebar-menu -->
                 </div>
             </div>
@@ -207,7 +85,7 @@
 @endauth
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper @guest mr-0 @endguest">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
@@ -230,84 +108,9 @@
         <section class="content">
             <div class="container-fluid ">
 
-                @if($errors->any())
-                    <div class="alert alert-danger col-sm-12 col-lg-6">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                @include('includes.messagesDisplay')
 
-                @endif
-
-                @if(session('message'))
-                    <div class="alert alert-success col-sm-12 col-lg-6">
-                        <ul class="list-inline">
-                            <li>
-                                <button type="button" class="close float-left" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </li>
-                            <li>{{session('message')}}</li>
-
-                        </ul>
-                    </div>
-
-                @endif
-
-                @if(isset($cart))
-                    {{-- Cart Modal --}}
-                    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLongTitle">تایید سبد خرید</h5>
-                                    <button type="button" class="close mr-auto ml-0" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    @if(count($cart)>0)
-                                        <form action="{{route('factor.store')}}" method="post">
-                                            @csrf
-                                            <p>آیا از خرید اطمینان دارید؟</p>
-                                            <table class="table table-bordered table-striped">
-                                                <tr>
-                                                    <th>عنوان محصول</th>
-                                                    <th>تعداد</th>
-                                                    <th>قیمت</th>
-                                                </tr>
-                                                @php $sum = 0 @endphp
-                                                @foreach($cart as $item)
-                                                    <tr>
-                                                        <td>{{$item->product->title}}</td>
-                                                        <td>{{$item->count}}</td>
-                                                        <td>{{$item->product->price}}تومان&nbsp;</td>
-                                                    </tr>
-                                                    @php $sum += $item->product->price*$item->count @endphp
-                                                @endforeach
-                                                <tr>
-                                                    <td colspan="3">مبلغ پرداختی:&nbsp;@php echo $sum; @endphpتومان
-                                                    </td>
-                                                </tr>
-                                            </table>
-
-                                            <input type="submit" class="btn btn-primary" name="sumbit" value="پرداخت">
-                                            <input type="hidden" name="price" value="@php echo $sum; @endphp">
-                                        </form>
-                                    @else
-                                        <p>شما محصولی در سبد خرید خود ندارید!</p>
-                                    @endif
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Cart Modal --}}
-                @endif
+                @include('includes.cartModal')
 
 
                 @yield('content')
@@ -318,15 +121,10 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <strong>CopyLeft &copy; 2018 <a href="http://github.com/hesammousavi/">حسام موسوی</a>.</strong>
+    <footer class="main-footer @guest mr-0 @endguest">
+        <strong>&copy; تمامی حقوق متعلق به وبسایت میباشد.</strong>
     </footer>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 

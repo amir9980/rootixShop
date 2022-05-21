@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\factorMaster;
 use App\Models\factorDetail;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,6 +14,9 @@ class FactorController extends Controller
 {
     public function store(Request $request)
     {
+        if ($request->price > $request->user()->wallet){
+            return redirect()->back()->withErrors(['شما مبلغ کافی در کیف پول خود ندارید!']);
+        }
 
         DB::beginTransaction();
 
@@ -56,13 +58,36 @@ class FactorController extends Controller
 
     public function index(Request $request)
     {
-
         if ($request->user()->is_admin == 1) {
 
-            $factors = factorMaster::paginate(15);
+            $factors = factorMaster::query();
         } else {
-            $factors = factorMaster::where('user_id', $request->user()->id)->paginate(15);
+            $factors = factorMaster::where('user_id', $request->user()->id);
         }
+
+
+
+        if ($request->has('status') && !empty($request->status)) {
+            if ($request->status=='paid'){
+                $factors = $factors->where('is_paid', '=', 1);
+            }
+            elseif ($request->status=='not_paid'){
+                $factors = $factors->where('is_paid', '=', 0);
+            }
+        }
+
+        if ($request->has('total_price') && !empty($request->total_price)) {
+            $factors = $factors->where('total_price', '=', $request->total_price);
+        }
+
+        if ($request->has('from_date') && !empty($request->from_date)) {
+            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+        }
+        if ($request->has('to_date') && !empty($request->to_date)) {
+            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+        }
+
+        $factors = $factors->paginate(15);
         $iteration = ($factors->currentPage() - 1) * $factors->perPage();
 
         return view('factors.index', ['factors' => $factors, 'iteration' => $iteration]);
@@ -76,4 +101,6 @@ class FactorController extends Controller
         return view('factors.details', ['products' => $details, 'iteration' => '0']);
 
     }
+
+
 }

@@ -25,8 +25,8 @@ class ProductController extends Controller
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
-            'from_date' => 'nullable|digits:13',
-            'to_date' => 'nullable|digits:13',
+            'from_date' => 'nullable',
+            'to_date' => 'nullable',
             'status' => 'nullable|digits_between:1,3',
 
         ]);
@@ -52,10 +52,10 @@ class ProductController extends Controller
             $products = $products->where('price', '<=', $request->to_price);
         }
         if ($request->has('from_date') && !empty($request->from_date)) {
-            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->from_date) . ' 00:00:00'));
+            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $this->convert($request->to_date) . ' 23:59:59'));
+            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
         }
 
         $products = $products->paginate(15)->withQueryString();;
