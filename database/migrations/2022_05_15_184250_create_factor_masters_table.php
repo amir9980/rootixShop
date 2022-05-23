@@ -16,8 +16,8 @@ class CreateFactorMastersTable extends Migration
         Schema::create('factor_masters', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->comment('User who ordered this factor.');
-            $table->boolean('is_paid')->default(true)->comment('Checks if this order has paid or not.');
-            $table->unsignedFloat('total_price')->comment('This order total price in Tomans.');
+            $table->boolean('is_paid')->default(false)->comment('Checks if this order has paid or not.');
+            $table->unsignedBigInteger('total_price')->comment('This order total price in Tomans.');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

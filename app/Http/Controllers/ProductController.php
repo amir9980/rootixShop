@@ -21,7 +21,11 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-        $validated = Validator::make($request->all(), [
+        //        value is in number format like 10,000 so:
+        $request['from_price'] = str_replace(',','',$request->from_price);
+        $request['to_price'] = str_replace(',','',$request->to_price);
+
+        $request->validate([
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
@@ -30,9 +34,7 @@ class ProductController extends Controller
             'status' => 'nullable|digits_between:1,3',
 
         ]);
-        if ($validated->fails()) {
-            return redirect()->back()->withInput()->withErrors($validated);
-        }
+
 
         $products = product::query();
 
@@ -85,16 +87,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $validated = Validator::make(request()->all(), [
+        //        value is in number format like 10,000 so:
+        $request['price'] = str_replace(',','',$request->price);
+        $request['old_price'] = str_replace(',','',$request->old_price);
+
+        $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'price' => 'required',
             'img' => 'required|mimes:png,jpg,jpeg|max:2048'
         ]);
-
-        if ($validated->fails()) {
-            return redirect()->back()->withInput()->withErrors($validated);
-        }
 
         $fileName = $request->file('img')->hashName();
         $request->file('img')->storeAs('images/products', $fileName);
@@ -152,7 +154,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, product $product)
     {
-        $validated = Validator::make(request()->all(), [
+
+        //        value is in number format like 10,000 so:
+        $request['price'] = str_replace(',','',$request->price);
+        $request['old_price'] = str_replace(',','',$request->old_price);
+
+
+         $request->validate([
             'title' => 'required',
             'description' => 'required',
             'price' => 'required',
@@ -161,9 +169,6 @@ class ProductController extends Controller
             'img' => 'mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        if ($validated->fails()) {
-            return redirect()->back()->withInput()->withErrors($validated);
-        }
 
         $fileName = $product->img_src;
 

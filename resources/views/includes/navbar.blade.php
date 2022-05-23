@@ -21,7 +21,7 @@
 
     </ul>
     @auth
-        <form action="{{route('logout')}}" method="post" class="mr-auto">
+        <form action="{{route('logout')}}" method="post">
             @csrf
             <button type="submit" class="btn btn-outline-danger">خروج</button>
         </form>
@@ -29,11 +29,18 @@
 @endauth
 
 <!-- Right navbar links -->
-    <ul class="navbar-nav">
-
     @auth
-        @if(isset($cart))
+    <ul class="navbar-nav mr-auto align-items-center ">
+
+
+        <li class="ml-3">
+            <p class="mb-0 text-primary">موجودی کیف پول شما: <small>{{number_format(request()->user()->wallet)}}</small> تومان</p>
+        </li>
+
+
+        @if(isset($cart) && !empty($cart))
             <!-- Cart Dropdown Menu -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -49,11 +56,12 @@
                                 <span class="float-left text-muted text-sm">{{$item->count}} عدد</span>
                             </a>
                         @endforeach
+
                         <div class="dropdown-item dropdown-footer">
-                            <button type="button" class="btn btn-warning " data-toggle="modal"
-                                    data-target="#cartModal">
-                                خرید
-                            </button>
+                            <form action="{{route('factor.store')}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-warning">ثبت و ادامه</button>
+                            </form>
                         </div>
 
 
@@ -62,8 +70,8 @@
                     @endif
 
                 </li>
-            @endauth
 
 
     </ul>
+    @endauth
 </nav>

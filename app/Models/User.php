@@ -26,4 +26,8 @@ class user extends Authenticatable
     {
         return $this->hasMany(factorMaster::class, 'user_id', 'id');
     }
+
+    public function reports(){
+        return $this->morphMany(PaymentReport::class,'reportable');
+    }
 }

@@ -21,8 +21,8 @@
                                 <label for="price">قیمت کل:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="قیمت کل" name="total_price"
-                                               value="{{request()->query('total_price')}}">
+                                        <input type="text" class="form-control numberInput" placeholder="قیمت کل" name="total_price"
+                                               value="{{number_format((float)request()->query('total_price'))}}">
 
                                     </div>
                                 </div>
@@ -119,10 +119,19 @@
                                                     <span class="badge badge-danger">پرداخت نشده</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{route('factor.show',$factor->id)}}"
                                                    class="btn btn-sm btn-info"><i class="fa fa-list-ul d-block" aria-hidden="true"></i>مشاهده
                                                 </a>
+                                                @if(!$factor->is_paid == 1)
+
+                                                    <form action="{{route('paymentReport.buy',$factor->id)}}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-warning mr-2"><i class="fa fa-credit-card-alt d-block" aria-hidden="true"></i>
+                                                            پرداخت</button>
+                                                    </form>
+
+                                                    @endif
 
                                             </td>
 

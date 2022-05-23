@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class WalletPayment extends Model
 {
     use HasFactory;
 
@@ -13,5 +13,9 @@ class Payment extends Model
 
     public function user(){
         return $this->belongsTo(user::class,'user_id');
+    }
+
+    public function reports(){
+        return $this->morphMany(PaymentReport::class,'reportable');
     }
 }

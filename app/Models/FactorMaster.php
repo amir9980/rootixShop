@@ -18,4 +18,8 @@ class factorMaster extends Model
     public function details(){
         return $this->hasMany(factorDetail::class,'master_id');
     }
+
+    public function reports(){
+        return $this->morphMany(PaymentReport::class,'reportable');
+    }
 }

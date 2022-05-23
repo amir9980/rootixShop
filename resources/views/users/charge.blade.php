@@ -11,7 +11,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="value">مبلغ</label>
-                    <input type="number" class="form-control" name="value" placeholder="تومان">
+                    <input type="text" class="form-control numberInput" name="value" placeholder="تومان">
                 </div>
 
                 <button class="btn btn-sm btn-outline-info" type="submit">پرداخت</button>

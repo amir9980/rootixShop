@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('email')->unique();
+            $table->unsignedBigInteger('wallet')->default(0);
+            $table->string('profile_pic')->default('defaultUser.png');
             $table->timestamps();
         });
     }

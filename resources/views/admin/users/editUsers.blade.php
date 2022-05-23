@@ -55,7 +55,7 @@
 
                 <div class="form-group">
                     <label for="wallet">اضافه کردن اعتبار</label>
-                    <input type="number" name="wallet" class="form-control" placeholder="تومان">
+                    <input type="text" name="wallet" class="form-control numberInput" placeholder="تومان">
                 </div>
 
                 {{--<div class="form-group">--}}

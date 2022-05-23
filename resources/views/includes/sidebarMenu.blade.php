@@ -16,7 +16,7 @@
         <li class="nav-item">
             <a href="{{route('factor.index')}}" class="nav-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true">&nbsp;</i>
-                <p>خرید های انجام شده</p>
+                <p>سبد های ثبت شده</p>
             </a>
         </li>
 

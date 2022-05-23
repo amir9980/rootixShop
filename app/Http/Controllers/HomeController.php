@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
@@ -14,29 +15,23 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-
         if (\Illuminate\Support\Facades\Auth::user()) {
             $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        } else {
+        }else{
             $cart = null;
+
         }
 
+        //        value is in number format like 10,000 so:
+        $request['from_price'] = str_replace(',','',$request->from_price);
+        $request['to_price'] = str_replace(',','',$request->to_price);
 
-        $validated = Validator::make($request->all(), [
+
+        $request->validate([
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
-//            'to_price' => 'nullable|numeric',
-//            'from_date' => 'nullable|digits:13',
-//            'to_date' => 'nullable|digits:13',
-
+            'to_price' => 'nullable|numeric',
         ]);
-
-$request->validate([
-
-]);
-        if ($validated->fails()) {
-            return redirect()->back()->withInput()->withErrors($validated);
-        }
 
         $products = product::query();
 
@@ -67,15 +62,4 @@ $request->validate([
         ]);
     }
 
-    public function convert($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١', '٠'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
-
-        return $englishNumbersOnly;
-    }
 }

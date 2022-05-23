@@ -170,15 +170,41 @@
 <script src="{{asset('assets/dist/js/persian-date.min.js')}}"></script>
 <script src="{{asset('assets/dist/js/persian-datepicker.min.js')}}"></script>
 
+{{-- Jquery Number Format --}}
+<script src="{{asset('assets/dist/js/jquery.number.min.js')}}"></script>
+
 <script type="text/javascript">
+
+
+
+
+
     $(document).ready(function () {
+
         $(".jalaliDatePicker").pDatepicker({
             initialValue: false,
             autoClose: true,
 
             format: 'YYYY/MM/DD',
         });
+
+        $(".numberInput").keyup(function () {
+            var number = $(this).val();
+            $(this).val($.number(number));
+        });
+
+        $(".numberInput").keydown(function (evt) {
+            // var charCode = (e.which) ? e.which : event.keyCode;
+            // if (String.fromCharCode(charCode).match(/[^0-9]/g))
+            //     return false;
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        });
+
     });
+
 </script>
 
 

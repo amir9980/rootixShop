@@ -6,8 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FactorController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WalletPaymentController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\PaymentReportController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
@@ -58,9 +59,11 @@ Route::post('user/profile/store',[UserController::class,'storeProfile'])->name('
 Route::get('user/charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
 
 
-Route::post('payment/{user}/store',[PaymentController::class,'store'])->name('payment.store')->middleware('auth');
+Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
 
 
 
 Route::get('/image/{fileName}', [FileController::class,'product'])->name('images.product');
 Route::get('/profile/{fileName}', [FileController::class,'user'])->name('images.user');
+
+Route::post('/paymentReport/{factor}/store',[PaymentReportController::class,'buyCart'])->middleware('auth')->name('paymentReport.buy');

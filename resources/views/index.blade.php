@@ -25,10 +25,10 @@
                                 <label for="price">قیمت:</label>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="از" name="from_price"
-                                               value="{{request()->query('from_price')}}">
-                                        <input type="number" class="form-control" placeholder="تا" name="to_price"
-                                               value="{{request()->query('to_price')}}">
+                                        <input type="text" class="form-control numberInput" placeholder="از" name="from_price"
+                                               value="{{number_format((float)request()->query('from_price'))}}">
+                                        <input type="text" class="form-control numberInput" placeholder="تا" name="to_price"
+                                               value="{{number_format((float)request()->query('to_price'))}}">
                                     </div>
                                 </div>
                                 <label for="date">تاریخ:</label>

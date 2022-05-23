@@ -14,21 +14,23 @@ class FactorController extends Controller
 {
     public function store(Request $request)
     {
-        if ($request->price > $request->user()->wallet){
-            return redirect()->back()->withErrors(['شما مبلغ کافی در کیف پول خود ندارید!']);
-        }
 
         DB::beginTransaction();
 
         try {
 
+            $details = [];
+            $total = null;
+
+
+            foreach ($request->user()->cart as $cartItem) {
+                $total += $cartItem->product->price * $cartItem->count;
+            }
+
             $factor = factorMaster::create([
                 'user_id' => $request->user()->id,
-                'total_price' => $request->price
-
+                'total_price'=>$total
             ]);
-            $details = [];
-
 
             foreach ($request->user()->cart as $cartItem) {
                 $details[] = [
@@ -36,16 +38,15 @@ class FactorController extends Controller
                     'product_id' => $cartItem->product->id,
                     'count' => $cartItem->count
                 ];
-
-
             }
+
             $factor->save();
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
 
             DB::commit();
-            return redirect()->back()->with('message', 'خرید با موفقیت انجام شد!');
+            return redirect()->route('factor.index')->with('message', 'سبد با موفقیت ثبت شد!');
 
 
         } catch (Exception $e) {
@@ -58,6 +59,8 @@ class FactorController extends Controller
 
     public function index(Request $request)
     {
+
+//        Authorize:
         if ($request->user()->is_admin == 1) {
 
             $factors = factorMaster::query();
@@ -67,6 +70,12 @@ class FactorController extends Controller
 
 
 
+
+        //        value is in number format like 10,000 so:
+        $request['value'] = str_replace(',','',$request->value);
+
+
+        //      Search:
         if ($request->has('status') && !empty($request->status)) {
             if ($request->status=='paid'){
                 $factors = $factors->where('is_paid', '=', 1);
@@ -90,15 +99,16 @@ class FactorController extends Controller
         $factors = $factors->paginate(15);
         $iteration = ($factors->currentPage() - 1) * $factors->perPage();
 
-        return view('factors.index', ['factors' => $factors, 'iteration' => $iteration]);
+
+        return view('factors.index', ['factors' => $factors, 'iteration' => $iteration,'cart'=>$request->user()->cart]);
     }
 
-    public function show(factorMaster $factor)
+    public function show(Request $request,factorMaster $factor)
     {
         $details = $factor->details;
 
 
-        return view('factors.details', ['products' => $details, 'iteration' => '0']);
+        return view('factors.details', ['products' => $details, 'iteration' => '0','carts'=>$request->user()->carts]);
 
     }
 

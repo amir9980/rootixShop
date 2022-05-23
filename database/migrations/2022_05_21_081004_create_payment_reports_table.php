@@ -15,10 +15,11 @@ class CreatePaymentReportsTable extends Migration
     {
         Schema::create('payment_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->string('status',20);
+            $table->morphs('reportable');
+            $table->string('status',20)->comment('Paid or Failed or Canceled');
+            $table->string('type',20)->comment('Increase or Decrease.');
+            $table->unsignedBigInteger('value')->comment('In Tomans.');
             $table->text('log');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -9,5 +9,9 @@ class PaymentReport extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','status','log'];
+    protected $fillable = ['status','type','value','log','reportable_type','reportable_id'];
+
+    public function reportable(){
+        return $this->morphTo();
+    }
 }

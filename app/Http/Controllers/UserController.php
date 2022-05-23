@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
+use App\Models\WalletPayment;
 use App\Models\user;
 use Illuminate\Http\Request;
 
@@ -69,6 +69,9 @@ class UserController extends Controller
 
     public function update(Request $request,$u){
 
+        //        value is in number format like 10,000 so:
+        $request['wallet'] = str_replace(',','',$request->wallet);
+
     $request->validate([
         'username'=>'required|string',
         'role'=>'required',
@@ -91,7 +94,7 @@ class UserController extends Controller
         }
 
         if (!empty($request->wallet)){
-            Payment::create([
+            WalletPayment::create([
                 'user_id'=>$user->id,
                 'value'=>$request->wallet
             ]);
