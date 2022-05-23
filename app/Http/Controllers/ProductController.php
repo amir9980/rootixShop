@@ -33,6 +33,11 @@ class ProductController extends Controller
             'to_date' => 'nullable',
             'status' => 'nullable|digits_between:1,3',
 
+        ],[
+            'title.max'=>'فیلد عنوان بیش از حد مجار است!',
+            'from_price.numeric'=>'فیلد قیمت مبدا باید فقط شامل عدد باشد!',
+            'to_price.numeric'=>'فیلد قیمت مقصد باید فقط شامل عدد باشد!',
+            'status.digits_between'=>'مقدار فیلد وضعیت نامعتبر میباشد!'
         ]);
 
 
@@ -94,8 +99,18 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'price' => 'required',
-            'img' => 'required|mimes:png,jpg,jpeg|max:2048'
+            'price' => 'required|numeric',
+            'old_price' => 'nullable|numeric',
+            'img' => 'nullable|mimes:png,jpg,jpeg|max:2048'
+        ],[
+            'title.required'=>'فیلد عنوان را وارد کنید!',
+            'title.max'=>'فیلد عنوان بیش از حد مجار است!',
+            'description.required'=>'توضیحات را وارد کنید!',
+            'price.required'=>'فیلد قیمت را وارد کنید!',
+            'price.numeric'=>'فیلد قیمت باید فقط شامل عدد باشد!',
+            'old_price.numeric'=>'فیلد قیمت قبلی باید فقط شامل عدد باشد!',
+            'img.mimes'=>'فایل تصویری نامعتبر میباشد!',
+            'img.max'=>'اندازه فایل تصویری مجاز نمیباشد!',
         ]);
 
         $fileName = $request->file('img')->hashName();
@@ -161,13 +176,24 @@ class ProductController extends Controller
 
 
          $request->validate([
-            'title' => 'required',
+            'title' => 'required|max:255',
             'description' => 'required',
-            'price' => 'required',
-            'old_price' => 'required',
+            'price' => 'required|numeric',
+            'old_price' => 'required|numeric',
             'status' => 'required|numeric',
             'img' => 'mimes:png,jpg,jpeg|max:2048'
-        ]);
+        ],[
+             'title.required'=>'فیلد عنوان را وارد کنید!',
+             'title.max'=>'فیلد عنوان بیش از حد مجار است!',
+             'description.required'=>'توضیحات را وارد کنید!',
+             'price.required'=>'فیلد قیمت را وارد کنید!',
+             'old_price.required'=>'فیلد قیمت قبلی را وارد کنید!',
+             'price.numeric'=>'فیلد قیمت باید فقط شامل عدد باشد!',
+             'old_price.numeric'=>'فیلد قیمت قبلی باید فقط شامل عدد باشد!',
+             'status.required'=>'فیلد وضعیت را وارد کنید!',
+             'img.mimes'=>'فایل تصویری نامعتبر میباشد!',
+             'img.max'=>'اندازه فایل تصویری مجاز نمیباشد!',
+         ]);
 
 
         $fileName = $product->img_src;
@@ -203,13 +229,13 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, product $product)
     {
-        $validated = Validator::make($request->all(), [
+        $request->validate([
             'reason' => 'required|max:255'
+        ],[
+            'reason.required'=>'فیلد دلیل را وارد کنید!',
+            'reason.max'=>'تعداد کاراکتر فیلد دلیل بیش از حد مجار است!',
         ]);
-        if ($validated->fails()) {
-            return redirect()->back()->withErrors($validated);
 
-        }
 
         $p = product::find($product->id);
         $p->status = 3; //status 3 means 'deleted'

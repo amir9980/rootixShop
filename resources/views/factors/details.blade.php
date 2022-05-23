@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
-@section('title','سبد های خرید')
+@section('title','جزئیات سبد خرید')
+@section('page title','جزئیات سبد خرید')
 
 @section('content')
 

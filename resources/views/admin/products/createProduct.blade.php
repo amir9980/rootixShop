@@ -32,11 +32,11 @@
                 <div class="row">
                     <div class="form-group col-md-12 col-lg-6">
                         <label for="price">قیمت</label>
-                        <input class="form-control" type="number" name="price" required>
+                        <input class="form-control numberInput" type="text" name="price" required placeholder="تومان">
                     </div>
                     <div class="form-group col-md-12 col-lg-6">
                         <label for="old_price">قیمت قبلی</label>
-                        <input class="form-control" type="number" name="old_price">
+                        <input class="form-control numberInput" type="text" name="old_price" placeholder="تومان">
                     </div>
                 </div>
 
