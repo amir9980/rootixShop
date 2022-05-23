@@ -49,21 +49,28 @@ Route::get('product/{product}', [ProductController::class, 'show'])->name('produ
 
 Route::post('cart/{product}', [CartController::class, 'store'])->middleware('auth')->name('cart.store');
 
-Route::post('factor/store', [FactorController::class, 'store'])->middleware('auth')->name('factor.store');
-Route::get('factor/index', [FactorController::class, 'index'])->name('factor.index');
-Route::get('factor/{factor}/show', [FactorController::class, 'show'])->name('factor.show');
+Route::prefix('factor')->group(function (){
+    Route::post('store', [FactorController::class, 'store'])->middleware('auth')->name('factor.store');
+    Route::get('index', [FactorController::class, 'index'])->name('factor.index');
+    Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
+});
 
-Route::get('user/profile',[UserController::class,'showProfile'])->name('users.profile')->middleware('auth');
-Route::post('user/profile/store',[UserController::class,'storeProfile'])->name('users.profile.store')->middleware('auth');
 
-Route::get('user/charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
+Route::prefix('user')->group(function (){
+    Route::get('profile',[UserController::class,'showProfile'])->name('users.profile')->middleware('auth');
+    Route::post('profile/store',[UserController::class,'storeProfile'])->name('users.profile.store')->middleware('auth');
+    Route::get('charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
+});
 
 
 Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
 
 
+Route::prefix('file')->group(function (){
+    Route::get('/image/{fileName}', [FileController::class,'product'])->name('images.product');
+    Route::get('/profile/{fileName}', [FileController::class,'user'])->name('images.user');
+});
 
-Route::get('/image/{fileName}', [FileController::class,'product'])->name('images.product');
-Route::get('/profile/{fileName}', [FileController::class,'user'])->name('images.user');
+
 
 Route::post('/paymentReport/{factor}/store',[PaymentReportController::class,'buyCart'])->middleware('auth')->name('paymentReport.buy');
