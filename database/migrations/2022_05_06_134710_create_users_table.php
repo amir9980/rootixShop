@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('email')->unique();
-//            $table->float('wallet')->default(0);    //should test for DB::beginTransaction()
+//            $table->float('wallet')->default(0);
             $table->float('wallet',15,3)->default(0);
             $table->string('profile_pic')->default('defaultUser.png');
             $table->timestamps();
