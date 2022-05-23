@@ -110,8 +110,6 @@
 
                 @include('includes.messagesDisplay')
 
-                @include('includes.cartModal')
-
 
                 @yield('content')
 
@@ -170,7 +168,7 @@
 <script src="{{asset('assets/dist/js/persian-date.min.js')}}"></script>
 <script src="{{asset('assets/dist/js/persian-datepicker.min.js')}}"></script>
 
-{{-- Jquery Number Format --}}
+{{-- Jquery Number Format Plugin --}}
 <script src="{{asset('assets/dist/js/jquery.number.min.js')}}"></script>
 
 <script type="text/javascript">

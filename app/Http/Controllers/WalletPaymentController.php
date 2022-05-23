@@ -29,8 +29,10 @@ class WalletPaymentController extends Controller
 
             $payment = WalletPayment::create([
                 'user_id'=>$user->id,
-                'value'=>$request->value
+                'value'=>$request->value,
+                'doorway'=>'AsanPardakht'
             ]);
+
 
             $user->wallet += $request->value;
 
@@ -42,6 +44,8 @@ class WalletPaymentController extends Controller
             $log .= now() . '';
             $log .= 'کیف پول خود را به مبلغ ';
             $log .= $request->value . '';
+            $log .= 'از طریق درگاه ';
+            $log .= $payment->doorway.'';
             $log .= 'شارژ کرد.';
 
             $payment->reports()->create([

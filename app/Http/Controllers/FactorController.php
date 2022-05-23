@@ -14,6 +14,9 @@ class FactorController extends Controller
 {
     public function store(Request $request)
     {
+        if (count($request->user()->cart) < 1){
+            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
+        }
 
         DB::beginTransaction();
 
@@ -72,7 +75,14 @@ class FactorController extends Controller
 
 
         //        value is in number format like 10,000 so:
-        $request['value'] = str_replace(',','',$request->value);
+        $request['from_price'] = str_replace(',','',$request->from_price);
+        $request['to_price'] = str_replace(',','',$request->to_price);
+
+        //validation
+        $request->validate([
+            'from_price'=>'nullable|numeric',
+            'to_price'=>'nullable|numeric',
+        ]);
 
 
         //      Search:
@@ -85,8 +95,12 @@ class FactorController extends Controller
             }
         }
 
-        if ($request->has('total_price') && !empty($request->total_price)) {
-            $factors = $factors->where('total_price', '=', $request->total_price);
+        if ($request->has('from_price') && !empty($request->from_price)) {
+            $products = $factors->where('total_price', '>=', $request->from_price);
+        }
+
+        if ($request->has('to_price') && !empty($request->to_price)) {
+            $products = $factors->where('total_price', '<=', $request->to_price);
         }
 
         if ($request->has('from_date') && !empty($request->from_date)) {

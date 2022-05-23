@@ -16,17 +16,19 @@
                     <div class="card-body">
                         <form action="#" method="get">
 
-                            <div class="row">
+                            <div class="row align-items-center">
                                 <label for="title">عنوان:</label>
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="title"
                                            value="{{request()->query('title')}}">
                                 </div>
-                                <label for="price">قیمت:</label>
+                                <label for="from_price">قیمت از:</label>
                                 <div class="col-md-2">
-                                    <div class="input-group">
+                                    <div class="input-group align-items-center">
                                         <input type="text" class="form-control numberInput" placeholder="از" name="from_price"
                                                value="{{number_format((float)request()->query('from_price'))}}">
+                                        <label for="to_price">تا:</label>
+
                                         <input type="text" class="form-control numberInput" placeholder="تا" name="to_price"
                                                value="{{number_format((float)request()->query('to_price'))}}">
                                     </div>
@@ -56,8 +58,8 @@
 
         @if(count($products)>0)
         @foreach($products as $product)
-            <div class="col-sm-6 col-md-4 col-lg-3 p-5">
-            <div class="card ">
+            <div class="col-sm-6 col-md-4 col-lg-3 px-5 py-3">
+            <div class="card">
                 <a href="#">
                     <img src="{{route('images.product',$product->img_src)}}" alt="تصویر محصول" class="card-img-top">
                 </a>
@@ -72,7 +74,7 @@
                     <div class="row ">
                         <div class="col-12 col-xl-6">
                             <a href="{{route('product.show',$product)}}" class=" btn btn-block btn-primary btn-sm mb-2 mb-xl-0">
-                                <small>مشاهده محصول</small>
+                                <small>مشاهده</small>
                             </a>
                         </div>
                         <div class="col-12 col-xl-6 ">
