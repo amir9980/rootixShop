@@ -130,7 +130,7 @@ class ProductController extends Controller
         return view('admin.products.editProducts', ['product' => $p]);
     }
 
-    public function show(product $product)
+    public function show($product)
     {
 
         if (\Illuminate\Support\Facades\Auth::user()) {
@@ -139,7 +139,7 @@ class ProductController extends Controller
             $cart = null;
         }
 
-        $p = product::find($product->id);
+        $p = product::find($product);
 
         return view('showProduct', ['product' => $p, 'cart' => $cart]);
 

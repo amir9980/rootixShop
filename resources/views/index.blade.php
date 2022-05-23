@@ -71,7 +71,7 @@
                 <div class="card-footer">
                     <div class="row ">
                         <div class="col-12 col-xl-6">
-                            <a href="#" class=" btn btn-block btn-primary btn-sm mb-2 mb-xl-0">
+                            <a href="{{route('product.show',$product)}}" class=" btn btn-block btn-primary btn-sm mb-2 mb-xl-0">
                                 <small>مشاهده محصول</small>
                             </a>
                         </div>

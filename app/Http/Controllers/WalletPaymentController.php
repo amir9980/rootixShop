@@ -7,13 +7,15 @@ use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Type;
 
 class WalletPaymentController extends Controller
 {
     public function store(Request $request,$u){
-
+//        dd(gettype($request->value));
 //        value is in number format like 10,000 so:
         $request['value'] = str_replace(',','',$request->value);
+
 
         $request->validate([
            'value'=>'required|numeric'

@@ -1,36 +1,41 @@
 @extends('layouts.master')
 
-@section('title', 'online shop')
+@section('title', 'مشاهده محصول')
+@section('page title', 'مشاهده محصول')
 
 @section('content')
+    <div class="container">
+        <div class="row">
+            <div class="card col-12 text-center">
+                <div class="card-header">
+                    <h5>{{$product->title}}</h5>
+                    <img src="{{route('images.product',$product->img_src)}}" alt="تصویر محصول" width="50%">
+                </div>
+                <div class="card-body">
+                    <p>&nbsp;{{number_format($product->price)}}&nbsp;<del>{{number_format($product->old_price)}}</del>
+                        تومان
+                    </p>
+                    <p class="lead">{{$product->description}}</p>
+                </div>
+                @auth
+                <div class="card-footer">
+                    <form action="{{route('cart.store',$product)}}" method="post" class="">
+                        @csrf
 
-    @if($product)
-        <div class="col-lg-12">
-            <h2>{{$product->title}}</h2>
-            <a href="{{route('product.show',$product)}}">
-                <img class="img-responsive" src="{{route('images',$product->img_src)}}" alt="{{$product->title}}">
-            </a>
-            <p>{{$product->description}}</p>
-            @auth
-                <form action="{{route('cart.store',$product->id)}}" method="post">
-                    @csrf
-                    <input class="btn btn-success mb-2" type="submit" name="addToCart" value="add to cart">
-                </form>
+                        <button type="submit" name="addToCart" class="btn btn-warning " onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
+                            <small>اضافه کردن به سبد خرید</small>
+                        </button>
 
-            @endauth
+                    </form>
+
+                </div>
+                    @endauth
+
+
+            </div>
         </div>
-    @endif
+    </div>
 
-
-    <!-- Pager -->
-    <ul class="pager col-lg-12">
-        <li class="previous">
-            <a href="#">&larr; Older</a>
-        </li>
-        <li class="next">
-            <a href="#">Newer &rarr;</a>
-        </li>
-    </ul>
 
 
 @endsection
