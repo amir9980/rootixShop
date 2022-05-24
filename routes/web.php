@@ -26,10 +26,14 @@ use Illuminate\Support\Facades\Response;
 
 Auth::routes();
 
+Route::prefix('file')->group(function (){
+    Route::get('/image/{fileName}', [FileController::class,'product'])->name('images.product');
+    Route::get('/profile/{fileName}', [FileController::class,'user'])->name('images.user');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/', function () {
         return view('admin/index');
     })->name('admin');
@@ -65,11 +69,6 @@ Route::prefix('user')->group(function (){
 
 Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
 
-
-Route::prefix('file')->group(function (){
-    Route::get('/image/{fileName}', [FileController::class,'product'])->name('images.product');
-    Route::get('/profile/{fileName}', [FileController::class,'user'])->name('images.user');
-});
 
 
 

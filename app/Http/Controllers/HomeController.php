@@ -31,10 +31,6 @@ class HomeController extends Controller
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
-        ],[
-            'title.max' => 'طول فیلد عنوان بیش از حد مجاز میباشد!',
-            'from_price.numeric'=>'فیلد قیمت مبدا باید فقط شامل عدد باشد!',
-            'to_price.numeric'=>'فیلد قیمت مقصد باید فقط شامل عدد باشد!',
         ]);
 
         $products = product::query();

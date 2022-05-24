@@ -12,7 +12,7 @@ class FileController extends Controller
         $path = storage_path('app/images/products/' . $fileName);
 
 
-//dd($path);
+//dd($fileName);
 
         if (!File::exists($path)) {
             abort(404);
@@ -29,6 +29,7 @@ class FileController extends Controller
     public function user($fileName){
         $path = storage_path('app/images/users/' . $fileName);
 
+//        dd($fileName);
 
 //dd($path);
 

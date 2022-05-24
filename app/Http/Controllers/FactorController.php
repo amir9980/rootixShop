@@ -82,10 +82,7 @@ class FactorController extends Controller
         $request->validate([
             'from_price'=>'nullable|numeric',
             'to_price'=>'nullable|numeric',
-        ],[
-            'from_price.numeric'=>'فیلد قیمت مبدا باید فقط شامل عدد باشد!',
-            'to_price.numeric'=>'فیلد قیمت مقصد باید فقط شامل عدد باشد!',
-            ]);
+        ]);
 
 
         //      Search:

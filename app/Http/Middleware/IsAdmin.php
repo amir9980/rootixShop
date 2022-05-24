@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class is_admin
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,8 +16,8 @@ class is_admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->is_admin !== 1){
-            return redirect()->back()->withErrors(['شما اجازه دسترسی به صفحه موردنظر را ندارید!']);
+        if ($request->user()->is_admin !== 1){
+            abort(403,'Unathorized');
         }
         return $next($request);
     }
