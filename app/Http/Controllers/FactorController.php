@@ -75,7 +75,7 @@ class FactorController extends Controller
 
 
         //        value is in number format like 10,000 so:
-//        $request['from_price'] = str_replace(',','',$request->from_price);
+        $request['from_price'] = str_replace(',','',$request->from_price);
         $request['to_price'] = str_replace(',','',$request->to_price);
 
         //validation

@@ -150,6 +150,17 @@ return [
     |
     */
     'attributes' => [
+
+//        custom attrs:
+        "price"=>"قیمت",
+        "old_price"=>"قیمت قبلی",
+        "from_price"=>"قیمت مبدا",
+        "to_price"=>"قیمت مقصد",
+        "from_date"=>"تاریخ مبدا",
+        "to_date"=>"تاریخ مقصد",
+
+//        end customs
+
         "name" => "نام",
         "username" => "نام کاربری",
         "email" => "پست الکترونیکی",

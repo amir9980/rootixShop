@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Response;
 |
 */
 
+
+App::setLocale('fa');
 
 Auth::routes();
 
