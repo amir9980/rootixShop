@@ -62,9 +62,7 @@
                         @endforeach
 
                         <div class="dropdown-item dropdown-footer">
-                            <form action="{{route('factor.confirm')}}" >
-                                <button type="submit" class="btn btn-block btn-warning">خرید</button>
-                            </form>
+                            <a href="{{route('factor.details')}}" class="btn btn-block btn-warning">خرید</a>
                         </div>
 
 

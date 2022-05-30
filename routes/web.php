@@ -9,6 +9,7 @@ use App\Http\Controllers\FactorController;
 use App\Http\Controllers\WalletPaymentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
+use App\Http\Controllers\DiscountTokenController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
@@ -48,21 +49,27 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('product/{product}/delete', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::post('product/{product}/status', [ProductController::class, 'status'])->name('product.status');
 
+    Route::resource('discountToken',DiscountTokenController::class);
+
 
 });
 
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
 
-Route::post('cart/{product}', [CartController::class, 'store'])->middleware('auth')->name('cart.store');
-Route::delete('cart/{product}', [CartController::class, 'destroy'])->middleware('auth')->name('cart.destroy');
+Route::prefix('cart')->middleware('auth')->group(function (){
+    Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::delete('{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+});
+
 
 Route::prefix('factor')->middleware('auth')->group(function (){
     Route::post('store', [FactorController::class, 'store'])->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
-    Route::get('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm');
-    Route::post('orderDetails/', [FactorController::class, 'orderDetails'])->name('factor.order');
+    Route::get('confirmDetails/', [FactorController::class, 'confirmDetailsForm'])->name('factor.details');
+    Route::post('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm.details');
+    Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->name('factor.order');
 });
 
 

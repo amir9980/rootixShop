@@ -141,7 +141,7 @@ class FactorController extends Controller
 
     }
 
-    public function confirmDetails(Request $request){
+    public function confirmDetailsForm(Request $request){
 
         if (count($request->user()->cart) < 1){
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
@@ -154,7 +154,7 @@ class FactorController extends Controller
         return view('factors.confirmDetails',['cart'=>$request->user()->cart,'total'=>$total]);
     }
 
-    public function orderDetails(Request $request){
+    public function confirmDetails(Request $request){
 
         if (count($request->user()->cart) < 1){
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
@@ -189,11 +189,18 @@ class FactorController extends Controller
 
             cart::destroy($deletes);
             cart::query()->upsert($changes,['id','user_id','product_id'],['count']);
-            $request->user()->load('cart');
-            $carts = $request->user()->cart;
 
         }catch (Exception $e){
             return redirect()->back()->withErrors($e);
+        }
+
+        return redirect()->route('factor.order');
+    }
+
+    public function orderDetails(Request $request){
+        $carts = $request->user()->cart;
+        if (count($carts) < 1){
+            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
 
         $total = 0;
@@ -201,7 +208,6 @@ class FactorController extends Controller
             $total+=$item->product->price*$item->count;
         }
         return view('factors.orderDetails',['cart'=>$carts,'total'=>$total]);
-
     }
 
 

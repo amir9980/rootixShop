@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{route('factor.order')}}" method="post" id="confirmDetailsForm">
+    <form action="{{route('factor.confirm.details')}}" method="post" id="confirmDetailsForm">
         @csrf
         <table class="table table-bordered table-striped text-center">
             <tr>

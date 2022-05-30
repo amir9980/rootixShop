@@ -17,13 +17,13 @@
                     <div class="row form-group">
                         <div class="col-md-6">
                             <label for="firstName">نام</label>
-                            <input type="text" class="form-control" name="firstName" required/>
+                            <input type="text" class="form-control" name="firstName"/>
                             <div class="invalid-feedback">نام را وارد کنید</div>
                             <div class="valid-feedback">نام وارد شد</div>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">نام خانوادگی</label>
-                            <input type="text" class="form-control" name="lastName" required/>
+                            <input type="text" class="form-control" name="lastName"/>
                             <div class="invalid-feedback">نام خانوادگی را وارد کنید</div>
                             <div class="valid-feedback">نام خانوادگی وارد شد</div>
                         </div>

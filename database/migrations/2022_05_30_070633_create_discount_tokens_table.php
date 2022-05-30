@@ -15,7 +15,13 @@ class CreateDiscountTokensTable extends Migration
     {
         Schema::create('discount_tokens', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('access',10)->comment("Public or Private.");
+            $table->string('token',255);
+            $table->integer('user_id')->nullable()->comment('this is null if access is public');
+            $table->tinyInteger('percentage');
+            $table->dateTime('start_date');
+            $table->dateTime('expire_date');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
