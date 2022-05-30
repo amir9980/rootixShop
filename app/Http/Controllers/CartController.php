@@ -106,6 +106,19 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
+        try{
 
+            $cart = cart::find($id);
+
+            if ($cart->count > 1){
+                $cart->count -= 1;
+                $cart->save();
+            }else{
+                $cart->delete();
+            }
+            return redirect()->back()->with('message','محصول از سبد خرید حذف شد!');
+        }catch (\Exception $e){
+            return redirect()->back()->withErrors($e);
+        }
     }
 }

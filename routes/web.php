@@ -55,11 +55,14 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
 
 Route::post('cart/{product}', [CartController::class, 'store'])->middleware('auth')->name('cart.store');
+Route::delete('cart/{product}', [CartController::class, 'destroy'])->middleware('auth')->name('cart.destroy');
 
-Route::prefix('factor')->group(function (){
-    Route::post('store', [FactorController::class, 'store'])->middleware('auth')->name('factor.store');
+Route::prefix('factor')->middleware('auth')->group(function (){
+    Route::post('store', [FactorController::class, 'store'])->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
+    Route::get('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm');
+    Route::post('orderDetails/', [FactorController::class, 'orderDetails'])->name('factor.order');
 });
 
 

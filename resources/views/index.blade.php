@@ -81,7 +81,7 @@
                             <form action="{{route('cart.store',$product)}}" method="post" class="">
                                 @csrf
 
-                                <button type="submit" name="addToCart" class="btn btn-block btn-warning btn-sm" onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
+                                <button type="submit" name="addToCart" class="btn btn-block btn-warning btn-sm submitbtn" >
                                     <small>اضافه کردن</small>
                                 </button>
 

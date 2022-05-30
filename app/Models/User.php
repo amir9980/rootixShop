@@ -17,6 +17,10 @@ class user extends Authenticatable
         return $this->belongsToMany(product::class, 'carts', 'user_id', 'product_id');
     }
 
+    public function profile(){
+        return $this->hasOne(Profile::class,'user_id');
+    }
+
     public function cart()
     {
         return $this->hasMany(cart::class, 'user_id');
@@ -30,4 +34,6 @@ class user extends Authenticatable
     public function reports(){
         return $this->morphMany(PaymentReport::class,'reportable');
     }
+
+
 }

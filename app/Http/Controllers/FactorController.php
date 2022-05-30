@@ -14,6 +14,15 @@ class FactorController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'firstName'=>'required|string|max:255',
+            'lastName'=>'required|string|max:255',
+            'address'=>'required|string',
+            'state'=>'required|string|max:255',
+            'city'=>'required|string|max:255',
+            'paymentMethod'=>'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht'
+        ]);
+
         if (count($request->user()->cart) < 1){
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
@@ -32,7 +41,13 @@ class FactorController extends Controller
 
             $factor = factorMaster::create([
                 'user_id' => $request->user()->id,
-                'total_price'=>$total
+                'user_first_name'=>$request->firstName,
+                'user_last_name'=>$request->lastName,
+                'state'=>$request->state,
+                'city'=>$request->city,
+                'address'=>$request->address,
+                'total_price'=>$total,
+                'payment_method'=>$request->paymentMethod,
             ]);
 
             foreach ($request->user()->cart as $cartItem) {
@@ -47,8 +62,8 @@ class FactorController extends Controller
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
-
             DB::commit();
+
             return redirect()->route('factor.index')->with('message', 'سبد با موفقیت ثبت شد!');
 
 
@@ -123,6 +138,69 @@ class FactorController extends Controller
 
 
         return view('factors.details', ['products' => $details, 'iteration' => '0','carts'=>$request->user()->carts]);
+
+    }
+
+    public function confirmDetails(Request $request){
+
+        if (count($request->user()->cart) < 1){
+            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
+        }
+
+        $total = 0;
+        foreach ($request->user()->cart as $item){
+            $total+=$item->product->price*$item->count;
+        }
+        return view('factors.confirmDetails',['cart'=>$request->user()->cart,'total'=>$total]);
+    }
+
+    public function orderDetails(Request $request){
+
+        if (count($request->user()->cart) < 1){
+            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
+        }
+
+        $request->validate([
+            'counter[][id]'=>'numeric',
+            'counter[][count]'=>'numeric',
+        ]);
+
+        try{
+            $changes = [];
+            $deletes = [];
+            $carts = $request->user()->cart;
+
+            foreach($carts as $item){
+                $flag = false;
+                foreach ($request->counter as $counter){
+                    if ($item->id == $counter['id']){
+                        $changes[] = ['id'=>$item->id,
+                            'count'=>$counter['count'],
+                            'user_id'=>$item->user_id,
+                            'product_id'=>$item->product_id,
+                            ];
+                        $flag = true;
+                    }
+                }
+                if ($flag==false){
+                    array_push($deletes,$item->id);
+                }
+            }
+
+            cart::destroy($deletes);
+            cart::query()->upsert($changes,['id','user_id','product_id'],['count']);
+            $request->user()->load('cart');
+            $carts = $request->user()->cart;
+
+        }catch (Exception $e){
+            return redirect()->back()->withErrors($e);
+        }
+
+        $total = 0;
+        foreach ($carts as $item){
+            $total+=$item->product->price*$item->count;
+        }
+        return view('factors.orderDetails',['cart'=>$carts,'total'=>$total]);
 
     }
 

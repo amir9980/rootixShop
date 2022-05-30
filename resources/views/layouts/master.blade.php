@@ -173,7 +173,28 @@
 
 <script type="text/javascript">
 
+    $("#confirmDetailsForm .increaseButton").click(function () {
+        var val = parseInt(fixNumbers($(this).siblings("span").text()));
+        $(this).siblings("span").text(val+1);
+        $(this).siblings(".productCount").val(val+1);
+    });
 
+    $("#confirmDetailsForm .decreaseButton").click(function () {
+        var val = parseInt(fixNumbers($(this).siblings("span").text()));
+        if (val > 1){
+            $(this).siblings("span").text(val-1);
+            $(this).siblings(".productCount").val(val-1);
+
+        }else if(val <= 1){
+            $(this).closest("tr").remove();
+        }
+    });
+
+    $(".submitbtn").click(function (){
+        this.disabled=true;
+        this.innerHTML='<small>...</small>';
+        this.form.submit();
+    });
 
 
 
@@ -202,6 +223,22 @@
         });
 
     });
+
+        var
+        persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+        arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+
+        fixNumbers = function (str)
+        {
+            if(typeof str === 'string')
+            {
+                for(var i=0; i<10; i++)
+                {
+                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                }
+            }
+            return str;
+        };
 
 </script>
 

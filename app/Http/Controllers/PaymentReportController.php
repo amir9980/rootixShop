@@ -23,17 +23,14 @@ class PaymentReportController extends Controller
         DB::beginTransaction();
         try {
 
-            $log = 'کاربر ';
-            $log .= $user->username . '';
-            $log .= 'با آیدی ';
-            $log .= $user->id . '';
-            $log .= 'در تاریخ ';
-            $log .= now() . '';
-            $log .= 'محصولات فاکتور ';
-            $log .= $factor->id . '';
-            $log .= 'را خریداری کرد و مبلغ ';
-            $log .= $factor->total_price . '';
-            $log .= 'تومان از کیف پول ایشان کاهش یافت.';
+            $log = 'کاربر '.$user->username . "\n";
+            $log .= 'با آیدی '.$user->id ."\n";
+            $log .= 'با آدرس '.$factor->state.''.$factor->city.''.$factor->address."\n";
+            $log .= 'به نام '.$factor->user_first_name.''.$factor->user_last_name."\n";
+            $log .= 'از طریق درگاه '.$factor->payment_method."\n";
+            $log .= 'در تاریخ '.now() ."\n";
+            $log .= 'محصولات فاکتور '.$factor->id ."\n";
+            $log .= 'را خریداری کرد و مبلغ '.$factor->total_price.'تومان از کیف پول ایشان کاهش یافت.';
 
 
             $user->wallet -= $factor->total_price;

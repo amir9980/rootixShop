@@ -9,7 +9,7 @@ class factorMaster extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','is_paid','total_price','shop'];
+    protected $fillable = ['user_id','user_first_name','user_last_name','payment_method','state','city','address','is_paid','total_price','',];
 
     public function user(){
         return $this->belongsTo(user::class,'user_id','id');

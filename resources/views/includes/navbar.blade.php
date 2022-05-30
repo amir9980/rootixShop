@@ -50,17 +50,20 @@
                         <span class="dropdown-item dropdown-header">{{count($cart)}} محصول در سبد شما وجود دارد</span>
                         @foreach($cart as $item)
                             <div class="dropdown-divider"></div>
-                            <a href="{{route('product.show',$item->product)}}" class="dropdown-item">
-                                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                                {{$item->product->title}}
-                                <span class="float-left text-muted text-sm">{{$item->count}} عدد</span>
-                            </a>
+                            <div class="dropdown-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <img class="rounded-circle" src="{{route('images.product',$item->product->img_src)}}" alt="productImage" width="50px" height="50px">
+                                <span>{{$item->product->title}}</span>
+                                </div>
+                                <div class="d-flex text-muted text-sm align-items-center">
+                                    <span>{{number_format($item->product->price)}}&nbsp;تومان</span>
+                                </div>
+                            </div>
                         @endforeach
 
                         <div class="dropdown-item dropdown-footer">
-                            <form action="{{route('factor.store')}}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-warning">ثبت و ادامه</button>
+                            <form action="{{route('factor.confirm')}}" >
+                                <button type="submit" class="btn btn-block btn-warning">خرید</button>
                             </form>
                         </div>
 
