@@ -176,6 +176,10 @@ class FactorController extends Controller
         if (count($request->user()->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
+        if (!isset($request->counter)){
+            cart::destroy($request->user()->cart);
+            return redirect()->route('home')->with('message','سبد خرید با موفقیت حذف شد!');
+        }
 
         $request->validate([
             'counter[][id]' => 'numeric',
@@ -186,6 +190,7 @@ class FactorController extends Controller
             $changes = [];
             $deletes = [];
             $carts = $request->user()->cart;
+
 
             foreach ($carts as $item) {
                 $flag = false;
