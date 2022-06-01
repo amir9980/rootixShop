@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
+use App\Models\DiscountToken;
 use App\Models\factorMaster;
 use App\Models\factorDetail;
 use Illuminate\Http\Request;
@@ -15,15 +16,16 @@ class FactorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstName'=>'required|string|max:255',
-            'lastName'=>'required|string|max:255',
-            'address'=>'required|string',
-            'state'=>'required|string|max:255',
-            'city'=>'required|string|max:255',
-            'paymentMethod'=>'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht'
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'address' => 'required|string',
+            'state' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'paymentMethod' => 'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht',
+            'discount_token' => 'nullable|string|max:20'
         ]);
 
-        if (count($request->user()->cart) < 1){
+        if (count($request->user()->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
 
@@ -39,15 +41,31 @@ class FactorController extends Controller
                 $total += $cartItem->product->price * $cartItem->count;
             }
 
+
+            if ($request->has('discount_token')) {
+                $discount = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
+
+                if ($discount->access == 'public' || $discount->user_id == $request->user()->id) {
+                    if ($discount->start_date < now() && $discount->expire_date > now()) {
+                        $total = $total / 100 * $discount->percentage;
+                    } else {
+                        return redirect()->back()->withInput()->withErrors(['کد تخفیف منقضی شده یا هنوز فعال نشده است!']);
+
+                    }
+                } else {
+                    return redirect()->back()->withInput()->withErrors(['کد تخفیف نامعتبر میباشد!']);
+                }
+            }
+
             $factor = factorMaster::create([
                 'user_id' => $request->user()->id,
-                'user_first_name'=>$request->firstName,
-                'user_last_name'=>$request->lastName,
-                'state'=>$request->state,
-                'city'=>$request->city,
-                'address'=>$request->address,
-                'total_price'=>$total,
-                'payment_method'=>$request->paymentMethod,
+                'user_first_name' => $request->firstName,
+                'user_last_name' => $request->lastName,
+                'state' => $request->state,
+                'city' => $request->city,
+                'address' => $request->address,
+                'total_price' => $total,
+                'payment_method' => $request->paymentMethod,
             ]);
 
             foreach ($request->user()->cart as $cartItem) {
@@ -87,25 +105,22 @@ class FactorController extends Controller
         }
 
 
-
-
         //        value is in number format like 10,000 so:
-        $request['from_price'] = str_replace(',','',$request->from_price);
-        $request['to_price'] = str_replace(',','',$request->to_price);
+        $request['from_price'] = str_replace(',', '', $request->from_price);
+        $request['to_price'] = str_replace(',', '', $request->to_price);
 
         //validation
         $request->validate([
-            'from_price'=>'nullable|numeric',
-            'to_price'=>'nullable|numeric',
+            'from_price' => 'nullable|numeric',
+            'to_price' => 'nullable|numeric',
         ]);
 
 
         //      Search:
         if ($request->has('status') && !empty($request->status)) {
-            if ($request->status=='paid'){
+            if ($request->status == 'paid') {
                 $factors = $factors->where('is_paid', '=', 1);
-            }
-            elseif ($request->status=='not_paid'){
+            } elseif ($request->status == 'not_paid') {
                 $factors = $factors->where('is_paid', '=', 0);
             }
         }
@@ -129,85 +144,88 @@ class FactorController extends Controller
         $iteration = ($factors->currentPage() - 1) * $factors->perPage();
 
 
-        return view('factors.index', ['factors' => $factors, 'iteration' => $iteration,'cart'=>$request->user()->cart]);
+        return view('factors.index', ['factors' => $factors, 'iteration' => $iteration]);
     }
 
-    public function show(Request $request,factorMaster $factor)
+    public function show(Request $request, factorMaster $factor)
     {
         $details = $factor->details;
 
 
-        return view('factors.details', ['products' => $details, 'iteration' => '0','carts'=>$request->user()->carts]);
+        return view('factors.details', ['products' => $details, 'iteration' => '0']);
 
     }
 
-    public function confirmDetailsForm(Request $request){
+    public function confirmDetailsForm(Request $request)
+    {
 
-        if (count($request->user()->cart) < 1){
+        if (count($request->user()->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
 
         $total = 0;
-        foreach ($request->user()->cart as $item){
-            $total+=$item->product->price*$item->count;
+        foreach ($request->user()->cart as $item) {
+            $total += $item->product->price * $item->count;
         }
-        return view('factors.confirmDetails',['cart'=>$request->user()->cart,'total'=>$total]);
+        return view('factors.confirmDetails', ['cart' => $request->user()->cart, 'total' => $total]);
     }
 
-    public function confirmDetails(Request $request){
+    public function confirmDetails(Request $request)
+    {
 
-        if (count($request->user()->cart) < 1){
+        if (count($request->user()->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
 
         $request->validate([
-            'counter[][id]'=>'numeric',
-            'counter[][count]'=>'numeric',
+            'counter[][id]' => 'numeric',
+            'counter[][count]' => 'numeric',
         ]);
 
-        try{
+        try {
             $changes = [];
             $deletes = [];
             $carts = $request->user()->cart;
 
-            foreach($carts as $item){
+            foreach ($carts as $item) {
                 $flag = false;
-                foreach ($request->counter as $counter){
-                    if ($item->id == $counter['id']){
-                        $changes[] = ['id'=>$item->id,
-                            'count'=>$counter['count'],
-                            'user_id'=>$item->user_id,
-                            'product_id'=>$item->product_id,
-                            ];
+                foreach ($request->counter as $counter) {
+                    if ($item->id == $counter['id']) {
+                        $changes[] = ['id' => $item->id,
+                            'count' => $counter['count'],
+                            'user_id' => $item->user_id,
+                            'product_id' => $item->product_id,
+                        ];
                         $flag = true;
                     }
                 }
-                if ($flag==false){
-                    array_push($deletes,$item->id);
+                if ($flag == false) {
+                    array_push($deletes, $item->id);
                 }
             }
 
             cart::destroy($deletes);
-            cart::query()->upsert($changes,['id','user_id','product_id'],['count']);
+            cart::query()->upsert($changes, ['id', 'user_id', 'product_id'], ['count']);
 
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return redirect()->back()->withErrors($e);
         }
 
         return redirect()->route('factor.order');
     }
 
-    public function orderDetails(Request $request){
+    public function orderDetails(Request $request)
+    {
         $carts = $request->user()->cart;
-        if (count($carts) < 1){
+        if (count($carts) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
 
         $total = 0;
-        foreach ($carts as $item){
-            $total+=$item->product->price*$item->count;
+        foreach ($carts as $item) {
+            $total += $item->product->price * $item->count;
         }
-        return view('factors.orderDetails',['cart'=>$carts,'total'=>$total]);
+        return view('factors.orderDetails', ['total' => $total, 'cart' => $carts]);
     }
 
 

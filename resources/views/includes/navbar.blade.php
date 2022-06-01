@@ -38,17 +38,17 @@
         </li>
 
 
-        @if(isset($cart) && !empty($cart))
+
             <!-- Cart Dropdown Menu -->
 
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        <span class="badge badge-warning navbar-badge">{{count($cart)}}</span>
+                        <span class="badge badge-warning navbar-badge">{{count(\Illuminate\Support\Facades\Auth::user()->cart)}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
-                        <span class="dropdown-item dropdown-header">{{count($cart)}} محصول در سبد شما وجود دارد</span>
-                        @foreach($cart as $item)
+                        <span class="dropdown-item dropdown-header">{{count(\Illuminate\Support\Facades\Auth::user()->cart)}} محصول در سبد شما وجود دارد</span>
+                        @foreach(\Illuminate\Support\Facades\Auth::user()->cart as $item)
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item d-flex justify-content-between align-items-center">
                                 <div>
@@ -68,7 +68,6 @@
 
                     </div>
 
-                    @endif
 
                 </li>
 

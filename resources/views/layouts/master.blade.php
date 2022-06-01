@@ -173,6 +173,16 @@
 
 <script type="text/javascript">
 
+    $("#accessSelectBox").on('change',function () {
+        if($(this).val()=='public'){
+                    $("#userIdInput").prop('disabled',true);
+                }
+        else {
+            $("#userIdInput").prop('disabled',false);
+        }
+    });
+
+
     $("#confirmDetailsForm .increaseButton").click(function () {
         var val = parseInt(fixNumbers($(this).siblings("span").text()));
         $(this).siblings("span").text(val+1);

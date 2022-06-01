@@ -10,20 +10,21 @@
     <div class="container">
 
         <div class="row">
+
             <div class="col-md-8">
                 <h4>آدرس شما</h4>
-                <form action="{{route('factor.store')}}" method="post" class="needs-validation" >
+                <form action="{{route('factor.store')}}" method="post" class="needs-validation">
                     @csrf
                     <div class="row form-group">
                         <div class="col-md-6">
                             <label for="firstName">نام</label>
-                            <input type="text" class="form-control" name="firstName"/>
+                            <input type="text" class="form-control" name="firstName" value="{{old('firstName')}}"/>
                             <div class="invalid-feedback">نام را وارد کنید</div>
                             <div class="valid-feedback">نام وارد شد</div>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">نام خانوادگی</label>
-                            <input type="text" class="form-control" name="lastName"/>
+                            <input type="text" class="form-control" name="lastName" value="{{old('lastName')}}"/>
                             <div class="invalid-feedback">نام خانوادگی را وارد کنید</div>
                             <div class="valid-feedback">نام خانوادگی وارد شد</div>
                         </div>
@@ -36,7 +37,7 @@
                                 type="text"
                                 name="address"
                                 placeholder="مازندران, بابل"
-                                required
+                                value="{{old('address')}}"
                         />
                         <div class="invalid-feedback">آدرس را وارد کنید</div>
                         <div class="valid-feedback">آدرس وارد شد</div>
@@ -49,7 +50,7 @@
                                     name="state"
                                     class="form-control"
                                     placeholder="اصفهان"
-                                    required
+                                    value="{{old('state')}}"
                             />
                             <div class="invalid-feedback">استان را وارد کنید</div>
                             <div class="valid-feedback">استان وارد شد</div>
@@ -61,7 +62,7 @@
                                     name="city"
                                     class="form-control"
                                     placeholder="اصفهان"
-                                    required
+                                    value="{{old('city')}}"
                             />
                             <div class="invalid-feedback">شهر را وارد کنید</div>
                             <div class="valid-feedback">شهر وارد شد</div>
@@ -114,7 +115,11 @@
                         />
                         <label for="paymentMethod" class="form-check-label">پرداخت نقدی</label>
                     </div>
+
                     <hr class="mb-4"/>
+                        <input type="text" name="discount_token" class="form-control" placeholder="کد تخفیف"/>
+                    <hr class="mb-4"/>
+
                     <button class="btn btn-lg btn-block btn-primary" type="submit">
                         ادامه و ثبت خرید
                     </button>
@@ -129,8 +134,7 @@
                 <ul class="list-group mb-3">
                     @foreach($cart as $item)
                         <li
-                                class="list-group-item d-flex justify-content-between align-items-center"
-                        >
+                                class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <h6>{{$item->product->title}}</h6>
                                 <small>{{$item->count}}&nbsp;عدد</small>
@@ -154,14 +158,7 @@
                         <span class="text-muted">{{number_format((float)$total)}}</span>
                     </li>
                 </ul>
-                {{--<form action="" class="card p-2">--}}
-                    {{--<div class="input-group">--}}
-                        {{--<input type="text" class="form-control" placeholder="کد تخفیف"/>--}}
-                        {{--<div class="input-group-append">--}}
-                            {{--<button type="submit" class="btn btn-secondary">اعمال</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</form>--}}
+
             </div>
         </div>
 

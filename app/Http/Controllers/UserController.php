@@ -57,8 +57,7 @@ class UserController extends Controller
         $users = $users->paginate(15)->withQueryString();;
 
         $iteration = ($users->currentPage() - 1) * $users->perPage();
-        $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.users.index', ['users' => $users, 'cart' => $cart, 'iteration' => $iteration]);
+        return view('admin.users.index', ['users' => $users, 'iteration' => $iteration]);
     }
 
     public function edit(Request $request,user $user){
@@ -131,7 +130,7 @@ class UserController extends Controller
     public function showProfile(Request $request){
 
 
-        return view('users.profile',['cart'=>$request->user()->cart]);
+        return view('users.profile');
     }
 
     public function storeProfile(Request $request){
@@ -162,7 +161,7 @@ class UserController extends Controller
     }
 
     public function charge(Request $request){
-        return view('users.charge',['cart'=>$request->user()->cart]);
+        return view('users.charge');
     }
 
 }
