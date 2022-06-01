@@ -6,6 +6,52 @@
 @section('content')
 
     <div class="container">
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">فیلتر</h4>
+            </div>
+            <div class="card-body">
+                <form action="#" method="get">
+
+                    <div class="row">
+                        <label>درصد تخفیف:</label>
+                        <div class="col-md-2">
+
+                                <input type="number" class="form-control" name="percentage" value="{{request()->query('percentage')}}">
+
+                        </div>
+                        <label>تاریخ:</label>
+                        <div class="col-md-2">
+                            <div class="input-group">
+
+                                <input type="text" class="jalaliDatePicker form-control" placeholder="شروع"
+                                       title="از" name="start_date"
+                                       value="{{request()->query('start_date')}}">
+                                <input type="text" class="jalaliDatePicker form-control" placeholder="انقضا"
+                                       title="از" name="expire_date"
+                                       value="{{request()->query('expire_date')}}">
+                            </div>
+                        </div>
+                        <label for="access">دسترسی:</label>
+                        <div class="col-md-2">
+                            <select class="form-control" name="access">
+                                <option value="">انتخاب کنید</option>
+                                <option value="public" @if(request()->query('access')=='public') selected @endif>عمومی</option>
+                                <option value="private" @if(request()->query('access')=='private') selected @endif>خصوصی</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn-primary btn" type="submit">فیلتر</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
         <table class="table table-bordered table-striped text-center">
 
             <tr>

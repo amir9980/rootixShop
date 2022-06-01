@@ -13,9 +13,33 @@ class DiscountTokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tokens = DiscountToken::orderBy('id', 'DESC')->paginate(15);
+        $request->validate([
+            'access'=>'nullable|string|in:public,private',
+            'percentage'=>'nullable|numeric'
+        ]);
+
+        $tokens = DiscountToken::query();
+
+        if ($request->has('access') && !empty($request->access)){
+            $tokens->where('access','=',$request->access);
+        }
+
+        if ($request->has('percentage') && !empty($request->percentage)){
+            $tokens->where('percentage','=',$request->percentage);
+        }
+
+        if ($request->has('start_date') && !empty($request->start_date)){
+            $tokens->where('start_date','>',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->start_date) . ' 00:00:00'));
+        }
+
+        if ($request->has('expire_date') && !empty($request->expire_date)){
+            $tokens->where('expire_date','<',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 00:00:00'));
+        }
+
+
+        $tokens = $tokens->orderBy('id', 'DESC')->paginate(15);
         $iteration = ($tokens->currentPage() - 1) * $tokens->perPage();
         return view('admin.discountTokens.index', ['iteration' => $iteration, 'tokens' => $tokens]);
     }
