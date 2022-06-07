@@ -29,8 +29,8 @@
                     <input class="form-control" type="number" name="percentage" placeholder="%">
                 </div>
                 <div class="form-group col-md-6">
-                    <label >تعداد</label>
-                    <input class="form-control" type="number" name="count">
+                    <label >تعداد مجاز استفاده</label>
+                    <input class="form-control" type="number" name="usage_count">
                 </div>
             </div>
 
@@ -48,6 +48,11 @@
                     >
                 </div>
             </div>
+                <div class="form-group">
+                    <label >تعداد</label>
+                    <input class="form-control" type="number" name="count">
+                </div>
+
             <hr class="my-3">
             <button class="btn btn-block btn-primary" type="submit">ساخت</button>
         </form>

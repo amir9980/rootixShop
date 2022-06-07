@@ -81,7 +81,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid">
+                            <table id="example2" class="text-center table table-bordered table-striped table-hover dataTable" role="grid">
 
                                 <thead>
                                 <tr role="row">
@@ -114,7 +114,10 @@
                                             <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
                                             <td class="sorting_1">{{$factor->user->username}}</td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($factor->created_at)->format('%A, %d %B %y')}}</td>
-                                            <td>{{\Illuminate\Support\Str::of($factor->total_price)->reverse()->substrReplace(',',3,0)->reverse()}}&nbsp;تومان</td>
+                                            <td class="d-flex flex-column">
+                                                <span>{{number_format($factor->total_price)}}&nbsp;تومان</span>
+
+                                                @if(isset($factor->discountToken))<span class="badge badge-success">با احتساب {{$factor->discountToken->percentage}}&nbsp;درصد تخفیف</span>@endif
                                             <td>
                                                 @if($factor->is_paid == 1)
                                                     <span class="badge badge-success">پرداخت شده</span>

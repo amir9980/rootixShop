@@ -17,6 +17,7 @@ class DiscountTokenFactory extends Factory
         return [
             'token'=>Str::random(10),
             'access'=>'public',
+            'usage_count'=>1,
             'percentage'=>random_int(5,50),
             'start_date'=>now(),
             'expire_date'=>now()->addDays(1),

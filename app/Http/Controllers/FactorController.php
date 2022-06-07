@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\cart;
+use App\Models\Discount;
 use App\Models\DiscountToken;
 use App\Models\factorMaster;
 use App\Models\factorDetail;
@@ -41,13 +42,27 @@ class FactorController extends Controller
                 $total += $cartItem->product->price * $cartItem->count;
             }
 
-
+//check discount token
             if ($request->has('discount_token')) {
-                $discount = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
+                $token = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
+                if ($token->access == 'public' || $token->user_id == $request->user()->id) {
+                    if ($token->start_date < now() && $token->expire_date > now()) {
+                        $discount = Discount::query()->where('user_id','=',$request->user()->id)->where('token_id','=',$token->id)->first();
+                        if (isset($discount) && $discount->count < $token->usage_count){
+                            $discount->count++;
+                            $discount->save();
+                        }else if(is_null($discount)){
+                            Discount::create([
+                                'user_id'=>$request->user()->id,
+                                'token_id'=>$token->id
+                            ]);
+                        }else{
+                            return redirect()->back()->withInput()->withErrors(['کد تخفیف استفاده شده است!']);
+                        }
 
-                if ($discount->access == 'public' || $discount->user_id == $request->user()->id) {
-                    if ($discount->start_date < now() && $discount->expire_date > now()) {
-                        $total = $total / 100 * $discount->percentage;
+                        $total -= $total / 100 * $token->percentage;
+
+
                     } else {
                         return redirect()->back()->withInput()->withErrors(['کد تخفیف منقضی شده یا هنوز فعال نشده است!']);
 
@@ -59,6 +74,7 @@ class FactorController extends Controller
 
             $factor = factorMaster::create([
                 'user_id' => $request->user()->id,
+                'discount_token_id'=>$token->id,
                 'user_first_name' => $request->firstName,
                 'user_last_name' => $request->lastName,
                 'state' => $request->state,
@@ -140,7 +156,7 @@ class FactorController extends Controller
             $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
         }
 
-        $factors = $factors->paginate(15);
+        $factors = $factors->orderBy('id','DESC')->paginate(15);
         $iteration = ($factors->currentPage() - 1) * $factors->perPage();
 
 

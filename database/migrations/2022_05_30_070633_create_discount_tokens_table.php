@@ -17,6 +17,7 @@ class CreateDiscountTokensTable extends Migration
             $table->id();
             $table->string('access',10)->comment("Public or Private.");
             $table->string('token',255);
+            $table->unsignedInteger('usage_count')->comment('How many times a user can use this token.');
             $table->integer('user_id')->nullable()->comment('this is null if access is public');
             $table->tinyInteger('percentage');
             $table->dateTime('start_date');

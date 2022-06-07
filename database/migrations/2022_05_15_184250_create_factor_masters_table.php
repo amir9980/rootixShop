@@ -16,6 +16,8 @@ class CreateFactorMastersTable extends Migration
         Schema::create('factor_masters', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->comment('User who ordered this factor.');
+            $table->integer('discount_token_id')->nullable();
+            $table->foreign('discount_token_id')->references('id')->on('discount_tokens');
             $table->string('user_first_name',255);
             $table->string('user_last_name',255);
             $table->boolean('is_paid')->default(false)->comment('Checks if this order has paid or not.');

@@ -67,6 +67,7 @@ class DiscountTokenController extends Controller
             'user_id' => 'nullable|numeric',
             'percentage' => 'required|numeric|max:100',
             'count' => 'required|numeric',
+            'usage_count' => 'required|numeric',
         ]);
 
         try {
@@ -77,9 +78,10 @@ class DiscountTokenController extends Controller
                     'user_id' => $request->user_id,
                     'access' => $request->access,
                     'percentage' => $request->percentage,
+                    'usage_count'=>$request->usage_count,
                     'token' => Str::random(10),
                     'start_date' =>  \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->start_date) . ' 00:00:00'),
-                    'expire_date' => \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 00:00:00'),
+                    'expire_date' => \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 23:59:59'),
                 ];
             }
 
