@@ -43,38 +43,42 @@ class FactorController extends Controller
             }
 
 //check discount token
-            if ($request->has('discount_token')) {
+            if (!empty($request->discount_token)) {
                 $token = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
-                if ($token->access == 'public' || $token->user_id == $request->user()->id) {
-                    if ($token->start_date < now() && $token->expire_date > now()) {
-                        $discount = Discount::query()->where('user_id','=',$request->user()->id)->where('token_id','=',$token->id)->first();
-                        if (isset($discount) && $discount->count < $token->usage_count){
-                            $discount->count++;
-                            $discount->save();
-                        }else if(is_null($discount)){
-                            Discount::create([
-                                'user_id'=>$request->user()->id,
-                                'token_id'=>$token->id
-                            ]);
-                        }else{
-                            return redirect()->back()->withInput()->withErrors(['کد تخفیف استفاده شده است!']);
+                if (isset($token)){
+                    if ($token->access == 'public' || $token->user_id == $request->user()->id) {
+                        if ($token->start_date < now() && $token->expire_date > now()) {
+                            $discount = Discount::query()->where('user_id','=',$request->user()->id)->where('token_id','=',$token->id)->first();
+                            if (isset($discount) && $discount->count < $token->usage_count){
+                                $discount->count++;
+                                $discount->save();
+                            }else if(is_null($discount)){
+                                Discount::create([
+                                    'user_id'=>$request->user()->id,
+                                    'token_id'=>$token->id
+                                ]);
+                            }else{
+                                return redirect()->back()->withInput()->withErrors(['کد تخفیف استفاده شده است!']);
+                            }
+
+                            $total -= $total / 100 * $token->percentage;
+
+
+                        } else {
+                            return redirect()->back()->withInput()->withErrors(['کد تخفیف منقضی شده یا هنوز فعال نشده است!']);
+
                         }
-
-                        $total -= $total / 100 * $token->percentage;
-
-
                     } else {
-                        return redirect()->back()->withInput()->withErrors(['کد تخفیف منقضی شده یا هنوز فعال نشده است!']);
-
+                        return redirect()->back()->withInput()->withErrors(['کد تخفیف نامعتبر میباشد!']);
                     }
-                } else {
+
+                }else {
                     return redirect()->back()->withInput()->withErrors(['کد تخفیف نامعتبر میباشد!']);
                 }
             }
 
             $factor = factorMaster::create([
                 'user_id' => $request->user()->id,
-                'discount_token_id'=>$token->id,
                 'user_first_name' => $request->firstName,
                 'user_last_name' => $request->lastName,
                 'state' => $request->state,
@@ -83,6 +87,9 @@ class FactorController extends Controller
                 'total_price' => $total,
                 'payment_method' => $request->paymentMethod,
             ]);
+            if (isset($token)){
+                $factor->discount_token_id = $token->id;
+            }
 
             foreach ($request->user()->cart as $cartItem) {
                 $details[] = [
