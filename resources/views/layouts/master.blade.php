@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="info">
-                            <a href="{{route('users.profile')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
+                            <a href="{{route('profile.show')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
                         </div>
 
                     </div>

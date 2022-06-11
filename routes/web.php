@@ -10,6 +10,7 @@ use App\Http\Controllers\WalletPaymentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
 use App\Http\Controllers\DiscountTokenController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
@@ -60,6 +61,7 @@ Route::get('product/{product}', [ProductController::class, 'show'])->name('produ
 Route::prefix('cart')->middleware('auth')->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
     Route::delete('{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::get('/', [CartController::class, 'show'])->name('cart.show');
 });
 
 
@@ -67,22 +69,19 @@ Route::prefix('factor')->middleware('auth')->group(function (){
     Route::post('store', [FactorController::class, 'store'])->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
-    Route::get('confirmDetails/', [FactorController::class, 'confirmDetailsForm'])->name('factor.details');
     Route::post('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm.details');
     Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->name('factor.order');
 });
 
+Route::prefix('profile')->middleware('auth')->group(function (){
+    Route::get('/',[ProfileController::class,'show'])->name('profile.show');
+    Route::put('/update',[ProfileController::class,'update'])->name('profile.update');
+});
 
 Route::prefix('user')->group(function (){
-    Route::get('profile',[UserController::class,'showProfile'])->name('users.profile')->middleware('auth');
-    Route::post('profile/store',[UserController::class,'storeProfile'])->name('users.profile.store')->middleware('auth');
     Route::get('charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
 });
 
 
 Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
 
-
-
-
-Route::post('/paymentReport/{factor}/store',[PaymentReportController::class,'buyCart'])->middleware('auth')->name('paymentReport.buy');

@@ -26,35 +26,36 @@ class FactorController extends Controller
             'discount_token' => 'nullable|string|max:20'
         ]);
 
-        if (count($request->user()->cart) < 1) {
+        $user = $request->user();
+
+
+        if (count($user->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
+
+        $total = null;
+        foreach ($user->cart as $cartItem) {
+            $total += $cartItem->product->price * $cartItem->count;
+        }
+
 
         DB::beginTransaction();
 
         try {
 
-            $details = [];
-            $total = null;
-
-
-            foreach ($request->user()->cart as $cartItem) {
-                $total += $cartItem->product->price * $cartItem->count;
-            }
-
-//check discount token
+            //check discount token
             if (!empty($request->discount_token)) {
                 $token = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
                 if (isset($token)){
-                    if ($token->access == 'public' || $token->user_id == $request->user()->id) {
+                    if ($token->access == 'public' || $token->user_id == $user->id) {
                         if ($token->start_date < now() && $token->expire_date > now()) {
-                            $discount = Discount::query()->where('user_id','=',$request->user()->id)->where('token_id','=',$token->id)->first();
+                            $discount = Discount::query()->where('user_id','=',$user->id)->where('token_id','=',$token->id)->first();
                             if (isset($discount) && $discount->count < $token->usage_count){
                                 $discount->count++;
                                 $discount->save();
                             }else if(is_null($discount)){
                                 Discount::create([
-                                    'user_id'=>$request->user()->id,
+                                    'user_id'=>$user->id,
                                     'token_id'=>$token->id
                                 ]);
                             }else{
@@ -77,8 +78,15 @@ class FactorController extends Controller
                 }
             }
 
+            if ($total > $user->wallet) {
+                return redirect()->route('users.charge')->withErrors(['شما مبلغ کافی در کیف پول خود ندارید!']);
+            }
+
+            $details = [];
+
+
             $factor = factorMaster::create([
-                'user_id' => $request->user()->id,
+                'user_id' => $user->id,
                 'user_first_name' => $request->firstName,
                 'user_last_name' => $request->lastName,
                 'state' => $request->state,
@@ -91,7 +99,7 @@ class FactorController extends Controller
                 $factor->discount_token_id = $token->id;
             }
 
-            foreach ($request->user()->cart as $cartItem) {
+            foreach ($user->cart as $cartItem) {
                 $details[] = [
                     'master_id' => $factor->id,
                     'product_id' => $cartItem->product->id,
@@ -99,13 +107,56 @@ class FactorController extends Controller
                 ];
             }
 
-            $factor->save();
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
+//            $log = 'کاربر '.$user->username . "\n";
+//            $log .= 'با آیدی '.$user->id ."\n";
+//            $log .= 'با آدرس '.$factor->state.''.$factor->city.''.$factor->address."\n";
+//            $log .= 'به نام '.$factor->user_first_name.''.$factor->user_last_name."\n";
+//            $log .= 'از طریق درگاه '.$factor->payment_method."\n";
+//            $log .= 'در تاریخ '.now() ."\n";
+//            $log .= 'محصولات فاکتور '.$factor->id ."\n";
+//            $log .= 'را خریداری کرد و مبلغ '.$factor->total_price.'تومان از کیف پول ایشان کاهش یافت.';
+            $log = __('logs.factor_report',['userId'=>$user->id,
+                'userName'=>$user->username,
+                'state'=>$factor->state,
+                'city'=>$factor->city,
+                'address'=>$factor->address,
+                'firstName'=>$factor->user_first_name,
+                'lastName'=>$factor->user_last_name,
+                'paymentMethod'=>$factor->payment_method,
+                'date'=>now(),
+                'factorId'=>$factor->id,
+                'price'=>$factor->total_price]);
+
+
+            $user->wallet -= $factor->total_price;
+            $factor->is_paid = 1;
+
+
+            $user->reports()->create([
+                'status' => 'paid',
+                'type' => 'decrease',
+                'value' => $factor->total_price,
+                'log' => $log,
+            ]);
+
+            $factor->reports()->create([
+                'status' => 'paid',
+                'type' => 'decrease',
+                'value' => $factor->total_price,
+                'log' => $log,
+            ]);
+
+
+            $user->save();
+            $factor->save();
+
+
             DB::commit();
 
-            return redirect()->route('factor.index')->with('message', 'سبد با موفقیت ثبت شد!');
+            return redirect()->route('home')->with('message', 'خرید شما با موفقیت ثبت شد!');
 
 
         } catch (Exception $e) {
@@ -179,19 +230,6 @@ class FactorController extends Controller
 
     }
 
-    public function confirmDetailsForm(Request $request)
-    {
-
-        if (count($request->user()->cart) < 1) {
-            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
-        }
-
-        $total = 0;
-        foreach ($request->user()->cart as $item) {
-            $total += $item->product->price * $item->count;
-        }
-        return view('factors.confirmDetails', ['cart' => $request->user()->cart, 'total' => $total]);
-    }
 
     public function confirmDetails(Request $request)
     {
@@ -245,15 +283,19 @@ class FactorController extends Controller
     public function orderDetails(Request $request)
     {
         $carts = $request->user()->cart;
+        $profile = $request->user()->profile;
         if (count($carts) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
+        }
+        if (!isset($profile)) {
+            return redirect()->route('profile.show')->withErrors(['لطفا پروفایل خود را تکمیل کنید!']);
         }
 
         $total = 0;
         foreach ($carts as $item) {
             $total += $item->product->price * $item->count;
         }
-        return view('factors.orderDetails', ['total' => $total, 'cart' => $carts]);
+        return view('factors.orderDetails', ['total' => $total, 'cart' => $carts,'profile'=>$profile]);
     }
 
 

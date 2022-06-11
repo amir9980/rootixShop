@@ -18,13 +18,13 @@
                     <div class="row form-group">
                         <div class="col-md-6">
                             <label for="firstName">نام</label>
-                            <input type="text" class="form-control" name="firstName" value="{{old('firstName')}}"/>
+                            <input type="text" class="form-control" name="firstName" value="{{$profile->first_name}}"/>
                             <div class="invalid-feedback">نام را وارد کنید</div>
                             <div class="valid-feedback">نام وارد شد</div>
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">نام خانوادگی</label>
-                            <input type="text" class="form-control" name="lastName" value="{{old('lastName')}}"/>
+                            <input type="text" class="form-control" name="lastName" value="{{$profile->last_name}}"/>
                             <div class="invalid-feedback">نام خانوادگی را وارد کنید</div>
                             <div class="valid-feedback">نام خانوادگی وارد شد</div>
                         </div>
@@ -37,7 +37,7 @@
                                 type="text"
                                 name="address"
                                 placeholder="مازندران, بابل"
-                                value="{{old('address')}}"
+                                value="{{$profile->address}}"
                         />
                         <div class="invalid-feedback">آدرس را وارد کنید</div>
                         <div class="valid-feedback">آدرس وارد شد</div>
@@ -50,7 +50,7 @@
                                     name="state"
                                     class="form-control"
                                     placeholder="اصفهان"
-                                    value="{{old('state')}}"
+                                    value="{{$profile->state}}"
                             />
                             <div class="invalid-feedback">استان را وارد کنید</div>
                             <div class="valid-feedback">استان وارد شد</div>
@@ -62,7 +62,7 @@
                                     name="city"
                                     class="form-control"
                                     placeholder="اصفهان"
-                                    value="{{old('city')}}"
+                                    value="{{$profile->city}}"
                             />
                             <div class="invalid-feedback">شهر را وارد کنید</div>
                             <div class="valid-feedback">شهر وارد شد</div>

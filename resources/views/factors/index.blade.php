@@ -129,15 +129,6 @@
                                                 <a href="{{route('factor.show',$factor->id)}}"
                                                    class="btn btn-sm btn-info"><i class="fa fa-list-ul d-block" aria-hidden="true"></i>مشاهده
                                                 </a>
-                                                @if(!$factor->is_paid == 1)
-
-                                                    <form action="{{route('paymentReport.buy',$factor->id)}}" method="post">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-sm btn-warning mr-2"><i class="fa fa-credit-card-alt d-block" aria-hidden="true"></i>
-                                                            پرداخت</button>
-                                                    </form>
-
-                                                    @endif
 
                                             </td>
 

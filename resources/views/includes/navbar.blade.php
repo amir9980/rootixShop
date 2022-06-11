@@ -62,7 +62,7 @@
                         @endforeach
 
                         <div class="dropdown-item dropdown-footer">
-                            <a href="{{route('factor.details')}}" class="btn btn-block btn-warning">خرید</a>
+                            <a href="{{route('cart.show')}}" class="btn btn-block btn-warning">خرید</a>
                         </div>
 
 

@@ -70,9 +70,18 @@ class CartController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+
+        if (count($request->user()->cart) < 1) {
+            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
+        }
+
+        $total = 0;
+        foreach ($request->user()->cart as $item) {
+            $total += $item->product->price * $item->count;
+        }
+        return view('factors.confirmDetails', ['cart' => $request->user()->cart, 'total' => $total]);
     }
 
     /**

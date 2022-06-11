@@ -35,5 +35,4 @@ class user extends Authenticatable
         return $this->morphMany(PaymentReport::class,'reportable');
     }
 
-
 }
