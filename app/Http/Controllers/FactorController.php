@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\cart;
 use App\Models\Discount;
 use App\Models\DiscountToken;
@@ -14,24 +15,9 @@ use Illuminate\Support\Arr;
 
 class FactorController extends Controller
 {
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $request->validate([
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
-            'address' => 'required|string',
-            'state' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'paymentMethod' => 'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht',
-            'discount_token' => 'nullable|string|max:20'
-        ]);
-
         $user = $request->user();
-
-
-        if (count($user->cart) < 1) {
-            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
-        }
 
         $total = null;
         foreach ($user->cart as $cartItem) {
@@ -110,14 +96,6 @@ class FactorController extends Controller
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
-//            $log = 'کاربر '.$user->username . "\n";
-//            $log .= 'با آیدی '.$user->id ."\n";
-//            $log .= 'با آدرس '.$factor->state.''.$factor->city.''.$factor->address."\n";
-//            $log .= 'به نام '.$factor->user_first_name.''.$factor->user_last_name."\n";
-//            $log .= 'از طریق درگاه '.$factor->payment_method."\n";
-//            $log .= 'در تاریخ '.now() ."\n";
-//            $log .= 'محصولات فاکتور '.$factor->id ."\n";
-//            $log .= 'را خریداری کرد و مبلغ '.$factor->total_price.'تومان از کیف پول ایشان کاهش یافت.';
             $log = __('logs.factor_report',['userId'=>$user->id,
                 'userName'=>$user->username,
                 'state'=>$factor->state,
@@ -284,9 +262,7 @@ class FactorController extends Controller
     {
         $carts = $request->user()->cart;
         $profile = $request->user()->profile;
-        if (count($carts) < 1) {
-            return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
-        }
+
         if (!isset($profile)) {
             return redirect()->route('profile.show')->withErrors(['لطفا پروفایل خود را تکمیل کنید!']);
         }

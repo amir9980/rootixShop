@@ -61,16 +61,16 @@ Route::get('product/{product}', [ProductController::class, 'show'])->name('produ
 Route::prefix('cart')->middleware('auth')->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
     Route::delete('{product}', [CartController::class, 'destroy'])->name('cart.destroy');
-    Route::get('/', [CartController::class, 'show'])->name('cart.show');
+    Route::get('/', [CartController::class, 'show'])->middleware('emptyCart')->name('cart.show');
 });
 
 
 Route::prefix('factor')->middleware('auth')->group(function (){
-    Route::post('store', [FactorController::class, 'store'])->name('factor.store');
+    Route::post('store', [FactorController::class, 'store'])->middleware('emptyCart')->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
     Route::post('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm.details');
-    Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->name('factor.order');
+    Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->middleware('emptyCart')->name('factor.order');
 });
 
 Route::prefix('profile')->middleware('auth')->group(function (){
