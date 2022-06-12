@@ -110,27 +110,16 @@ class FactorController extends Controller
 
 
             $user->wallet -= $factor->total_price;
+            $user->save();
+
             $factor->is_paid = 1;
-
-
-            $user->reports()->create([
-                'status' => 'paid',
-                'type' => 'decrease',
-                'value' => $factor->total_price,
-                'log' => $log,
-            ]);
-
             $factor->reports()->create([
                 'status' => 'paid',
                 'type' => 'decrease',
                 'value' => $factor->total_price,
                 'log' => $log,
             ]);
-
-
-            $user->save();
             $factor->save();
-
 
             DB::commit();
 

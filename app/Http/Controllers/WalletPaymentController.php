@@ -36,17 +36,13 @@ class WalletPaymentController extends Controller
 
             $user->wallet += $request->value;
 
-            $log = 'کاربر ';
-            $log .= $user->username . '';
-            $log .= 'با آیدی ';
-            $log .= $user->id . '';
-            $log .= 'در تاریخ ';
-            $log .= now() . '';
-            $log .= 'کیف پول خود را به مبلغ ';
-            $log .= $request->value . '';
-            $log .= 'از طریق درگاه ';
-            $log .= $payment->doorway.'';
-            $log .= 'شارژ کرد.';
+            $log = __('logs.factor_report',[
+                'userId'=>$user->id,
+                'userName'=>$user->username,
+                'date'=>now(),
+                'value'=>$request->value,
+                'doorway'=>$payment->doorway
+            ]);
 
             $payment->reports()->create([
                 'status' => 'paid',
