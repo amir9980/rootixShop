@@ -72,7 +72,7 @@
                 <tr>
                     <td>@php $iteration+=1;echo $iteration; @endphp</td>
                     <td>@if($token->access=='public')عمومی@elseخصوصی @endif</td>
-                    <td>@if($token->user){{$token->user->username}}@endif</td>
+                    <td>@if($token->user){{$token->user->username}}@else همه کاربران @endif</td>
                     <td>{{$token->token}}</td>
                     <td>{{$token->percentage}}</td>
                     <td>{{\Morilog\Jalali\Jalalian::forge($token->start_date)->format('%A, %d %B %y')}}</td>

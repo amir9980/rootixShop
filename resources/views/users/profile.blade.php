@@ -33,6 +33,10 @@
                 <label for="address">آدرس</label>
                 <input type="text" class="form-control" name="address" value="{{old('address')}}">
             </div>
+            <div class="form-group">
+                <label for="address">تصویر پروفایل</label>
+                <input type="file" class="form-control" name="img">
+            </div>
             <button class="btn btn-sm btn-outline-success" type="submit">ویرایش</button>
         </form>
 

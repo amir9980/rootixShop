@@ -20,9 +20,10 @@ class ProfileController extends Controller
             'city'=>'required|string|max:255',
             'address'=>'required|string',
 //            'username'=>'required|string|max:255',
-//            'img'=>'nullable|mimes:jpg,png,jpeg|max:2048'
+            'img'=>'nullable|mimes:jpg,png,jpeg|max:2048'
         ]);
         try{
+            $user = $request->user();
 
             Profile::updateOrCreate([
                 'user_id'=>$request->user()->id
@@ -35,17 +36,15 @@ class ProfileController extends Controller
             ]);
 //            $user = user::find($request->user()->id);
 //            $fileName = $user->profile_pic;
-//            if ($request->has('img') && !empty($request->file('img'))) {
-//
-//                $fileName = $request->file('img')->hashName();
-//                $request->file('img')->storeAs('images/users', $fileName);
-//            }
+            if ($request->has('img') && !empty($request->file('img'))) {
+
+                $fileName = $request->file('img')->hashName();
+                $request->file('img')->storeAs('images/users', $fileName);
+            }
 //
 //            $user->username = $request->username;
-//            $user->profile_pic = $fileName;
-//            $user->save();
-
-
+            $user->profile_pic = $fileName;
+            $user->save();
 
             return redirect()->back()->with('message','پروفایل با موفقیت ویرایش شد!');
 

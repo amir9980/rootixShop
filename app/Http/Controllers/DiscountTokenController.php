@@ -39,7 +39,7 @@ class DiscountTokenController extends Controller
         }
 
 
-        $tokens = $tokens->orderBy('id', 'DESC')->paginate(15);
+        $tokens = $tokens->latest('id')->paginate(15);
         $iteration = ($tokens->currentPage() - 1) * $tokens->perPage();
         return view('admin.discountTokens.index', ['iteration' => $iteration, 'tokens' => $tokens]);
     }
