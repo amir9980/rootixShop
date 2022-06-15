@@ -86,6 +86,35 @@
             </ul>
         </li>
 
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-usd" aria-hidden="true">&nbsp;</i>
+
+                        <p>
+                            جشنواره های تخفیف
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+
+                        <li class="nav-item">
+                            <a href="{{route('discountEvent.index')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست جشنواره ها</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('discountEvent.create')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>ساخت جشنواره</p>
+                            </a>
+                        </li>
+
+
+            </ul>
+        </li>
+
 
     </ul>
 </nav>

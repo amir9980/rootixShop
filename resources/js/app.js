@@ -1,4 +1,5 @@
-// require("../assets/jquery-3.6.0.min");
+window.$ = window.jQuery = require("../assets/jquery-3.6.0.min");
+require("../assets/jquery-ui.min");
 require("../assets/plugins/bootstrap/js/bootstrap.bundle.min");
 require("../assets/plugins/morris/morris.min");
 require("../assets/plugins/sparkline/jquery.sparkline.min");
@@ -9,10 +10,10 @@ require("../assets/plugins/slimScroll/jquery.slimscroll.min");
 require("../assets/plugins/fastclick/fastclick");
 require("../assets/dist/js/adminlte");
 require("../assets/dist/js/demo");
-// require("../assets/dist/js/persian-date.min");
-// require("../assets/dist/js/persian-datepicker.min");
-// require("../assets/dist/js/jquery.number.min");
-
+require("../assets/dist/js/persian-date.min");
+require("../assets/dist/js/persian-datepicker.min");
+require("../assets/dist/js/jquery.number.min");
+//
 //
 //
 //

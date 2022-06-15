@@ -107,6 +107,7 @@
                                 </thead>
                                 <tbody>
 
+
                                 @if(count($factors)>0)
                                     @foreach($factors as $factor)
 
@@ -116,8 +117,8 @@
                                             <td>{{\Morilog\Jalali\Jalalian::forge($factor->created_at)->format('%A, %d %B %y')}}</td>
                                             <td class="d-flex flex-column">
                                                 <span>{{number_format($factor->total_price)}}&nbsp;تومان</span>
-
                                                 @if(isset($factor->discountToken))<span class="badge badge-success">با احتساب {{$factor->discountToken->percentage}}&nbsp;درصد تخفیف</span>@endif
+                                                @if(isset($factor->discountEvent))<span class="badge badge-warning">با احتساب {{$factor->discountEvent->percentage}}&nbsp;درصد تخفیف جشنواره</span>@endif
                                             <td>
                                                 @if($factor->is_paid == 1)
                                                     <span class="badge badge-success">پرداخت شده</span>

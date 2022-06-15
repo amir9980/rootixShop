@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Models\cart;
 use App\Models\Discount;
+use App\Models\DiscountEvent;
 use App\Models\DiscountToken;
 use App\Models\factorMaster;
 use App\Models\factorDetail;
@@ -64,12 +65,28 @@ class FactorController extends Controller
                 }
             }
 
+            //check discount events
+            $events = DiscountEvent::all();
+            if (!empty($events)){
+                $currentEvent = null;
+                foreach ($events as $event){
+                    if ($event->start_date < now() && $event->expire_date > now()){
+                        $currentEvent = $event;
+                        break;
+                    }
+                }
+                if (!is_null($currentEvent)){
+                    $total -= ($total/100)*($currentEvent->percentage);
+                }
+
+
+            }
+
             if ($total > $user->wallet) {
                 return redirect()->route('users.charge')->withErrors(['شما مبلغ کافی در کیف پول خود ندارید!']);
             }
 
             $details = [];
-
 
             $factor = factorMaster::create([
                 'user_id' => $user->id,
@@ -83,6 +100,9 @@ class FactorController extends Controller
             ]);
             if (isset($token)){
                 $factor->discount_token_id = $token->id;
+            }
+            if (isset($currentEvent) && !is_null($currentEvent)){
+                $factor->discount_event_id = $currentEvent->id;
             }
 
             foreach ($user->cart as $cartItem) {
@@ -145,7 +165,6 @@ class FactorController extends Controller
             $factors = factorMaster::where('user_id', $request->user()->id);
         }
 
-
         //        value is in number format like 10,000 so:
         $request['from_price'] = str_replace(',', '', $request->from_price);
         $request['to_price'] = str_replace(',', '', $request->to_price);
@@ -181,7 +200,7 @@ class FactorController extends Controller
             $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
         }
 
-        $factors = $factors->orderBy('id','DESC')->paginate(15);
+        $factors = $factors->latest()->paginate(15);
         $iteration = ($factors->currentPage() - 1) * $factors->perPage();
 
 

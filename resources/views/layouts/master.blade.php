@@ -125,12 +125,12 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+{{--<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>--}}
 
 <script src={{asset("js/app.js")}}></script>
 
+<!-- jQuery UI 1.11.4 -->
+{{--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--}}
 
 {{--<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->--}}
 {{--<script>--}}
@@ -169,7 +169,7 @@
 <script src="{{asset('assets/dist/js/persian-datepicker.min.js')}}"></script>
 
 {{-- Jquery Number Format Plugin --}}
-<script src="{{asset('assets/dist/js/jquery.number.min.js')}}"></script>
+{{--<script src="{{asset('assets/dist/js/jquery.number.min.js')}}"></script>--}}
 
 <script type="text/javascript">
 

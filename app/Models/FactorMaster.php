@@ -26,4 +26,8 @@ class factorMaster extends Model
     public function discountToken(){
         return $this->belongsTo(DiscountToken::class,'discount_token_id');
     }
+
+    public function discountEvent(){
+        return $this->belongsTo(DiscountEvent::class,'discount_event_id');
+    }
 }

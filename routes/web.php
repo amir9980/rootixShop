@@ -10,6 +10,7 @@ use App\Http\Controllers\WalletPaymentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
 use App\Http\Controllers\DiscountTokenController;
+use App\Http\Controllers\DiscountEventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -51,6 +52,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('product/{product}/status', [ProductController::class, 'status'])->name('product.status');
 
     Route::resource('discountToken',DiscountTokenController::class);
+    Route::resource('discountEvent',DiscountEventController::class);
 
 
 });
