@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 class FileController extends Controller
 {
     public function product($fileName){
+
         $path = storage_path('app/images/products/' . $fileName);
 
 

@@ -17,10 +17,13 @@ class CreateProductsTable extends Migration
             $table->id('id');
             $table->string('title');
             $table->text('description');
-            $table->string('img_src')->nullable();
+            $table->text('images')->nullable();
             $table->unsignedFloat('price');
             $table->unsignedFloat('old_price')->nullable();
             $table->string('shop')->default('rootixShop');
+            $table->float('rate')->default(0);
+            $table->unsignedInteger('rate_count')->default(0);
+            $table->text('details')->nullable();
             $table->timestamps();
         });
     }

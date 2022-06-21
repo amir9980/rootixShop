@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             productSeeder::class,
+            UserSeeder::class,
             DiscountTokenSeeder::class,
             DiscountEventSeeder::class,
             ]);

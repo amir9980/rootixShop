@@ -58,7 +58,7 @@ class DiscountEventController extends Controller
         if ($request->start_date < now()->addDays(-1) || $request->expire_date < $request->start_date){
             return back()->withInput()->withErrors(['بازه زمانی انتخاب شده نامعتبر است!']);
         }
-        $events = DiscountEvent::query()->where('status','Active');
+        $events = DiscountEvent::query()->where('status','=','Active')->get();
         foreach ($events as $event){
             if ($event->start_date >= $request->start_date){
                 if ($request->expire_date >= $event->start_date){
@@ -75,11 +75,11 @@ class DiscountEventController extends Controller
         if ($newEvent->start_date <= now()){
             $newEvent->status = 'Active';
             foreach (user::all() as $user) {
-                    SendDiscountEventEmail::dispatch($user);
+                    SendDiscountEventEmail::dispatch($user,$newEvent);
             }
         }else{
             foreach (user::all() as $user) {
-                SendDiscountEventEmail::dispatch($user)->delay($newEvent->start_date);
+                SendDiscountEventEmail::dispatch($user,$newEvent)->delay($newEvent->start_date);
             }
         }
         $newEvent->save();

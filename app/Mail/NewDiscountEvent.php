@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\DiscountEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,14 +12,15 @@ class NewDiscountEvent extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $event;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DiscountEvent $event)
     {
-        //
+        $this->event = $event;
     }
 
     /**
@@ -28,6 +30,6 @@ class NewDiscountEvent extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.discountEvent')->subject('Dux');
+        return $this->view('mails.discountEvent')->subject($this->event->title);
     }
 }

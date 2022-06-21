@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <label >درصد تخفیف</label>
-                    <input class="form-control" type="number" name="percentage" placeholder="%" >
+                    <input class="form-control" type="number" name="percentage" placeholder="%" value="{{old('percentage')}}">
                 </div>
 
             </div>

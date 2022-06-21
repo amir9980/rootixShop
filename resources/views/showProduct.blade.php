@@ -7,29 +7,77 @@
     <div class="container">
         <div class="row">
             <div class="card col-12 text-center">
-                <div class="card-header">
+                <div class="card-header ">
                     <h5>{{$product->title}}</h5>
-                    <img src="{{route('images.product',$product->img_src)}}" alt="تصویر محصول" width="50%">
+
+
+                    <div id="carouselExampleIndicators" class="carousel slide w-50 mx-auto" data-ride="carousel"
+                         style="height: 100%">
+                        <ol class="carousel-indicators">
+                            @foreach($product->images['images'] as $image)
+                                <li data-target="#carouselExampleIndicators"
+                                    data-slide-to="{{$loop->index}}" {{$loop->index==0?'active':''}}></li>
+                            @endforeach
+                        </ol>
+                        <div class="carousel-inner">
+                            @foreach($product->images['images'] as $image)
+                                <div class="carousel-item justify-content-center {{$loop->index==0?'active':''}}">
+                                    <img class="d-block w-100" src="{{route('images.product',$image)}}" alt=" slide">
+                                </div>
+                            @endforeach
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 </div>
+
+
                 <div class="card-body">
                     <p>&nbsp;{{number_format($product->price)}}&nbsp;<del>{{number_format($product->old_price)}}</del>
                         تومان
                     </p>
                     <p class="lead">{{$product->description}}</p>
+                    @if(!empty($product->details))
+                        @foreach($product->details as $detailName => $details)
+                            <p>{{$detailName}}:
+                                @foreach($details as $item)
+                                    <span>{{$item}}&nbsp;</span>
+                                @endforeach
+                            </p>
+                        @endforeach
+                    @endif
                 </div>
                 @auth
-                <div class="card-footer">
-                    <form action="{{route('cart.store',$product)}}" method="post" class="">
-                        @csrf
+                    <div class="card-footer">
+                        <form action="{{route('cart.store',$product)}}" method="post" class="">
+                            @csrf
 
-                        <button type="submit" name="addToCart" class="btn btn-warning " onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
-                            <small>اضافه کردن به سبد خرید</small>
-                        </button>
+                            <button type="submit" name="addToCart" class="btn btn-warning "
+                                    onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
+                                <small>اضافه کردن به سبد خرید</small>
+                            </button>
+                        </form>
+                        <div class="rate mt-3">
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                        <p>
+                            امتیاز: <span class="badge badge-dark rateBadge">{{$product->rate}}</span> از <span class="badge badge-dark rateCountBadge">{{$product->rate_count}}</span> رای
+                        </p>
 
-                    </form>
-
-                </div>
-                    @endauth
+                    </div>
+                @endauth
 
 
             </div>

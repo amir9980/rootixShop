@@ -34,7 +34,15 @@
     {{-- Persian Date Picker --}}
 {{--    <link rel="stylesheet" href="{{asset('assets/dist/css/persian-datepicker.min.css')}}"/>--}}
 
+    <style>
+        .rate span.checked{
+            color: orange;
+        }
+        .rate span:hover{
+            cursor: pointer;
+        }
 
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -173,42 +181,90 @@
 
 <script type="text/javascript">
 
-    $("#accessSelectBox").on('change',function () {
-        if($(this).val()=='public'){
-                    $("#userIdInput").prop('disabled',true);
-                }
-        else {
-            $("#userIdInput").prop('disabled',false);
-        }
-    });
 
 
-    $("#confirmDetailsForm .increaseButton").click(function () {
-        var val = parseInt(fixNumbers($(this).siblings("span").text()));
-        $(this).siblings("span").text(val+1);
-        $(this).siblings(".productCount").val(val+1);
-    });
+    {{--function sendDeleteImgRequest(btn){--}}
+        {{--$.ajax({--}}
+            {{--type: "POST",--}}
+            {{--url: "/admin/product/deleteImg",--}}
+            {{--headers:{--}}
+                {{--"X-CSRF-TOKEN":"@php echo csrf_token() @endphp"--}}
+            {{--},--}}
+            {{--success: function(data,txt,xhr){--}}
+                {{--btn.innerHTML = data.message;--}}
+            {{--},--}}
+            {{--error: function (xhr,statustxt,err) {--}}
+                {{--console.log(xhr.responseText);--}}
+            {{--}--}}
+        {{--})--}}
 
-    $("#confirmDetailsForm .decreaseButton").click(function () {
-        var val = parseInt(fixNumbers($(this).siblings("span").text()));
-        if (val > 1){
-            $(this).siblings("span").text(val-1);
-            $(this).siblings(".productCount").val(val-1);
-
-        }else if(val <= 1){
-            $(this).closest("tr").remove();
-        }
-    });
-
-    $(".submitbtn").click(function (){
-        this.disabled=true;
-        this.innerHTML='<small>...</small>';
-        this.form.submit();
-    });
+    {{--}--}}
 
 
 
     $(document).ready(function () {
+
+
+        $(".rate span").on("click",function(){
+            var currentIndex = $(".rate span").index($(this));
+            $(".rate span").each((index,item)=>{
+                if(index <= currentIndex){
+                    item.classList.add("checked");
+                    // item.addClass("checked");
+                }else{
+                    item.classList.remove("checked");
+                }
+            });
+            $.ajax({
+                type:'POST',
+                url: '/product/'+'{{$product->id}}'+'/rate',
+                headers:{
+                "X-CSRF-TOKEN":"@php echo csrf_token() @endphp"
+                },
+                data:{'rate':currentIndex+1},
+                success:function (data) {
+
+                    $(".rateBadge").text(data.rate.slice(0,3));
+                    $(".rateCountBadge").text(data.rateCount);
+                },
+                error:function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $("#accessSelectBox").on('change',function () {
+            if($(this).val()=='public'){
+                $("#userIdInput").prop('disabled',true);
+            }
+            else {
+                $("#userIdInput").prop('disabled',false);
+            }
+        });
+
+
+        $("#confirmDetailsForm .increaseButton").click(function () {
+            var val = parseInt(fixNumbers($(this).siblings("span").text()));
+            $(this).siblings("span").text(val+1);
+            $(this).siblings(".productCount").val(val+1);
+        });
+
+        $("#confirmDetailsForm .decreaseButton").click(function () {
+            var val = parseInt(fixNumbers($(this).siblings("span").text()));
+            if (val > 1){
+                $(this).siblings("span").text(val-1);
+                $(this).siblings(".productCount").val(val-1);
+
+            }else if(val <= 1){
+                $(this).closest("tr").remove();
+            }
+        });
+
+        $(".submitbtn").click(function (){
+            this.disabled=true;
+            this.innerHTML='<small>...</small>';
+            this.form.submit();
+        });
 
         $(".jalaliDatePicker").pDatepicker({
             initialValue: false,

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\is_admin;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\NotEmptyCart;

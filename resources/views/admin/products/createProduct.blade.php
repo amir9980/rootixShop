@@ -25,7 +25,8 @@
                 <!-- textarea -->
                 <div class="form-group">
                     <label for="description">توضیحات</label>
-                    <textarea class="form-control" rows="3" name="description" placeholder="توضیحات محصول را وارد کنبد" required></textarea>
+                    <textarea class="form-control" rows="3" name="description" placeholder="توضیحات محصول را وارد کنبد"
+                              required></textarea>
                 </div>
 
 
@@ -41,16 +42,21 @@
                 </div>
 
 
-
-
                 <div class="form-group">
-                    <label for="img">تصویر</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="img">
-                            <label class="custom-file-label" for="img">انتخاب فایل</label>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="images">تصویر</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="images[]" multiple>
+                                    <label class="custom-file-label" for="images">انتخاب فایل</label>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
+
+
                 </div>
 
 
@@ -65,34 +71,32 @@
         </form>
 
 
-
-
     </div>
 
 
     {{--<form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">--}}
-        {{--@csrf--}}
-        {{--<div class="form-group">--}}
-            {{--<label for="title">title:</label>--}}
-            {{--<input type="text" name="title" required>--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-            {{--<label for="description">description:</label>--}}
-            {{--<textarea name="description" cols="30" rows="10"></textarea>--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-            {{--<label for="price">price:</label>--}}
-            {{--<input type="number" name="price" required>--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-            {{--<label for="old_price">old price:</label>--}}
-            {{--<input type="number" name="old_price">--}}
-        {{--</div>--}}
-        {{--<div class="form-group">--}}
-            {{--<label for="img">picture:</label>--}}
-            {{--<input type="file" name="img">--}}
-        {{--</div>--}}
-        {{--<input type="submit" name="submit" value="store" class="btn btn-success">--}}
+    {{--@csrf--}}
+    {{--<div class="form-group">--}}
+    {{--<label for="title">title:</label>--}}
+    {{--<input type="text" name="title" required>--}}
+    {{--</div>--}}
+    {{--<div class="form-group">--}}
+    {{--<label for="description">description:</label>--}}
+    {{--<textarea name="description" cols="30" rows="10"></textarea>--}}
+    {{--</div>--}}
+    {{--<div class="form-group">--}}
+    {{--<label for="price">price:</label>--}}
+    {{--<input type="number" name="price" required>--}}
+    {{--</div>--}}
+    {{--<div class="form-group">--}}
+    {{--<label for="old_price">old price:</label>--}}
+    {{--<input type="number" name="old_price">--}}
+    {{--</div>--}}
+    {{--<div class="form-group">--}}
+    {{--<label for="img">picture:</label>--}}
+    {{--<input type="file" name="img">--}}
+    {{--</div>--}}
+    {{--<input type="submit" name="submit" value="store" class="btn btn-success">--}}
     {{--</form>--}}
 
-    @endsection
+@endsection

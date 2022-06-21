@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\App;
 
 
 App::setLocale('fa');
+//\App\Jobs\CheckDiscountEvents::dispatch();
 
 Auth::routes();
 
@@ -50,6 +51,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('product/{product}/update', [ProductController::class, 'update'])->name('product.update');
     Route::post('product/{product}/delete', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::post('product/{product}/status', [ProductController::class, 'status'])->name('product.status');
+    Route::post('product/deleteImg',[ProductController::class,'deleteImg'])->name('product.img.delete');
 
     Route::resource('discountToken',DiscountTokenController::class);
     Route::resource('discountEvent',DiscountEventController::class);
@@ -59,6 +61,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
+Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate');
 
 Route::prefix('cart')->middleware('auth')->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
@@ -86,4 +89,8 @@ Route::prefix('user')->group(function (){
 
 
 Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
+
+//Route::post('/product/deleteImg',function (){
+//    return response()->json(['message'=>'done']);
+//});
 

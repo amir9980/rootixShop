@@ -40,12 +40,12 @@ class ProfileController extends Controller
 
                 $fileName = $request->file('img')->hashName();
                 $request->file('img')->storeAs('images/users', $fileName);
+                $user->profile_pic = $fileName;
+
             }
 //
 //            $user->username = $request->username;
-            $user->profile_pic = $fileName;
             $user->save();
-
             return redirect()->back()->with('message','پروفایل با موفقیت ویرایش شد!');
 
         }catch (\Exception $e){

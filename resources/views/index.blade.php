@@ -60,8 +60,8 @@
         @foreach($products as $product)
             <div class="col-sm-6 col-md-4 col-lg-3 px-5 py-3">
             <div class="card">
-                <a href="#">
-                    <img src="{{route('images.product',$product->img_src)}}" alt="تصویر محصول" class="card-img-top">
+                <a href="{{route('product.show',$product->id)}}">
+                    <img src="{{route('images.product',$product->images['thumb'])}}" alt="تصویر محصول" class="card-img-top">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">{{$product->title}}</h5>

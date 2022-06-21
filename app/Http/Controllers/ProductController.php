@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CalculateProductRate;
+use App\Jobs\RateProduct;
 use App\Models\product;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -22,8 +25,8 @@ class ProductController extends Controller
     {
 
         //        value is in number format like 10,000 so:
-        $request['from_price'] = str_replace(',','',$request->from_price);
-        $request['to_price'] = str_replace(',','',$request->to_price);
+        $request['from_price'] = str_replace(',', '', $request->from_price);
+        $request['to_price'] = str_replace(',', '', $request->to_price);
 
         $request->validate([
             'title' => 'nullable|max:255',
@@ -60,7 +63,7 @@ class ProductController extends Controller
             $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
         }
 
-        $products = $products->paginate(15)->withQueryString();;
+        $products = $products->paginate(15)->withQueryString();
 
         $iteration = ($products->currentPage() - 1) * $products->perPage();
         $cart = \Illuminate\Support\Facades\Auth::user()->cart;
@@ -74,8 +77,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.products.createProduct', ['cart' => $cart]);
+        return view('admin.products.createProduct');
     }
 
     /**
@@ -88,27 +90,34 @@ class ProductController extends Controller
     {
 
         //        value is in number format like 10,000 so:
-        $request['price'] = str_replace(',','',$request->price);
-        $request['old_price'] = str_replace(',','',$request->old_price);
+        $request['price'] = str_replace(',', '', $request->price);
+        $request['old_price'] = str_replace(',', '', $request->old_price);
 
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
             'old_price' => 'nullable|numeric',
-            'img' => 'nullable|mimes:png,jpg,jpeg|max:2048'
+            'images.*' => 'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        $fileName = $request->file('img')->hashName();
-        $request->file('img')->storeAs('images/products', $fileName);
+            $images = ['images'=>[]];
+//        $images = ['images'=>[],'thumb'=>''];
+        if ($request->has('images') && !empty($request->file('images'))) {
+            foreach ($request->file('images') as $image) {
+                $fileName = $this->uploadImage($image);
+                array_push($images['images'], $fileName);
+            }
+        }
 
+        $images['thumb'] = $images['images'][0];
 
         $product = product::create([
             'title' => $request['title'],
             'description' => $request['description'],
             'price' => $request['price'],
             'old_price' => $request['old_price'],
-            'img_src' => $fileName
+            'images' => $images
         ]);
 
         $product->save();
@@ -157,29 +166,34 @@ class ProductController extends Controller
     {
 
         //        value is in number format like 10,000 so:
-        $request['price'] = str_replace(',','',$request->price);
-        $request['old_price'] = str_replace(',','',$request->old_price);
+        $request['price'] = str_replace(',', '', $request->price);
+        $request['old_price'] = str_replace(',', '', $request->old_price);
 
 
-         $request->validate([
+        $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
             'old_price' => 'required|numeric',
             'status' => 'required|numeric',
-            'img' => 'mimes:png,jpg,jpeg|max:2048'
+            'images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
+        $images = $product->images;
 
-        $fileName = $product->img_src;
-
-        if ($request->has('img')) {
-            if ($fileName !== 'default.png') {
-                Storage::delete('images/products/' . $fileName);
+        if ($request->has('images') && !empty($request->file('images'))) {
+            foreach ($request->file('images') as $image) {
+                $fileName = $this->uploadImage($image);
+                array_push($images['images'], $fileName);
             }
-            $fileName = $request->file('img')->hashName();
-            $request->file('img')->storeAs('images/products', $fileName);
+//            if ($image !== 'default.png') {
+//                Storage::delete('images/products/' . $fileName);
+//            }
 
+        }
+
+        if ($request->has('thumb')) {
+            $images['thumb'] = $request->thumb;
         }
 
 
@@ -189,7 +203,7 @@ class ProductController extends Controller
             'price' => $request['price'],
             'old_price' => $request['old_price'],
             'status' => (int)$request['status'],
-            'img_src' => $fileName
+            'images' => $images,
         ]);
 
 
@@ -208,13 +222,38 @@ class ProductController extends Controller
             'reason' => 'required|max:255'
         ]);
 
-
         $p = product::find($product->id);
         $p->status = 3; //status 3 means 'deleted'
         $p->delete_reason = $request->reason;
         $p->save();
-        return redirect()->back()->with('message', 'محصول با موفقیت حذف شد!');
 
+        return redirect()->back()->with('message', 'محصول با موفقیت حذف شد!');
+    }
+
+    public function rate(Request $request, product $product){
+        $request->validate(['rate'=>'nullable|numeric|between:1,5']);
+
+        $rate = Rate::where('product_id','=',$product->id)->where('user_id','=',$request->user()->id)->first();
+        if(!is_null($rate)){
+            $rate->rate = $request->rate;
+            $rate->save();
+        }else{
+            Rate::create([
+                'user_id'=>$request->user()->id,
+                'product_id'=>$product->id,
+                'rate'=>$request->rate
+            ]);
+            $product->rate_count += 1;
+        }
+        $average = Rate::where('product_id','=',$product->id)->avg('rate');
+        $product->rate = $average;
+        $product->save();
+
+        return response()->json([
+            'message'=>'رای شما ثبت شد!',
+            'rate'=> $average,
+            'rateCount'=>$product->rate_count
+            ]);
     }
 
 
@@ -225,4 +264,15 @@ class ProductController extends Controller
     }
 
 
+    public function uploadImage($file)
+    {
+        $fileName = $file->hashName();
+        $file->storeAs('images/products', $fileName);
+        return $fileName;
+    }
+
+
+    public function deleteImg(){
+        return response()->json(['message'=>'done']);
+    }
 }

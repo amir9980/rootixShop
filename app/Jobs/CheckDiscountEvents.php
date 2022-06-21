@@ -2,32 +2,31 @@
 
 namespace App\Jobs;
 
-use App\Mail\NewDiscountEvent;
 use App\Models\DiscountEvent;
-use App\Models\user;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
-class SendDiscountEventEmail implements ShouldQueue
+
+class CheckDiscountEvents implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $user;
-    protected $event;
+    public function retryUntil()
+    {
+        return now()->addYears(5);
+    }
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(user $user,DiscountEvent $event)
+    public function __construct()
     {
-        $this->user = $user;
-        $this->event = $event;
+        //
     }
 
     /**
@@ -37,6 +36,17 @@ class SendDiscountEventEmail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->user)->send(new NewDiscountEvent($this->event));
+        foreach (DiscountEvent::all() as $event){
+            if ($event->start_date<now() && $event->expire_date>now()){
+                $event->status = 'Active';
+                $event->save();
+            }else{
+                $event->status = 'Deactive';
+                $event->save();
+            }
+        }
+
+        $this->release(20);
     }
+
 }
