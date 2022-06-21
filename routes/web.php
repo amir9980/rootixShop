@@ -61,7 +61,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate');
+Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate')->middleware('auth');
 
 Route::prefix('cart')->middleware('auth')->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
