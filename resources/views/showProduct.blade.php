@@ -73,7 +73,8 @@
                             <span class="fa fa-star"></span>
                         </div>
                         <p>
-                            امتیاز: <span class="badge badge-dark rateBadge">{{$product->rate}}</span> از <span class="badge badge-dark rateCountBadge">{{$product->rate_count}}</span> رای
+                            امتیاز: <span class="badge badge-dark rateBadge">{{$product->rate}}</span> از <span
+                                    class="badge badge-dark rateCountBadge">{{$product->rate_count}}</span> رای
                         </p>
 
                     </div>
@@ -85,5 +86,39 @@
     </div>
 
 
+
+@endsection
+
+
+@section('script')
+    <script type="text/javascript">
+        $(".rate span").on("click", function () {
+            var currentIndex = $(".rate span").index($(this));
+            $(".rate span").each((index, item) => {
+                if (index <= currentIndex) {
+                    item.classList.add("checked");
+                    // item.addClass("checked");
+                } else {
+                    item.classList.remove("checked");
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/product/' + '{{$product->id}}' + '/rate',
+                headers: {
+                    "X-CSRF-TOKEN": "@php echo csrf_token() @endphp"
+                },
+                data: {'rate': currentIndex + 1},
+                success: function (data) {
+
+                    $(".rateBadge").text(data.rate.slice(0, 3));
+                    $(".rateCountBadge").text(data.rateCount);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>
 
 @endsection
