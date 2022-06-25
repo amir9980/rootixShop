@@ -20,14 +20,11 @@ class CreateFactorMastersTable extends Migration
             $table->foreign('discount_token_id')->references('id')->on('discount_tokens');
             $table->integer('discount_event_id')->nullable();
             $table->foreign('discount_event_id')->references('id')->on('discount_events');
-            $table->string('user_first_name',255);
-            $table->string('user_last_name',255);
             $table->boolean('is_paid')->default(false)->comment('Checks if this order has paid or not.');
             $table->unsignedBigInteger('total_price')->comment('This order total price in Tomans.');
             $table->string('payment_method',255)->comment('Cash, Saderat, AsanPardakht, ZarinPal.');
-            $table->string('state',255);
-            $table->string('city',255);
-            $table->text('address');
+            $table->unsignedInteger('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

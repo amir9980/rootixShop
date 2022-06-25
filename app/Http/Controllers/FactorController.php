@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Models\Address;
 use App\Models\cart;
 use App\Models\Discount;
 use App\Models\DiscountEvent;
@@ -16,9 +17,37 @@ use Illuminate\Support\Arr;
 
 class FactorController extends Controller
 {
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
+//        dd($request->all());
         $user = $request->user();
+        if ($request->has('addressBar') && $request->addressBar == 'newAddress') {
+            $request->validate([
+                'address' => 'required|string',
+                'state' => 'required|string|max:255',
+                'city' => 'required|string|max:255',
+                'paymentMethod' => 'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht',
+                'discount_token' => 'nullable|string|max:20'
+            ]);
+            $address = Address::create([
+                'state' => $request->state,
+                'city' => $request->city,
+                'address' => $request->address,
+                'user_id'=>$user->id
+            ]);
+        }else{
+            $request->validate([
+                'addressBar'=>'required|numeric',
+                'paymentMethod' => 'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht',
+                'discount_token' => 'nullable|string|max:20'
+            ]);
+            $address = Address::find($request->addressBar);
+            if (is_null($address) || $address->user_id != $request->user()->id){
+                return back()->withErrors(['آدرس وارد شده نامعتبر میباشد!']);
+            }
+        }
+
+
 
         $total = null;
         foreach ($user->cart as $cartItem) {
@@ -33,19 +62,19 @@ class FactorController extends Controller
             //check discount token
             if (!empty($request->discount_token)) {
                 $token = DiscountToken::query()->where('token', '=', $request->discount_token)->first();
-                if (isset($token)){
+                if (isset($token)) {
                     if ($token->access == 'public' || $token->user_id == $user->id) {
                         if ($token->start_date < now() && $token->expire_date > now()) {
-                            $discount = Discount::query()->where('user_id','=',$user->id)->where('token_id','=',$token->id)->first();
-                            if (isset($discount) && $discount->count < $token->usage_count){
+                            $discount = Discount::query()->where('user_id', '=', $user->id)->where('token_id', '=', $token->id)->first();
+                            if (isset($discount) && $discount->count < $token->usage_count) {
                                 $discount->count++;
                                 $discount->save();
-                            }else if(is_null($discount)){
+                            } else if (is_null($discount)) {
                                 Discount::create([
-                                    'user_id'=>$user->id,
-                                    'token_id'=>$token->id
+                                    'user_id' => $user->id,
+                                    'token_id' => $token->id
                                 ]);
-                            }else{
+                            } else {
                                 return redirect()->back()->withInput()->withErrors(['کد تخفیف استفاده شده است!']);
                             }
 
@@ -60,23 +89,23 @@ class FactorController extends Controller
                         return redirect()->back()->withInput()->withErrors(['کد تخفیف نامعتبر میباشد!']);
                     }
 
-                }else {
+                } else {
                     return redirect()->back()->withInput()->withErrors(['کد تخفیف نامعتبر میباشد!']);
                 }
             }
 
             //check discount events
             $events = DiscountEvent::all();
-            if (!empty($events)){
+            if (!empty($events)) {
                 $currentEvent = null;
-                foreach ($events as $event){
-                    if ($event->start_date < now() && $event->expire_date > now()){
+                foreach ($events as $event) {
+                    if ($event->start_date < now() && $event->expire_date > now()) {
                         $currentEvent = $event;
                         break;
                     }
                 }
-                if (!is_null($currentEvent)){
-                    $total -= ($total/100)*($currentEvent->percentage);
+                if (!is_null($currentEvent)) {
+                    $total -= ($total / 100) * ($currentEvent->percentage);
                 }
 
 
@@ -90,18 +119,15 @@ class FactorController extends Controller
 
             $factor = factorMaster::create([
                 'user_id' => $user->id,
-                'user_first_name' => $request->firstName,
-                'user_last_name' => $request->lastName,
-                'state' => $request->state,
-                'city' => $request->city,
-                'address' => $request->address,
                 'total_price' => $total,
                 'payment_method' => $request->paymentMethod,
+                'address_id'=>$address->id
             ]);
-            if (isset($token)){
+
+            if (isset($token)) {
                 $factor->discount_token_id = $token->id;
             }
-            if (isset($currentEvent) && !is_null($currentEvent)){
+            if (isset($currentEvent) && !is_null($currentEvent)) {
                 $factor->discount_event_id = $currentEvent->id;
             }
 
@@ -116,17 +142,15 @@ class FactorController extends Controller
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
-            $log = __('logs.factor_report',['userId'=>$user->id,
-                'userName'=>$user->username,
-                'state'=>$factor->state,
-                'city'=>$factor->city,
-                'address'=>$factor->address,
-                'firstName'=>$factor->user_first_name,
-                'lastName'=>$factor->user_last_name,
-                'paymentMethod'=>$factor->payment_method,
-                'date'=>now(),
-                'factorId'=>$factor->id,
-                'price'=>$factor->total_price]);
+            $log = __('logs.factor_report', ['userId' => $user->id,
+                'userName' => $user->username,
+                'state' => $factor->address->state,
+                'city' => $factor->address->city,
+                'address' => $factor->address->address,
+                'paymentMethod' => $factor->payment_method,
+                'date' => now(),
+                'factorId' => $factor->id,
+                'price' => $factor->total_price]);
 
 
             $user->wallet -= $factor->total_price;
@@ -223,9 +247,9 @@ class FactorController extends Controller
         if (count($request->user()->cart) < 1) {
             return redirect()->back()->withErrors(['شما محصولی برای خرید انتخاب نکرده اید!']);
         }
-        if (!isset($request->counter)){
+        if (!isset($request->counter)) {
             cart::destroy($request->user()->cart);
-            return redirect()->route('home')->with('message','سبد خرید با موفقیت حذف شد!');
+            return redirect()->route('home')->with('message', 'سبد خرید با موفقیت حذف شد!');
         }
 
         $request->validate([
@@ -268,18 +292,14 @@ class FactorController extends Controller
 
     public function orderDetails(Request $request)
     {
-        $carts = $request->user()->cart;
-        $profile = $request->user()->profile;
-
-        if (!isset($profile)) {
-            return redirect()->route('profile.show')->withErrors(['لطفا پروفایل خود را تکمیل کنید!']);
-        }
+        $cart = $request->user()->cart;
+        $addresses = $request->user()->addresses;
 
         $total = 0;
-        foreach ($carts as $item) {
+        foreach ($cart as $item) {
             $total += $item->product->price * $item->count;
         }
-        return view('factors.orderDetails', ['total' => $total, 'cart' => $carts,'profile'=>$profile]);
+        return view('factors.orderDetails', ['addresses' => $addresses, 'total' => $total, 'cart' => $cart]);
     }
 
 

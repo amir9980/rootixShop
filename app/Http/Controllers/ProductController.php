@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CalculateProductRate;
 use App\Jobs\RateProduct;
+use App\Models\FileUpload;
 use App\Models\product;
 use App\Models\Rate;
 use Illuminate\Http\Request;
@@ -101,25 +102,23 @@ class ProductController extends Controller
             'images.*' => 'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
-            $images = ['images'=>[]];
-//        $images = ['images'=>[],'thumb'=>''];
-        if ($request->has('images') && !empty($request->file('images'))) {
-            foreach ($request->file('images') as $image) {
-                $fileName = $this->uploadImage($image);
-                array_push($images['images'], $fileName);
-            }
-        }
-
-        $images['thumb'] = $images['images'][0];
-
         $product = product::create([
             'title' => $request['title'],
             'description' => $request['description'],
             'price' => $request['price'],
             'old_price' => $request['old_price'],
-            'images' => $images
         ]);
 
+        if ($request->has('images') && !empty($request->file('images'))) {
+            foreach ($request->file('images') as $image) {
+                $fileName = $this->uploadImage($image);
+                $product->images()->create([
+                    'path'=>$fileName,
+                ]);
+            }
+        }
+
+        $product->thumbnail = $product->images->first()->path;
         $product->save();
 
         return redirect(route('product.index'))->with('message', 'محصول با موفقیت ایجاد شد!');
@@ -179,23 +178,18 @@ class ProductController extends Controller
             'images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        $images = $product->images;
 
         if ($request->has('images') && !empty($request->file('images'))) {
             foreach ($request->file('images') as $image) {
                 $fileName = $this->uploadImage($image);
-                array_push($images['images'], $fileName);
+                FileUpload::create([
+                    'path'=>$fileName,
+                    'product_id'=>$product->id
+                ]);
             }
-//            if ($image !== 'default.png') {
-//                Storage::delete('images/products/' . $fileName);
-//            }
-
         }
 
-        if ($request->has('thumb')) {
-            $images['thumb'] = $request->thumb;
-        }
-
+        $thumb = $request->has('thumb') && !is_null($request->thumb) ? $request->thumb : $product->images->first()->path;
 
         $product->update([
             'title' => $request['title'],
@@ -203,7 +197,7 @@ class ProductController extends Controller
             'price' => $request['price'],
             'old_price' => $request['old_price'],
             'status' => (int)$request['status'],
-            'images' => $images,
+            'thumbnail'=>$thumb
         ]);
 
 

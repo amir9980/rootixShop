@@ -11,7 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
 use App\Http\Controllers\DiscountTokenController;
 use App\Http\Controllers\DiscountEventController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
@@ -69,7 +69,6 @@ Route::prefix('cart')->middleware('auth')->group(function (){
     Route::get('/', [CartController::class, 'show'])->middleware('emptyCart')->name('cart.show');
 });
 
-
 Route::prefix('factor')->middleware('auth')->group(function (){
     Route::post('store', [FactorController::class, 'store'])->middleware('emptyCart')->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
@@ -78,12 +77,10 @@ Route::prefix('factor')->middleware('auth')->group(function (){
     Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->middleware('emptyCart')->name('factor.order');
 });
 
-Route::prefix('profile')->middleware('auth')->group(function (){
-    Route::get('/',[ProfileController::class,'show'])->name('profile.show');
-    Route::put('/update',[ProfileController::class,'update'])->name('profile.update');
-});
 
 Route::prefix('user')->group(function (){
+    Route::get('profile',[UserController::class,'showProfile'])->name('profile.show');
+    Route::put('profile',[UserController::class,'storeProfileProfile'])->name('profile.update');
     Route::get('charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
 });
 

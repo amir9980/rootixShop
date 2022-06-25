@@ -14,15 +14,15 @@
                     <div id="carouselExampleIndicators" class="carousel slide w-50 mx-auto" data-ride="carousel"
                          style="height: 100%">
                         <ol class="carousel-indicators">
-                            @foreach($product->images['images'] as $image)
+                            @foreach($product->images as $image)
                                 <li data-target="#carouselExampleIndicators"
                                     data-slide-to="{{$loop->index}}" {{$loop->index==0?'active':''}}></li>
                             @endforeach
                         </ol>
                         <div class="carousel-inner">
-                            @foreach($product->images['images'] as $image)
+                            @foreach($product->images as $image)
                                 <div class="carousel-item justify-content-center {{$loop->index==0?'active':''}}">
-                                    <img class="d-block w-100" src="{{route('images.product',$image)}}" alt=" slide">
+                                    <img class="d-block w-100" src="{{route('images.product',$image->path)}}" alt=" slide">
                                 </div>
                             @endforeach
                         </div>

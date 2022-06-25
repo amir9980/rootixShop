@@ -52,7 +52,7 @@
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item d-flex justify-content-between align-items-center">
                                 <div>
-                                    <img class="rounded-circle" src="{{route('images.product',$item->product->images['thumb'])}}" alt="productImage" width="50px" height="50px">
+                                    <img class="rounded-circle" src="{{route('images.product',$item->product->thumbnail)}}" alt="productImage" width="50px" height="50px">
                                 <span>{{$item->product->title}}</span>
                                 </div>
                                 <div class="d-flex text-muted text-sm align-items-center">

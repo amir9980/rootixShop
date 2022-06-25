@@ -143,7 +143,6 @@ class UserController extends Controller
             $user = user::find($request->user()->id);
             $fileName = $user->profile_pic;
             if ($request->has('img') && !empty($request->file('img'))) {
-
                 $fileName = $request->file('img')->hashName();
                 $request->file('img')->storeAs('images/users', $fileName);
             }

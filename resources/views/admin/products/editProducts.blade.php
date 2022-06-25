@@ -64,13 +64,12 @@
                     <div class="form-group col-md-8">
                         <label > تصویر شاخص:</label>
                         <div class="row">
-                        @foreach($product->images['images'] as $image)
+                        @foreach($product->images as $image)
                                 <div class="col-md-3 col-sm-4 d-flex flex-column">
                                     {{--<label >حذف تصویر:</label>--}}
-                                    <input type="radio" name="thumb" value="{{$image}}" {{$product->images['thumb']==$image ? 'checked':''}}>
-                                    <img src="{{route('images.product',$image)}}" alt="alt" width="100%">
+                                    <input type="radio" name="thumb" value="{{$image->path}}" {{$product->thumbnail == $image->path ? 'checked':''}}>
+                                    <img src="{{route('images.product',$image->path)}}" alt="alt" width="100%">
                                     {{--<button class="btn btn-sm btn-danger" type="button" value="{{$image}}" onclick="sendDeleteImgRequest(this)">حذف</button>--}}
-
                                 </div>
                             @endforeach
                         </div>

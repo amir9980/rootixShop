@@ -23,9 +23,8 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
             'address' => 'required|string',
             'state' => 'required|string|max:255',
             'city' => 'required|string|max:255',

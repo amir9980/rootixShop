@@ -9,7 +9,7 @@ class factorMaster extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','discount_token_id','user_first_name','user_last_name','payment_method','state','city','address','is_paid','total_price'];
+    protected $fillable = ['user_id','discount_token_id','address_id','payment_method','state','city','address','is_paid','total_price'];
 
     public function user(){
         return $this->belongsTo(user::class,'user_id','id');
@@ -29,5 +29,9 @@ class factorMaster extends Model
 
     public function discountEvent(){
         return $this->belongsTo(DiscountEvent::class,'discount_event_id');
+    }
+
+    public function address(){
+        return $this->belongsTo(Address::class,'address_id');
     }
 }

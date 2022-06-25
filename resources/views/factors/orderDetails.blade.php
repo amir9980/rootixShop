@@ -6,68 +6,67 @@
 @section('content')
 
 
-
     <div class="container">
 
         <div class="row">
 
             <div class="col-md-8">
-                <h4>آدرس شما</h4>
-                <form action="{{route('factor.store')}}" method="post" class="needs-validation">
+                <h4>آدرس های شما</h4>
+                <form action="{{route('factor.store')}}" method="post" class="needs-validation" id="firstForm">
                     @csrf
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <label for="firstName">نام</label>
-                            <input type="text" class="form-control" name="firstName" value="{{$profile->first_name}}"/>
-                            <div class="invalid-feedback">نام را وارد کنید</div>
-                            <div class="valid-feedback">نام وارد شد</div>
+                    @foreach($addresses as $address)
+                            <p>
+                            <input type="radio" name="addressBar" value="{{$address->id}}">
+                                <span>{{$address->address}}</span>
+                            </p>
+                    @endforeach
+
+                    <input type="radio" name="addressBar" {{count($addresses)<1 ? 'checked' : ''}}  value="newAddress">
+
+                    <a href="#newAddressForm" data-toggle="collapse" class="btn btn-success">اضافه کردن آدرس جدید</a>
+                    <div id="newAddressForm" class="collapse mt-3 {{count($addresses)<1 ? 'show' : ''}}">
+
+                        <div class="form-group">
+                            <label>آدرس</label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    name="address"
+                                    placeholder="مازندران, بابل"
+                                    value="{{old('address')}}"
+                            />
+                            <div class="invalid-feedback">آدرس را وارد کنید</div>
+                            <div class="valid-feedback">آدرس وارد شد</div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="lastName">نام خانوادگی</label>
-                            <input type="text" class="form-control" name="lastName" value="{{$profile->last_name}}"/>
-                            <div class="invalid-feedback">نام خانوادگی را وارد کنید</div>
-                            <div class="valid-feedback">نام خانوادگی وارد شد</div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="state" class="mt-xs-2 mt-md-0">استان</label>
+                                <input
+                                        type="text"
+                                        name="state"
+                                        class="form-control"
+                                        placeholder="اصفهان"
+                                        value="{{old('state')}}"
+                                />
+                                <div class="invalid-feedback">استان را وارد کنید</div>
+                                <div class="valid-feedback">استان وارد شد</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city" class="mt-xs-2 mt-md-0">شهر</label>
+                                <input
+                                        type="text"
+                                        name="city"
+                                        class="form-control"
+                                        placeholder="اصفهان"
+                                        value="{{old('city')}}"
+                                />
+                                <div class="invalid-feedback">شهر را وارد کنید</div>
+                                <div class="valid-feedback">شهر وارد شد</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>آدرس</label>
-                        <input
-                                class="form-control"
-                                type="text"
-                                name="address"
-                                placeholder="مازندران, بابل"
-                                value="{{$profile->address}}"
-                        />
-                        <div class="invalid-feedback">آدرس را وارد کنید</div>
-                        <div class="valid-feedback">آدرس وارد شد</div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <label for="state" class="mt-xs-2 mt-md-0">استان</label>
-                            <input
-                                    type="text"
-                                    name="state"
-                                    class="form-control"
-                                    placeholder="اصفهان"
-                                    value="{{$profile->state}}"
-                            />
-                            <div class="invalid-feedback">استان را وارد کنید</div>
-                            <div class="valid-feedback">استان وارد شد</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="city" class="mt-xs-2 mt-md-0">شهر</label>
-                            <input
-                                    type="text"
-                                    name="city"
-                                    class="form-control"
-                                    placeholder="اصفهان"
-                                    value="{{$profile->city}}"
-                            />
-                            <div class="invalid-feedback">شهر را وارد کنید</div>
-                            <div class="valid-feedback">شهر وارد شد</div>
-                        </div>
-                    </div>
+
                     <hr class="my-4"/>
 
                     <h4 class="mb-4">نحوه پرداخت</h4>
@@ -117,13 +116,14 @@
                     </div>
 
                     <hr class="mb-4"/>
-                        <input type="text" name="discount_token" class="form-control" placeholder="کد تخفیف"/>
+                    <input type="text" name="discount_token" class="form-control" placeholder="کد تخفیف"/>
                     <hr class="mb-4"/>
 
-                    <button class="btn btn-lg btn-block btn-primary" type="submit">
+                    <button class="btn btn-lg btn-block btn-primary" type="submit" id="submitOrderForm">
                         ادامه و ثبت خرید
                     </button>
                 </form>
+
             </div>
 
             <div class="col-md-4">

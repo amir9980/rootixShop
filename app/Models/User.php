@@ -18,8 +18,8 @@ class user extends Authenticatable
         return $this->belongsToMany(product::class, 'carts', 'user_id', 'product_id');
     }
 
-    public function profile(){
-        return $this->hasOne(Profile::class,'user_id');
+    public function addresses(){
+        return $this->hasMany(Address::class,'user_id');
     }
 
     public function cart()

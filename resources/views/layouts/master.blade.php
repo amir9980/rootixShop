@@ -201,12 +201,7 @@
 
     {{--}--}}
 
-
-
     $(document).ready(function () {
-
-
-
 
         $("#accessSelectBox").on('change',function () {
             if($(this).val()=='public'){

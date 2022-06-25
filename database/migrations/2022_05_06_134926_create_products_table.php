@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id('id');
             $table->string('title');
             $table->text('description');
-            $table->text('images')->nullable();
+            $table->string('thumbnail')->default('default.png');
             $table->unsignedFloat('price');
             $table->unsignedFloat('old_price')->nullable();
             $table->string('shop')->default('rootixShop');
