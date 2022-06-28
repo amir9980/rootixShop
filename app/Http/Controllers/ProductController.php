@@ -258,6 +258,7 @@ class ProductController extends Controller
     }
 
 
+
     public function uploadImage($file)
     {
         $fileName = $file->hashName();

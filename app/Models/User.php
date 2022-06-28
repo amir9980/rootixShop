@@ -32,4 +32,8 @@ class user extends Authenticatable
         return $this->hasMany(factorMaster::class, 'user_id', 'id');
     }
 
+    public function comments(){
+        return $this->hasMany(Comment::class,'user_id');
+    }
+
 }

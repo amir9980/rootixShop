@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentReportController;
 use App\Http\Controllers\DiscountTokenController;
 use App\Http\Controllers\DiscountEventController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -56,6 +57,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('discountToken',DiscountTokenController::class);
     Route::resource('discountEvent',DiscountEventController::class);
 
+    Route::get('comment/index',[CommentController::class,'index'])->name('comment.index');
+    Route::get('inactiveComments/index',[CommentController::class,'inactiveCommentsIndex'])->name('inactiveComments.index');
+
 
 });
 
@@ -77,17 +81,20 @@ Route::prefix('factor')->middleware('auth')->group(function (){
     Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->middleware('emptyCart')->name('factor.order');
 });
 
+Route::prefix('comment')->middleware('auth')->group(function (){
+    Route::post('store/{product}', [CommentController::class, 'store'])->name('comment.store');
+    Route::delete('{comment}/delete', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+});
+
 
 Route::prefix('user')->group(function (){
     Route::get('profile',[UserController::class,'showProfile'])->name('profile.show');
-    Route::put('profile',[UserController::class,'storeProfileProfile'])->name('profile.update');
+    Route::put('profile',[UserController::class,'storeProfile'])->name('profile.update');
     Route::get('charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
 });
 
 
 Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
 
-//Route::post('/product/deleteImg',function (){
-//    return response()->json(['message'=>'done']);
-//});
 

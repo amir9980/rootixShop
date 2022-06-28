@@ -88,7 +88,7 @@
 
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
-                        <i class="fa fa-usd" aria-hidden="true">&nbsp;</i>
+                        <i class="fa fa-calendar-check-o" aria-hidden="true">&nbsp;</i>
 
                         <p>
                             جشنواره های تخفیف
@@ -108,6 +108,35 @@
                             <a href="{{route('discountEvent.create')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>ساخت جشنواره</p>
+                            </a>
+                        </li>
+
+
+            </ul>
+        </li>
+
+
+        <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-comment" aria-hidden="true">&nbsp;</i>
+                        <p>
+                            نظرات
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+
+                        <li class="nav-item">
+                            <a href="{{route('comment.index')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>همه نظرات</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('inactiveComments.index')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>نظرات تایید نشده</p>
                             </a>
                         </li>
 
