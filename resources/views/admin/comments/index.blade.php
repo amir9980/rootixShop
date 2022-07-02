@@ -10,6 +10,7 @@
             <thead>
             <th>ردیف</th>
             <th>کاربر</th>
+            <th>محصول</th>
             <th>متن</th>
             <th>تاریخ ثبت</th>
             <th>وضعیت</th>
@@ -20,6 +21,7 @@
                     <tr>
                         <td>{{$iteration}}</td>
                         <td>{{$comment->user->username}}</td>
+                        <td><a href="{{route('product.show',$comment->product->id)}}">{{$comment->product->title}}</a></td>
                         <td>{{\Illuminate\Support\Str::limit($comment->body,15)}}</td>
                         <td>{{\Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%A, %d %B %y')}}</td>
                         <td>@if($comment->status=='inactive') <span class="badge badge-danger">غیرفعال</span> @else  <span class="badge badge-success">فعال</span> @endif </td>

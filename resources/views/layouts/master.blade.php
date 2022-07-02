@@ -42,6 +42,14 @@
             cursor: pointer;
         }
 
+        #bookmark{
+            z-index: 10;
+            font-size: 2rem;
+            top: 0.5rem;
+            right: 0.5rem;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body class="hold-transition sidebar-mini">

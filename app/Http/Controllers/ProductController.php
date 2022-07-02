@@ -113,7 +113,7 @@ class ProductController extends Controller
             foreach ($request->file('images') as $image) {
                 $fileName = $this->uploadImage($image);
                 $product->images()->create([
-                    'path'=>$fileName,
+                    'path' => $fileName,
                 ]);
             }
         }
@@ -183,8 +183,8 @@ class ProductController extends Controller
             foreach ($request->file('images') as $image) {
                 $fileName = $this->uploadImage($image);
                 FileUpload::create([
-                    'path'=>$fileName,
-                    'product_id'=>$product->id
+                    'path' => $fileName,
+                    'product_id' => $product->id
                 ]);
             }
         }
@@ -197,7 +197,7 @@ class ProductController extends Controller
             'price' => $request['price'],
             'old_price' => $request['old_price'],
             'status' => (int)$request['status'],
-            'thumbnail'=>$thumb
+            'thumbnail' => $thumb
         ]);
 
 
@@ -224,30 +224,50 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'محصول با موفقیت حذف شد!');
     }
 
-    public function rate(Request $request, product $product){
-        $request->validate(['rate'=>'nullable|numeric|between:1,5']);
+    public function rate(Request $request, product $product)
+    {
+        $request->validate(['rate' => 'nullable|numeric|between:1,5']);
 
-        $rate = Rate::where('product_id','=',$product->id)->where('user_id','=',$request->user()->id)->first();
-        if(!is_null($rate)){
+        $rate = Rate::where('product_id', '=', $product->id)->where('user_id', '=', $request->user()->id)->first();
+        if (!is_null($rate)) {
             $rate->rate = $request->rate;
             $rate->save();
-        }else{
+        } else {
             Rate::create([
-                'user_id'=>$request->user()->id,
-                'product_id'=>$product->id,
-                'rate'=>$request->rate
+                'user_id' => $request->user()->id,
+                'product_id' => $product->id,
+                'rate' => $request->rate
             ]);
             $product->rate_count += 1;
         }
-        $average = Rate::where('product_id','=',$product->id)->avg('rate');
+        $average = Rate::where('product_id', '=', $product->id)->avg('rate');
         $product->rate = $average;
         $product->save();
 
         return response()->json([
-            'message'=>'رای شما ثبت شد!',
-            'rate'=> $average,
-            'rateCount'=>$product->rate_count
-            ]);
+            'message' => 'رای شما ثبت شد!',
+            'rate' => $average,
+            'rateCount' => $product->rate_count
+        ]);
+    }
+
+
+    public function bookmark(Request $request, product $product)
+    {
+
+        try {
+            $request->user()->bookmarks()->attach([$product->id]);
+            return response()->json(['message' => 'added.']);
+
+        }catch(\Exception $e){
+            if ($e->getCode() == 23000){
+                $request->user()->bookmarks()->detach([$product->id]);
+                return response()->json(['message'=>'deleted.']);
+            }
+        }
+
+
+
     }
 
 
@@ -258,7 +278,6 @@ class ProductController extends Controller
     }
 
 
-
     public function uploadImage($file)
     {
         $fileName = $file->hashName();
@@ -267,7 +286,8 @@ class ProductController extends Controller
     }
 
 
-    public function deleteImg(){
-        return response()->json(['message'=>'done']);
+    public function deleteImg()
+    {
+        return response()->json(['message' => 'done']);
     }
 }

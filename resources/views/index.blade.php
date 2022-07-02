@@ -68,7 +68,7 @@
                                      class="card-img-top img-rounded">
                             </a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body position-relative">
                             <h5 class="card-title">{{$product->title}}</h5>
                             <p class="card-text">{{\Illuminate\Support\Str::limit($product->description,20)}}</p>
                             <p>&nbsp;{{number_format($product->price)}}&nbsp;<del
@@ -105,13 +105,10 @@
             <h2>محصولی یافت نشد!</h2>
         </div>
 
-        @endif
+    @endif
 
-
-        </div>
 
 
 
 @endsection
-
 

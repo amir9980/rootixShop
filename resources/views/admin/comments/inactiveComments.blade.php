@@ -12,7 +12,7 @@
             <th>کاربر</th>
             <th>متن</th>
             <th>تاریخ ثبت</th>
-            <th>وضعیت</th>
+            <th>عملیات</th>
             </thead>
             @if(count($comments) > 0)
                 @foreach($comments as $comment)
@@ -22,7 +22,12 @@
                         <td>{{$comment->user->username}}</td>
                         <td>{{\Illuminate\Support\Str::limit($comment->body,15)}}</td>
                         <td>{{\Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%A, %d %B %y')}}</td>
-                        <td>@if($comment->status=='inactive') <span class="badge badge-danger">غیرفعال</span> @endif</td>
+                        <td>
+                            <form action="{{route('comment.activate',$comment->id)}}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-sm btn-success">فعالسازی</button>
+                            </form></td>
                     </tr>
 
 

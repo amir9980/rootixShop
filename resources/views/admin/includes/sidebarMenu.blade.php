@@ -117,10 +117,11 @@
 
 
         <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link ">
                         <i class="fa fa-comment" aria-hidden="true">&nbsp;</i>
                         <p>
                             نظرات
+                            <span class="badge badge-pill badge-light pt-1">{{\App\Models\Comment::where('status','=','inactive')->count()}}</span>
                             <i class="right fa fa-angle-left"></i>
                         </p>
                     </a>
@@ -136,7 +137,7 @@
                         <li class="nav-item">
                             <a href="{{route('inactiveComments.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>نظرات تایید نشده</p>
+                                <p>نظرات تایید نشده <span class="badge badge-pill badge-light pt-1">{{\App\Models\Comment::where('status','=','inactive')->count()}}</span></p>
                             </a>
                         </li>
 

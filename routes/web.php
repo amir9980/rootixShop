@@ -59,6 +59,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('comment/index',[CommentController::class,'index'])->name('comment.index');
     Route::get('inactiveComments/index',[CommentController::class,'inactiveCommentsIndex'])->name('inactiveComments.index');
+    Route::put('{comment}/activate',[CommentController::class,'activate'])->name('comment.activate');
 
 
 });
@@ -66,6 +67,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
 Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate')->middleware('auth');
+Route::post('product/{product}/bookmark', [ProductController::class, 'bookmark'])->name('product.bookmark')->middleware('auth');
 
 Route::prefix('cart')->middleware('auth')->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
@@ -88,10 +90,11 @@ Route::prefix('comment')->middleware('auth')->group(function (){
 });
 
 
-Route::prefix('user')->group(function (){
+Route::prefix('user')->middleware('auth')->group(function (){
     Route::get('profile',[UserController::class,'showProfile'])->name('profile.show');
     Route::put('profile',[UserController::class,'storeProfile'])->name('profile.update');
-    Route::get('charge',[UserController::class,'charge'])->name('users.charge')->middleware('auth');
+    Route::get('charge',[UserController::class,'charge'])->name('users.charge');
+    Route::get('bookmarks',[UserController::class,'bookmarks'])->name('users.bookmarks');
 });
 
 

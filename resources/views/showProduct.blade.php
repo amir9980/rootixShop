@@ -5,33 +5,22 @@
 
 @section('content')
     <div class="container">
-        <div class="row pb-2 h-100">
+        <div class="row pb-2">
             <div class="col-md-6 ">
                 <div class="card text-center p-3 h-100">
+                    @auth
+                        <div id="bookmark" class="position-absolute" onclick="bookmark(this,{{$product->id}})">
+
+                        <span class="fa @if(request()->user()->bookmarks->contains($product)) fa-bookmark @else fa-bookmark-o @endif "
+                              aria-hidden="true"></span>
+                        </div>
+                    @endauth
                     <div class="card-header ">
                         <h5>{{$product->title}}</h5>
                     </div>
 
 
                     <div class="card-body d-flex flex-column">
-                        <div class="row justify-content-between">
-                            <div class="col-md-4">&nbsp;{{number_format($product->price)}}&nbsp;<del
-                                        class="text-danger">{{number_format($product->old_price)}}</del>
-                                تومان
-                            </div>
-                            <div class="col-md-4">
-                                <form action="{{route('cart.store',$product)}}" method="post">
-                                    @csrf
-
-                                    <button type="submit" name="addToCart" class="btn btn-sm btn-success "
-                                            onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
-                                        <small>اضافه کردن به سبد خرید</small>
-                                    </button>
-                                </form>
-                            </div>
-
-                        </div>
-
                         <div class="lead mt-3">{{$product->description}}</div>
                         <div class="my-auto">
                             @if(!empty($product->details))
@@ -44,6 +33,26 @@
                                 @endforeach
                             @endif
                         </div>
+
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-md-4">
+                                <del class="text-danger text-bold">{{number_format($product->old_price)}}</del>
+                                <span class="h5 text-bold">{{number_format($product->price)}}تومان</span>
+
+                            </div>
+                            <div class="col-md-4">
+                                <form action="{{route('cart.store',$product)}}" method="post">
+                                    @csrf
+                                    <button type="submit" name="addToCart" class="btn btn-light"
+                                            onclick="this.disabled=true;this.innerHTML='<small>در حال انجام...</small>';this.form.submit();">
+                                        <span class="fa fa-cart-plus text-success display-4" aria-hidden="true"></span>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+
+
                     </div>
                     @auth
                         <div class="card-footer">
@@ -68,8 +77,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card p-3 h-100">
-                    <div class="card-header text-center"><h5>تصاویر</h5></div>
-                    <div class="card-body ">
+                    <div class="card-body">
                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
                              style="height: 100%">
                             <ol class="carousel-indicators">
@@ -81,8 +89,8 @@
                             <div class="carousel-inner">
                                 @foreach($product->images as $image)
                                     <div class="carousel-item justify-content-center {{$loop->index==0?'active':''}}">
-                                        <img class="d-block img-fluid w-100" src="{{route('images.product',$image->path)}}"
-                                             alt=" slide">
+                                        <img class="d-block w-100" src="{{route('images.product',$image->path)}}"
+                                             alt=" slide" style="height: 500px">
                                     </div>
                                 @endforeach
                             </div>
@@ -157,6 +165,30 @@
 
 @section('script')
     <script type="text/javascript">
+
+        function bookmark(div, prodId) {
+            $.ajax({
+                type: "POST",
+                url: '/product/' + prodId + '/bookmark',
+                headers: {
+                    "X-CSRF-TOKEN": "@php echo csrf_token() @endphp"
+                },
+                success: function (data) {
+                    if (data.message == 'deleted.') {
+                        div.innerHTML = "<span class='fa fa-bookmark-o'></span>";
+                        console.log(data.message);
+                    } else {
+                        div.innerHTML = "<span class='fa fa-bookmark'></span>";
+                        console.log(data.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+
         $(".rate span").on("click", function () {
             var currentIndex = $(".rate span").index($(this));
             $(".rate span").each((index, item) => {
@@ -175,7 +207,6 @@
                 },
                 data: {'rate': currentIndex + 1},
                 success: function (data) {
-
                     $(".rateBadge").text(data.rate.slice(0, 3));
                     $(".rateCountBadge").text(data.rateCount);
                 },

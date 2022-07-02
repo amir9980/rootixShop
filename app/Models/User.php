@@ -36,4 +36,8 @@ class user extends Authenticatable
         return $this->hasMany(Comment::class,'user_id');
     }
 
+    public function bookmarks(){
+        return $this->belongsToMany(product::class,'bookmarks','user_id','product_id');
+    }
+
 }

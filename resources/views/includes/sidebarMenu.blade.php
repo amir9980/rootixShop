@@ -35,6 +35,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{route('users.bookmarks')}}" class="nav-link">
+                <i class="fa fa-bookmark" aria-hidden="true">&nbsp;</i>
+                <p>محصولات ذخیره شده</p>
+            </a>
+        </li>
+
 
     </ul>
 </nav>

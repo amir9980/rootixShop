@@ -23,4 +23,8 @@ class product extends Model
     public function comments(){
         return $this->hasMany(Comment::class,'product_id');
     }
+
+    public function bookmarks(){
+        return $this->belongsToMany(User::class,'bookmarks','product_id','user_id');
+    }
 }

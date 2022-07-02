@@ -163,4 +163,10 @@ class UserController extends Controller
         return view('users.charge');
     }
 
+
+    public function bookmarks(Request $request){
+        $products = $request->user()->bookmarks;
+        return view('users.bookmarks',compact('products'));
+    }
+
 }

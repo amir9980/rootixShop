@@ -81,9 +81,12 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function activate(Request $request,Comment $comment)
     {
-        //
+        $comment->update([
+            'status'=>'Active'
+        ]);
+        return back()->with(['message'=>'نظر با موفقیت فعال شد!']);
     }
 
     /**
