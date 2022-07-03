@@ -8,41 +8,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
 {{--    <link rel="stylesheet" href="{{asset('assets/plugins/font-awesome/css/font-awesome.min.css')}}">--}}
-    <!-- Ionicons -->
+<!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
 {{--    <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">--}}
-    <!-- iCheck -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/iCheck/flat/blue.css')}}">--}}
-    <!-- Morris chart -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/morris/morris.css')}}">--}}
-    <!-- jvectormap -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}">--}}
-    <!-- Date Picker -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/datepicker/datepicker3.css')}}">--}}
-    <!-- Daterange picker -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker-bs3.css')}}">--}}
-    <!-- bootstrap wysihtml5 - text editor -->
-    {{--<link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">--}}
-    <!-- Google Font: Source Sans Pro -->
+<!-- iCheck -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/iCheck/flat/blue.css')}}">--}}
+<!-- Morris chart -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/morris/morris.css')}}">--}}
+<!-- jvectormap -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}">--}}
+<!-- Date Picker -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/datepicker/datepicker3.css')}}">--}}
+<!-- Daterange picker -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker-bs3.css')}}">--}}
+<!-- bootstrap wysihtml5 - text editor -->
+{{--<link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">--}}
+<!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- bootstrap rtl -->
 {{--    <link rel="stylesheet" href="{{asset('assets/dist/css/bootstrap-rtl.min.css')}}">--}}
-    <!-- template rtl version -->
-{{--    <link rel="stylesheet" href="{{asset('assets/dist/css/custom-style.css')}}">--}}
+<!-- template rtl version -->
+    {{--    <link rel="stylesheet" href="{{asset('assets/dist/css/custom-style.css')}}">--}}
     {{-- Persian Date Picker --}}
-{{--    <link rel="stylesheet" href="{{asset('assets/dist/css/persian-datepicker.min.css')}}"/>--}}
+    {{--    <link rel="stylesheet" href="{{asset('assets/dist/css/persian-datepicker.min.css')}}"/>--}}
 
     <style>
-        .rate span.checked{
+        .rate span.checked {
             color: orange;
         }
-        .rate span:hover{
+
+        .rate span:hover {
             cursor: pointer;
         }
 
-        #bookmark{
+        #bookmark {
             z-index: 10;
             font-size: 2rem;
             top: 0.5rem;
@@ -56,8 +57,8 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    @include('includes.navbar')
-    <!-- /.navbar -->
+@include('includes.navbar')
+<!-- /.navbar -->
 @auth
 
     <!-- Main Sidebar Container -->
@@ -78,19 +79,20 @@
                         </div>
 
                         <div class="info">
-                            <a href="{{route('profile.show')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
+                            <a href="{{route('profile.show')}}"
+                               class="d-block">{{\Illuminate\Support\Facades\Auth::user()->username}}</a>
                         </div>
 
                     </div>
 
                     <!-- Sidebar Menu -->
-                    @if(request()->user()->is_admin == 1)
-                        @include('admin.includes.sidebarMenu')
-                        @else
-                        @include('includes.sidebarMenu')
-
+                @if(request()->user()->is_admin == 1)
+                    @include('admin.includes.sidebarMenu')
                 @endif
-                    <!-- /.sidebar-menu -->
+                @include('includes.sidebarMenu')
+
+
+                <!-- /.sidebar-menu -->
                 </div>
             </div>
             <!-- /.sidebar -->
@@ -150,7 +152,7 @@
 
 {{--<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->--}}
 {{--<script>--}}
-    {{--$.widget.bridge('uibutton', $.ui.button)--}}
+{{--$.widget.bridge('uibutton', $.ui.button)--}}
 {{--</script>--}}
 {{--<!-- Bootstrap 4 -->--}}
 {{--<script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>--}}
@@ -191,56 +193,54 @@
 <script type="text/javascript">
 
 
-
     {{--function sendDeleteImgRequest(btn){--}}
-        {{--$.ajax({--}}
-            {{--type: "POST",--}}
-            {{--url: "/admin/product/deleteImg",--}}
-            {{--headers:{--}}
-                {{--"X-CSRF-TOKEN":"@php echo csrf_token() @endphp"--}}
-            {{--},--}}
-            {{--success: function(data,txt,xhr){--}}
-                {{--btn.innerHTML = data.message;--}}
-            {{--},--}}
-            {{--error: function (xhr,statustxt,err) {--}}
-                {{--console.log(xhr.responseText);--}}
-            {{--}--}}
-        {{--})--}}
+    {{--$.ajax({--}}
+    {{--type: "POST",--}}
+    {{--url: "/admin/product/deleteImg",--}}
+    {{--headers:{--}}
+    {{--"X-CSRF-TOKEN":"@php echo csrf_token() @endphp"--}}
+    {{--},--}}
+    {{--success: function(data,txt,xhr){--}}
+    {{--btn.innerHTML = data.message;--}}
+    {{--},--}}
+    {{--error: function (xhr,statustxt,err) {--}}
+    {{--console.log(xhr.responseText);--}}
+    {{--}--}}
+    {{--})--}}
 
     {{--}--}}
 
     $(document).ready(function () {
 
-        $("#accessSelectBox").on('change',function () {
-            if($(this).val()=='public'){
-                $("#userIdInput").prop('disabled',true);
-            }
-            else {
-                $("#userIdInput").prop('disabled',false);
+        $("#accessSelectBox").on('change', function () {
+            if ($(this).val() == 'public') {
+                $("#userIdInput").prop('disabled', true);
+            } else {
+                $("#userIdInput").prop('disabled', false);
             }
         });
 
 
         $("#confirmDetailsForm .increaseButton").click(function () {
             var val = parseInt(fixNumbers($(this).siblings("span").text()));
-            $(this).siblings("span").text(val+1);
-            $(this).siblings(".productCount").val(val+1);
+            $(this).siblings("span").text(val + 1);
+            $(this).siblings(".productCount").val(val + 1);
         });
 
         $("#confirmDetailsForm .decreaseButton").click(function () {
             var val = parseInt(fixNumbers($(this).siblings("span").text()));
-            if (val > 1){
-                $(this).siblings("span").text(val-1);
-                $(this).siblings(".productCount").val(val-1);
+            if (val > 1) {
+                $(this).siblings("span").text(val - 1);
+                $(this).siblings(".productCount").val(val - 1);
 
-            }else if(val <= 1){
+            } else if (val <= 1) {
                 $(this).closest("tr").remove();
             }
         });
 
-        $(".submitbtn").click(function (){
-            this.disabled=true;
-            this.innerHTML='<small>...</small>';
+        $(".submitbtn").click(function () {
+            this.disabled = true;
+            this.innerHTML = '<small>...</small>';
             this.form.submit();
         });
 
@@ -268,21 +268,18 @@
 
     });
 
-        var
+    var
         persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-        arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+        arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
 
-        fixNumbers = function (str)
-        {
-            if(typeof str === 'string')
-            {
-                for(var i=0; i<10; i++)
-                {
-                    str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-                }
+    fixNumbers = function (str) {
+        if (typeof str === 'string') {
+            for (var i = 0; i < 10; i++) {
+                str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
             }
-            return str;
-        };
+        }
+        return str;
+    };
 
 </script>
 

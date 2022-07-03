@@ -37,7 +37,7 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-md-4">
                                 <del class="text-danger text-bold">{{number_format($product->old_price)}}</del>
-                                <span class="h5 text-bold">{{number_format($product->price)}}تومان</span>
+                                <span class="h5 text-bold">{{number_format($product->price)}}&nbsp;تومان</span>
 
                             </div>
                             <div class="col-md-4">
@@ -58,11 +58,10 @@
                         <div class="card-footer">
 
                             <div class="rate mt-3">
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+                                @foreach(range(1,5) as $index)
+                                <span class="fa fa-star {{$index<=$product->rate ? 'checked':''}}"></span>
+                              @endforeach
+
                             </div>
                             <p>
                                 امتیاز: <span class="badge badge-dark rateBadge">{{$product->rate}}</span> از <span
@@ -106,8 +105,6 @@
                             </a>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -165,6 +162,7 @@
 
 @section('script')
     <script type="text/javascript">
+
 
         function bookmark(div, prodId) {
             $.ajax({

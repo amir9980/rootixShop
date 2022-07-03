@@ -37,6 +37,9 @@
                                         aria-label=" تعداد: activate to sort column ascending">تعداد
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                        aria-label=" قیمت: activate to sort column ascending">قیمت
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
                                         aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت
                                     </th>
 
@@ -51,6 +54,7 @@
                                             <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
                                             <td class="sorting_1">{{$product->product->title}}</td>
                                             <td class="sorting_1">{{$product->count}}</td>
+                                            <td class="sorting_1">{{number_format($product->product->price)}}</td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($product->created_at)->format('%A, %d %B %y')}}</td>
 
 
@@ -63,14 +67,6 @@
 
                                 </tbody>
 
-                                <tfoot>
-                                <tr>
-                                    <th rowspan="1" colspan="1">ردیف</th>
-                                    <th rowspan="1" colspan="1">محصول</th>
-                                    <th rowspan="1" colspan="1">تعداد</th>
-                                    <th rowspan="1" colspan="1">تاریخ ثبت</th>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

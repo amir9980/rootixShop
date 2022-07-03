@@ -139,18 +139,9 @@ class ProductController extends Controller
         return view('admin.products.editProducts', ['product' => $p]);
     }
 
-    public function show($product)
+    public function show(product $product)
     {
-
-        if (\Illuminate\Support\Facades\Auth::user()) {
-            $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        } else {
-            $cart = null;
-        }
-
-        $p = product::find($product);
-
-        return view('showProduct', ['product' => $p, 'cart' => $cart]);
+        return view('showProduct', compact('product'));
 
     }
 
@@ -229,10 +220,7 @@ class ProductController extends Controller
         $request->validate(['rate' => 'nullable|numeric|between:1,5']);
 
         $rate = Rate::where('product_id', '=', $product->id)->where('user_id', '=', $request->user()->id)->first();
-        if (!is_null($rate)) {
-            $rate->rate = $request->rate;
-            $rate->save();
-        } else {
+        if (is_null($rate)) {
             Rate::create([
                 'user_id' => $request->user()->id,
                 'product_id' => $product->id,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\WalletPayment;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -73,7 +74,7 @@ class UserController extends Controller
 
     $request->validate([
         'username'=>'required|string',
-        'role'=>'required',
+        'role'=>['required',Rule::in(['admin','user'])],
         'wallet'=>'nullable|numeric',
         'new_password'=>'nullable|confirmed',
         'img'=>'nullable|mimes:jpg,jpeg,png|max:2024'

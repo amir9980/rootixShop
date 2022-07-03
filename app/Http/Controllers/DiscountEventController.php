@@ -16,9 +16,26 @@ class DiscountEventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = DiscountEvent::orderBy('id','DESC')->paginate(15);
+//        dd($request->all());
+        $request->validate([
+            'percentage'=>'nullable|numeric',
+        ]);
+
+        $events = DiscountEvent::query();
+
+        if ($request->has('percentage') && !empty($request->percentage)) {
+            $events = $events->where('percentage', '=', $request->percentage);
+        }
+        if ($request->has('start_date') && !empty($request->start_date)) {
+            $events = $events->where('start_date', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->start_date) . ' 00:00:00'));
+        }
+        if ($request->has('expire_date') && !empty($request->expire_date)) {
+            $events = $events->where('expire_date', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 23:59:59'));
+        }
+
+        $events = $events->orderBy('id','DESC')->paginate(15);
         $iteration = ($events->currentPage() - 1) * $events->perPage();
         return view('admin.discountEvents.index',compact('events','iteration'));
     }
