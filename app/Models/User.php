@@ -40,4 +40,8 @@ class user extends Authenticatable
         return $this->belongsToMany(product::class,'bookmarks','user_id','product_id');
     }
 
+    public function orderShipping(){
+        return $this->hasOne(OrderShipping::class,'user_id');
+    }
+
 }

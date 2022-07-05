@@ -49,6 +49,14 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="status">وضعیت</label>
+                    <select class="form-control" name="status">
+                        <option value="Active" @if($user->status == 'Active')selected @endif>فعال</option>
+                        <option value="Inactive" @if($user->status == 'Inactive')selected @endif>غیرفعال</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label>اعتبار کیف پول:</label>
                     <span>{{number_format($user->wallet)}}&nbsp;تومان</span>
                 </div>

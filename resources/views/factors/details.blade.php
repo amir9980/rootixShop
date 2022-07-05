@@ -10,14 +10,15 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">سبدهای خرید</h3>
+                <h3 class="card-title">سبد خرید</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <div id="example2_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6"></div>
-                        <div class="col-sm-12 col-md-6"></div>
+                    {{--@if($factor->is_paid == 1)--}}
+                    <div class="d-flex flex-column align-items-center my-3">
+                        {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate(route('factor.orderShipping',$factor->tracking_code))}}
+                        <span class="my-2">برای رهگیری سفارش اسکن کنید.</span>
                     </div>
 
 
@@ -47,23 +48,21 @@
                                 </thead>
                                 <tbody>
 
-                                @if(count($products)>0)
-                                    @foreach($products as $product)
+                                @foreach($factor->details as $product)
 
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
-                                            <td class="sorting_1">{{$product->product->title}}</td>
-                                            <td class="sorting_1">{{$product->count}}</td>
-                                            <td class="sorting_1">{{number_format($product->product->price)}}</td>
-                                            <td>{{\Morilog\Jalali\Jalalian::forge($product->created_at)->format('%A, %d %B %y')}}</td>
-
-
-                                        </tr>
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">@php $iteration+=1;echo $iteration; @endphp</td>
+                                        <td class="sorting_1">{{$product->product->title}}</td>
+                                        <td class="sorting_1">{{$product->count}}</td>
+                                        <td class="sorting_1">{{number_format($product->product->price)}}</td>
+                                        <td>{{\Morilog\Jalali\Jalalian::forge($product->created_at)->format('%A, %d %B %y')}}</td>
 
 
-                                    @endforeach
+                                    </tr>
 
-                                @endif
+
+                                @endforeach
+
 
                                 </tbody>
 

@@ -107,7 +107,7 @@ class CommentController extends Controller
 
 
     public function inactiveCommentsIndex(){
-        $comments = Comment::where('status','=','inactive')->paginate(15);
+        $comments = Comment::where('status','=','Inactive')->paginate(15);
         $iteration = ($comments->currentPage() - 1) * $comments->perPage();
 
         return view('admin.comments.inactivecomments',compact('comments','iteration'));

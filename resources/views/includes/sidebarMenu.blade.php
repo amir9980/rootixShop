@@ -42,6 +42,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{route('factor.orderShipping.search')}}" class="nav-link">
+                <i class="fa fa-search" aria-hidden="true">&nbsp;</i>
+                <p>رهگیری سفارش</p>
+            </a>
+        </li>
+
 
     </ul>
 </nav>

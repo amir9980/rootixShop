@@ -98,6 +98,9 @@
                                         aria-label="تاریخ ثبت: activate to sort column ascending">تاریخ ثبت
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
+                                        aria-label="وضعیت: activate to sort column ascending">وضعیت
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
                                         aria-label="آیدی: activate to sort column ascending">آیدی
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"
@@ -116,7 +119,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>
                                                 @if($user->is_admin == 1)
-                                                    <span class="badge badge-success">مدیر</span>
+                                                    <span class="badge badge-warning">مدیر</span>
                                                 @else
                                                     <span class="badge badge-primary">کاربر</span>
 
@@ -124,6 +127,8 @@
                                                 @endif
                                             </td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($user->created_at)->format('%A, %d %B %y')}}</td>
+
+                                            <td>@if($user->status == 'Active') <span class="badge badge-success">فعال</span> @elseif($user->status == 'Inactive') <span class="badge badge-danger">غیرفعال</span> @endif</td>
 
                                             <td>{{$user->id}}</td>
 
@@ -151,6 +156,7 @@
                                     <th rowspan="1" colspan="1">ایمیل</th>
                                     <th rowspan="1" colspan="1">نقش</th>
                                     <th rowspan="1" colspan="1">تاریخ ثبت</th>
+                                    <th rowspan="1" colspan="1">وضعیت</th>
                                     <th rowspan="1" colspan="1">آیدی</th>
                                     <th rowspan="1" colspan="1">عملیات</th>
                                 </tr>

@@ -117,11 +117,11 @@
                                             <td>{{ number_format($product->price)}}&nbsp;تومان</td>
                                             <td>{{\Morilog\Jalali\Jalalian::forge($product->created_at)->format('%A, %d %B %y')}}</td>
                                             <td>
-                                                @if($product->status == 1)
+                                                @if($product->status == 'Active')
                                                     <span class="badge badge-success">فعال</span>
-                                                @elseif($product->status == 2)
+                                                @elseif($product->status == 'Inactive')
                                                     <span class="badge badge-primary">غیرفعال</span>
-                                                @elseif($product->status == 3)
+                                                @elseif($product->status == 'Deleted')
                                                     <span class="badge badge-danger">حذف شده</span>
 
                                                 @endif

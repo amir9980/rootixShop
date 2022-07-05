@@ -85,8 +85,6 @@ class DiscountTokenController extends Controller
                 ];
             }
 
-//            dd($tokens);
-
             DiscountToken::insert($tokens);
             return redirect()->route('discountToken.index')->with('message','shod');
 

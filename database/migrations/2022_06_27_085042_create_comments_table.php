@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('CASCADE');
-            $table->string('status')->comment('Active or inactive.')->default('inactive');
+            $table->string('status')->comment('Active or Inactive.')->default('Inactive');
             $table->text('body');
             $table->timestamps();
         });

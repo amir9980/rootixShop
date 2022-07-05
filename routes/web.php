@@ -41,7 +41,7 @@ Route::prefix('file')->group(function (){
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'isAdmin','isActive'])->group(function () {
     Route::get('/', function () {
         return view('admin/index');
     })->name('admin');
@@ -66,31 +66,33 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
-Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate')->middleware('auth');
-Route::post('product/{product}/bookmark', [ProductController::class, 'bookmark'])->name('product.bookmark')->middleware('auth');
+Route::post('product/{product}/rate', [ProductController::class, 'rate'])->name('product.rate')->middleware(['auth','isActive']);
+Route::post('product/{product}/bookmark', [ProductController::class, 'bookmark'])->name('product.bookmark')->middleware(['auth','isActive']);
 
-Route::prefix('cart')->middleware('auth')->group(function (){
+Route::prefix('cart')->middleware(['auth','isActive'])->group(function (){
     Route::post('{product}', [CartController::class, 'store'])->name('cart.store');
     Route::delete('{product}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('/', [CartController::class, 'show'])->middleware('emptyCart')->name('cart.show');
 });
 
-Route::prefix('factor')->middleware('auth')->group(function (){
+Route::prefix('factor')->middleware(['auth','isActive'])->group(function (){
     Route::post('store', [FactorController::class, 'store'])->middleware('emptyCart')->name('factor.store');
     Route::get('index', [FactorController::class, 'index'])->name('factor.index');
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
     Route::post('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm.details');
     Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->middleware('emptyCart')->name('factor.order');
+    Route::get('orderShipping/', [FactorController::class, 'searchOrderShipping'])->name('factor.orderShipping.search');
+    Route::match(['get','post'],'orderShipping/{trackingCode?}', [FactorController::class, 'orderShipping'])->name('factor.orderShipping');
 });
 
-Route::prefix('comment')->middleware('auth')->group(function (){
+Route::prefix('comment')->middleware(['auth','isActive'])->group(function (){
     Route::post('store/{product}', [CommentController::class, 'store'])->name('comment.store');
     Route::delete('{comment}/delete', [CommentController::class, 'destroy'])->name('comment.destroy');
 
 });
 
 
-Route::prefix('user')->middleware('auth')->group(function (){
+Route::prefix('user')->middleware(['auth','isActive'])->group(function (){
     Route::get('profile',[UserController::class,'showProfile'])->name('profile.show');
     Route::put('profile',[UserController::class,'storeProfile'])->name('profile.update');
     Route::get('charge',[UserController::class,'charge'])->name('users.charge');
@@ -98,6 +100,6 @@ Route::prefix('user')->middleware('auth')->group(function (){
 });
 
 
-Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware('auth');
+Route::post('payment/{user}/store',[WalletPaymentController::class,'store'])->name('payment.store')->middleware(['auth','isActive']);
 
 

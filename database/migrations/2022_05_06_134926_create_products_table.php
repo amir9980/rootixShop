@@ -24,6 +24,8 @@ class CreateProductsTable extends Migration
             $table->float('rate')->default(0);
             $table->unsignedInteger('rate_count')->default(0);
             $table->text('details')->nullable();
+            $table->string('status',10)->default('Inactive')->comment('Active or Inactive or Deleted');
+            $table->string('delete_reason')->nullable();
             $table->timestamps();
         });
     }

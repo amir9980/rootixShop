@@ -17,19 +17,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-//        $validated = Validator::make($request->all(), [
-//            'title' => 'nullable|max:255',
-//            'from_price' => 'nullable|numeric',
-//            'to_price' => 'nullable|numeric',
-//            'from_date' => 'nullable',
-//            'to_date' => 'nullable',
-//            'status' => 'nullable|digits_between:1,3',
-//
-//        ]);
-//        if ($validated->fails()) {
-//            return redirect()->back()->withInput()->withErrors($validated);
-//        }
-
         $users = user::query();
 
         if ($request->has('username') && !empty($request->username)) {
@@ -67,22 +54,21 @@ class UserController extends Controller
         return view('admin.users.editUsers', ['user' => $u]);
     }
 
-    public function update(Request $request,$u){
+    public function update(Request $request,user $user){
 
         //        value is in number format like 10,000 so:
         $request['wallet'] = str_replace(',','',$request->wallet);
 
     $request->validate([
         'username'=>'required|string',
-        'role'=>['required',Rule::in(['admin','user'])],
+        'role'=>'required|string|in:admin,user',
+        'status'=>'required|string|in:Active,Inactive',
         'wallet'=>'nullable|numeric',
         'new_password'=>'nullable|confirmed',
         'img'=>'nullable|mimes:jpg,jpeg,png|max:2024'
     ]);
 
     try{
-
-        $user = user::find($u);
 
         $user->username=$request->username;
 
@@ -92,6 +78,8 @@ class UserController extends Controller
         elseif ($request->role == 'user'){
             $user->is_admin = 0;
         }
+
+        $user->status = $request->status;
 
         if (!empty($request->wallet)){
             WalletPayment::create([

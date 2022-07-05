@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\is_admin;
+use App\Http\Middleware\isActive;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\NotEmptyCart;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -58,6 +59,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'isActive'=>isActive::class,
         'isAdmin'=> IsAdmin::class,
         'emptyCart'=>NotEmptyCart::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

@@ -45,9 +45,9 @@
                 <div class="form-group">
                     <label for="status">وضعیت</label>
                     <select class="form-control" name="status">
-                        <option value="1" @if($product->status==1)selected @endif>فعال</option>
-                        <option value="2" @if($product->status==2)selected @endif>غیرفعال</option>
-                        <option value="3" @if($product->status==3)selected @endif>حذف شده</option>
+                        <option value="1" @if($product->status=='Active')selected @endif>فعال</option>
+                        <option value="2" @if($product->status=='Inactive')selected @endif>غیرفعال</option>
+                        <option value="3" @if($product->status=='Deleted')selected @endif>حذف شده</option>
                     </select>
                 </div>
 

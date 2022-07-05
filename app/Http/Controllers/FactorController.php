@@ -10,10 +10,12 @@ use App\Models\DiscountEvent;
 use App\Models\DiscountToken;
 use App\Models\factorMaster;
 use App\Models\factorDetail;
+use App\Models\OrderShipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Morilog\Jalali\Jalalian;
 
 class FactorController extends Controller
 {
@@ -121,7 +123,7 @@ class FactorController extends Controller
                 'user_id' => $user->id,
                 'total_price' => $total,
                 'payment_method' => $request->paymentMethod,
-                'address_id'=>$address->id
+                'address_id'=>$address->id,
             ]);
 
             if (isset($token)) {
@@ -154,20 +156,28 @@ class FactorController extends Controller
 
 
             $user->wallet -= $factor->total_price;
+            $factor->is_paid = 1;
             $user->save();
 
-            $factor->is_paid = 1;
             $factor->reports()->create([
                 'status' => 'paid',
                 'type' => 'decrease',
                 'value' => $factor->total_price,
                 'log' => $log,
             ]);
+
+
+            OrderShipping::create([
+                'factor_id'=>$factor->id,
+                'tracking_code'=>Str::random(10),
+                'ordered_description'=> 'سفارش کاربر '.$user->username.' '.'در تاریخ '.Jalalian::forge($factor->created_at).' '.'ثبت شد.'
+            ]);
+
             $factor->save();
 
             DB::commit();
 
-            return redirect()->route('home')->with('message', 'خرید شما با موفقیت ثبت شد!');
+            return redirect()->route('factor.show',$factor->id)->with('message', 'خرید شما با موفقیت ثبت شد!');
 
 
         } catch (Exception $e) {
@@ -233,10 +243,8 @@ class FactorController extends Controller
 
     public function show(Request $request, factorMaster $factor)
     {
-        $details = $factor->details;
 
-
-        return view('factors.details', ['products' => $details, 'iteration' => '0']);
+        return view('factors.details', ['factor' => $factor, 'iteration' => '0']);
 
     }
 
@@ -300,6 +308,24 @@ class FactorController extends Controller
             $total += $item->product->price * $item->count;
         }
         return view('factors.orderDetails', ['addresses' => $addresses, 'total' => $total, 'cart' => $cart]);
+    }
+
+    public function searchOrderShipping(){
+        return view('factors.searchOrderShipping');
+    }
+
+    public function orderShipping(Request $request,$code = null){
+        $request->validate([
+            'code'=>'required|string|max:20'
+        ]);
+
+        if (is_null($code)){
+            $code = $request->code;
+        }
+
+        $shipping = OrderShipping::where('tracking_code','=',$code)->firstOrFail();
+
+        return view('factors.orderShipping',compact('shipping'));
     }
 
 

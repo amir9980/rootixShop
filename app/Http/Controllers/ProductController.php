@@ -35,7 +35,7 @@ class ProductController extends Controller
             'to_price' => 'nullable|numeric',
             'from_date' => 'nullable',
             'to_date' => 'nullable',
-            'status' => 'nullable|digits_between:1,3',
+            'status' => 'nullable|string|in:Active,Inactive,Deleted',
 
         ]);
 
@@ -165,7 +165,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'old_price' => 'required|numeric',
-            'status' => 'required|numeric',
+            'status' => 'required|string|in:Active,Inactive,Deleted',
             'images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
@@ -187,7 +187,7 @@ class ProductController extends Controller
             'description' => $request['description'],
             'price' => $request['price'],
             'old_price' => $request['old_price'],
-            'status' => (int)$request['status'],
+            'status' => $request['status'],
             'thumbnail' => $thumb
         ]);
 
@@ -208,7 +208,7 @@ class ProductController extends Controller
         ]);
 
         $p = product::find($product->id);
-        $p->status = 3; //status 3 means 'deleted'
+        $p->status = 'Deleted';
         $p->delete_reason = $request->reason;
         $p->save();
 

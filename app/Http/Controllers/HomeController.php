@@ -48,7 +48,7 @@ class HomeController extends Controller
         }
 
 
-        $products = $products->where('status', '=', 1)->paginate(15);
+        $products = $products->where('status', '=', 'Active')->paginate(15);
 
         return view('index', [
             'products' => $products,
