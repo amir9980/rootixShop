@@ -61,6 +61,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin','isActive'])->group(functi
     Route::get('inactiveComments/index',[CommentController::class,'inactiveCommentsIndex'])->name('inactiveComments.index');
     Route::put('{comment}/activate',[CommentController::class,'activate'])->name('comment.activate');
 
+    Route::get('factor/index',[FactorController::class,'adminIndex'])->name('admin.factor.index');
+    Route::get('shipping/{shipping}/status',[FactorController::class,'statusConfirmation'])->name('admin.shipping.statusConfirmation');
+    Route::put('shipping/{shipping}/status',[FactorController::class,'status'])->name('admin.shipping.status');
 
 });
 
@@ -81,8 +84,8 @@ Route::prefix('factor')->middleware(['auth','isActive'])->group(function (){
     Route::get('{factor}/show', [FactorController::class, 'show'])->name('factor.show');
     Route::post('confirmDetails/', [FactorController::class, 'confirmDetails'])->name('factor.confirm.details');
     Route::get('orderDetails/', [FactorController::class, 'orderDetails'])->middleware('emptyCart')->name('factor.order');
-    Route::get('orderShipping/', [FactorController::class, 'searchOrderShipping'])->name('factor.orderShipping.search');
-    Route::match(['get','post'],'orderShipping/{trackingCode?}', [FactorController::class, 'orderShipping'])->name('factor.orderShipping');
+    Route::match(['get','post'],'orderShipping/', [FactorController::class, 'orderShipping'])->name('factor.orderShipping');
+    Route::get('orderShipping/search', [FactorController::class, 'searchOrderShipping'])->name('factor.orderShipping.search');
 });
 
 Route::prefix('comment')->middleware(['auth','isActive'])->group(function (){

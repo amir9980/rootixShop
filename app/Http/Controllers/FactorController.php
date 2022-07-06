@@ -35,20 +35,19 @@ class FactorController extends Controller
                 'state' => $request->state,
                 'city' => $request->city,
                 'address' => $request->address,
-                'user_id'=>$user->id
+                'user_id' => $user->id
             ]);
-        }else{
+        } else {
             $request->validate([
-                'addressBar'=>'required|numeric',
+                'addressBar' => 'required|numeric',
                 'paymentMethod' => 'required|string|max:255|in:zarinpal,saderat,cash,asanpardakht',
                 'discount_token' => 'nullable|string|max:20'
             ]);
             $address = Address::find($request->addressBar);
-            if (is_null($address) || $address->user_id != $request->user()->id){
+            if (is_null($address) || $address->user_id != $request->user()->id) {
                 return back()->withErrors(['آدرس وارد شده نامعتبر میباشد!']);
             }
         }
-
 
 
         $total = null;
@@ -123,7 +122,7 @@ class FactorController extends Controller
                 'user_id' => $user->id,
                 'total_price' => $total,
                 'payment_method' => $request->paymentMethod,
-                'address_id'=>$address->id,
+                'address_id' => $address->id,
             ]);
 
             if (isset($token)) {
@@ -168,16 +167,16 @@ class FactorController extends Controller
 
 
             OrderShipping::create([
-                'factor_id'=>$factor->id,
-                'tracking_code'=>Str::random(10),
-                'ordered_description'=> 'سفارش کاربر '.$user->username.' '.'در تاریخ '.Jalalian::forge($factor->created_at).' '.'ثبت شد.'
+                'factor_id' => $factor->id,
+                'tracking_code' => Str::random(10),
+                'ordered_description' => 'سفارش کاربر ' . $user->username . ' ' . 'در تاریخ ' . Jalalian::forge($factor->created_at) . ' ' . 'ثبت شد.'
             ]);
 
             $factor->save();
 
             DB::commit();
 
-            return redirect()->route('factor.show',$factor->id)->with('message', 'خرید شما با موفقیت ثبت شد!');
+            return redirect()->route('factor.show', $factor->id)->with('message', 'خرید شما با موفقیت ثبت شد!');
 
 
         } catch (Exception $e) {
@@ -190,14 +189,7 @@ class FactorController extends Controller
 
     public function index(Request $request)
     {
-
-//        Authorize:
-        if ($request->user()->is_admin == 1) {
-
-            $factors = factorMaster::query();
-        } else {
-            $factors = factorMaster::where('user_id', $request->user()->id);
-        }
+        $factors = factorMaster::where('user_id', $request->user()->id);
 
         //        value is in number format like 10,000 so:
         $request['from_price'] = str_replace(',', '', $request->from_price);
@@ -220,11 +212,11 @@ class FactorController extends Controller
         }
 
         if ($request->has('from_price') && !empty($request->from_price)) {
-            $products = $factors->where('total_price', '>=', $request->from_price);
+            $factors = $factors->where('total_price', '>=', $request->from_price);
         }
 
         if ($request->has('to_price') && !empty($request->to_price)) {
-            $products = $factors->where('total_price', '<=', $request->to_price);
+            $factors = $factors->where('total_price', '<=', $request->to_price);
         }
 
         if ($request->has('from_date') && !empty($request->from_date)) {
@@ -239,6 +231,52 @@ class FactorController extends Controller
 
 
         return view('factors.index', ['factors' => $factors, 'iteration' => $iteration]);
+    }
+
+    public function adminIndex(Request $request)
+    {
+
+        $request['from_price'] = str_replace(',', '', $request->from_price);
+        $request['to_price'] = str_replace(',', '', $request->to_price);
+
+        //validation
+        $request->validate([
+            'from_price' => 'nullable|numeric',
+            'to_price' => 'nullable|numeric',
+        ]);
+
+        $factors = factorMaster::query();
+
+        //      Search:
+        if ($request->has('status') && !empty($request->status)) {
+            if ($request->status == 'paid') {
+                $factors = $factors->where('is_paid', '=', 1);
+            } elseif ($request->status == 'not_paid') {
+                $factors = $factors->where('is_paid', '=', 0);
+            }
+        }
+
+        if ($request->has('from_price') && !empty($request->from_price)) {
+            $factors = $factors->where('total_price', '>=', $request->from_price);
+        }
+
+        if ($request->has('to_price') && !empty($request->to_price)) {
+            $factors = $factors->where('total_price', '<=', $request->to_price);
+        }
+
+        if ($request->has('from_date') && !empty($request->from_date)) {
+            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+        }
+        if ($request->has('to_date') && !empty($request->to_date)) {
+            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+        }
+
+        $factors = $factors->latest()->paginate(15);
+        $iteration = ($factors->currentPage() - 1) * $factors->perPage();
+
+
+        return view('admin.factors.index', ['factors' => $factors, 'iteration' => $iteration]);
+
     }
 
     public function show(Request $request, factorMaster $factor)
@@ -310,22 +348,68 @@ class FactorController extends Controller
         return view('factors.orderDetails', ['addresses' => $addresses, 'total' => $total, 'cart' => $cart]);
     }
 
-    public function searchOrderShipping(){
+    public function searchOrderShipping()
+    {
         return view('factors.searchOrderShipping');
     }
 
-    public function orderShipping(Request $request,$code = null){
+    public function orderShipping(Request $request, $code = null)
+    {
         $request->validate([
-            'code'=>'required|string|max:20'
+            'code' => 'required|string|max:20'
         ]);
 
-        if (is_null($code)){
+        if (is_null($code)) {
             $code = $request->code;
         }
 
-        $shipping = OrderShipping::where('tracking_code','=',$code)->firstOrFail();
+        $shipping = OrderShipping::where('tracking_code', '=', $code)->firstOrFail();
 
-        return view('factors.orderShipping',compact('shipping'));
+        return view('factors.orderShipping', compact('shipping'));
+    }
+
+    public function statusConfirmation(Request $request, OrderShipping $shipping)
+    {
+
+        return view('admin.factors.statusConfirmation', compact('shipping'));
+    }
+
+    public function status(Request $request, OrderShipping $shipping)
+    {
+        $request->validate([
+            'extraDescription' => 'nullable|string|max:500',
+            'postalTrackingCode' => 'nullable|string|max:30'
+        ]);
+
+        switch ($shipping->status) {
+            case 'ordered':
+                $shipping->update([
+                    'status' => 'checked',
+                    'checked_description' => 'checked log',
+                ]);
+                break;
+            case 'checked':
+                if (!$request->has('postalTrackingCode') || empty($request->postalTrackingCode)){
+                    return back()->withErrors(['شماره پیگیری پستی وارد نشده است!']);
+                }
+                $shipping->update([
+                    'status' => 'sent',
+                    'sent_description' => 'sent log',
+                    'extra_field'=>$request->postalTrackingCode
+                ]);
+                break;
+            case 'sent':
+                $shipping->update([
+                    'status' => 'delivered',
+                    'delivered_description' => 'delivered log',
+                ]);
+                break;
+            case 'delivered':
+                return back()->withErrors(['امکان ویرایش وضعیت وجود ندارد!']);
+                break;
+        }
+
+        return redirect()->route('admin.factor.index')->with('message','تغییر وضعیت با موفقیت اعمال شد!');
     }
 
 
