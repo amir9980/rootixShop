@@ -135,7 +135,7 @@
                                             </td>
                                             <td>
                                                 @if($factor->orderShipping->status == 'delivered')
-                                                    <span class="badge badge-seccess">تحویل داده شده</span>
+                                                    <span class="badge badge-success">تحویل داده شده</span>
                                                 @elseif($factor->orderShipping->status == 'sent')
                                                     <span class="badge badge-warning">ارسال شده</span>
                                                 @elseif($factor->orderShipping->status == 'checked')

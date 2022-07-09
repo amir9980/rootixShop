@@ -23,6 +23,7 @@ class CreateOrderShippingsTable extends Migration
             $table->text('checked_description')->nullable();
             $table->text('sent_description')->nullable();
             $table->text('delivered_description')->nullable();
+            $table->text('postal_tracking_code')->nullable();
             $table->text('extra_field')->nullable();
             $table->timestamps();
         });

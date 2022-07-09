@@ -149,7 +149,7 @@ class FactorController extends Controller
                 'city' => $factor->address->city,
                 'address' => $factor->address->address,
                 'paymentMethod' => $factor->payment_method,
-                'date' => now(),
+                'date' => Jalalian::forge(now()),
                 'factorId' => $factor->id,
                 'price' => $factor->total_price]);
 
@@ -169,7 +169,10 @@ class FactorController extends Controller
             OrderShipping::create([
                 'factor_id' => $factor->id,
                 'tracking_code' => Str::random(10),
-                'ordered_description' => 'سفارش کاربر ' . $user->username . ' ' . 'در تاریخ ' . Jalalian::forge($factor->created_at) . ' ' . 'ثبت شد.'
+                'ordered_description' =>__('logs.order_ordered_description',[
+                    'user'=>$user->username,
+                    'date'=>Jalalian::forge($factor->created_at)
+                ])
             ]);
 
             $factor->save();
@@ -385,7 +388,11 @@ class FactorController extends Controller
             case 'ordered':
                 $shipping->update([
                     'status' => 'checked',
-                    'checked_description' => 'checked log',
+                    'checked_description' =>__('logs.order_checked_description',[
+                        'user'=>$shipping->factor->user->username,
+                        'admin'=>$request->user()->username,
+                        'date'=>Jalalian::forge(now())
+                    ]),
                 ]);
                 break;
             case 'checked':
@@ -394,14 +401,20 @@ class FactorController extends Controller
                 }
                 $shipping->update([
                     'status' => 'sent',
-                    'sent_description' => 'sent log',
-                    'extra_field'=>$request->postalTrackingCode
+                    'sent_description' => __('logs.order_sent_description',[
+                        'user'=>$shipping->factor->user->username,
+                        'date'=>Jalalian::forge(now())
+                    ]),
+                    'postal_tracking_code'=>$request->postalTrackingCode
                 ]);
                 break;
             case 'sent':
                 $shipping->update([
                     'status' => 'delivered',
-                    'delivered_description' => 'delivered log',
+                    'delivered_description' => __('logs.order_delivered_description',[
+                        'user'=>$shipping->factor->user->username,
+                        'date'=>Jalalian::forge(now())
+                    ]),
                 ]);
                 break;
             case 'delivered':
