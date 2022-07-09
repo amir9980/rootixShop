@@ -59,7 +59,6 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'isActive'=>isActive::class,
         'isAdmin'=> IsAdmin::class,
         'emptyCart'=>NotEmptyCart::class,
         'auth' => \App\Http\Middleware\Authenticate::class,

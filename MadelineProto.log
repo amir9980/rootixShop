@@ -1,0 +1,870 @@
+[09-Jul-2022 06:44:09 UTC] Enabled PHP logging
+[09-Jul-2022 06:44:09 UTC] Enabled PHP logging
+[09-Jul-2022 06:44:56 UTC] Enabled PHP logging
+[09-Jul-2022 06:44:56 UTC] Enabled PHP logging
+[09-Jul-2022 06:45:11 UTC] Enabled PHP logging
+[09-Jul-2022 06:45:11 UTC] Enabled PHP logging
+[09-Jul-2022 06:46:36 UTC] Enabled PHP logging
+[09-Jul-2022 06:46:36 UTC] Enabled PHP logging
+[09-Jul-2022 06:56:28 UTC] Enabled PHP logging
+[09-Jul-2022 06:56:28 UTC] Enabled PHP logging
+[09-Jul-2022 06:57:52 UTC] Enabled PHP logging
+[09-Jul-2022 06:57:52 UTC] Enabled PHP logging
+[09-Jul-2022 06:57:54 UTC] Enabled PHP logging
+[09-Jul-2022 06:57:54 UTC] Enabled PHP logging
+[09-Jul-2022 06:58:04 UTC] Enabled PHP logging
+[09-Jul-2022 06:58:04 UTC] Enabled PHP logging
+[09-Jul-2022 06:58:04 UTC] Enabled PHP logging
+Logger:         	MadelineProto
+Logger:         	Copyright (C) 2016-2022 Daniil Gentili
+Logger:         	Licensed under AGPLv3
+Logger:         	https://github.com/danog/MadelineProto
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akmx', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for my.telegram.org: Amp\Dns\TimeoutException: No response for 'my.telegram.org' (A) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akmw', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main}, Amp\Dns\TimeoutException: No response for 'my.telegram.org' (AAAA) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akmx', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main} in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:161
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akmx', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	Connection failed: Amp\TimeoutException: Operation timed out in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:275
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('avyl', NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#7 [internal function]: danog\MadelineProto\API->__destruct()
+#8 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	Connection failed: Amp\Socket\ConnectException: Connecting to tcp://my.telegram.org:443 failed: timeout exceeded (10000 ms) in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\socket\src\DnsConnector.php:93
+Stack trace:
+#0 [internal function]: Amp\Socket\DnsConnector::Amp\Socket\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('bgyx', NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#14 [internal function]: danog\MadelineProto\API->__destruct()
+#15 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	Connection failed: Amp\Socket\ConnectException: Connecting to tcp://my.telegram.org:443 failed: timeout exceeded (10000 ms) in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\socket\src\DnsConnector.php:93
+Stack trace:
+#0 [internal function]: Amp\Socket\DnsConnector::Amp\Socket\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('bgzl', NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#14 [internal function]: danog\MadelineProto\API->__destruct()
+#15 {main}
+Exception:      	Could not connect to URI tcp://my.telegram.org:443 in ContextConnector.php:69
+[09-Jul-2022 07:00:55 UTC] Enabled PHP logging
+[09-Jul-2022 07:00:55 UTC] Enabled PHP logging
+[09-Jul-2022 07:00:57 UTC] Enabled PHP logging
+[09-Jul-2022 07:00:57 UTC] Enabled PHP logging
+[09-Jul-2022 07:00:59 UTC] Enabled PHP logging
+[09-Jul-2022 07:00:59 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:04 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:04 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:04 UTC] Enabled PHP logging
+Logger:         	MadelineProto
+Logger:         	Copyright (C) 2016-2022 Daniil Gentili
+Logger:         	Licensed under AGPLv3
+Logger:         	https://github.com/danog/MadelineProto
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akdx', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for my.telegram.org: Amp\Dns\TimeoutException: No response for 'my.telegram.org' (A) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akdx', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main}, Amp\Dns\TimeoutException: No response for 'my.telegram.org' (AAAA) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akdw', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main} in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:161
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('akdx', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asnq', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for mozilla.cloudflare-dns.com: No response for 'mozilla.cloudflare-dns.com' (A) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53, No response for 'mozilla.cloudflare-dns.com' (AAAA) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53 in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\dns\lib\Rfc1035StubResolver.php:197
+Stack trace:
+#0 [internal function]: Amp\Dns\Rfc1035StubResolver->Amp\Dns\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asnq', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asnu', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for dns.google: No response for 'dns.google' (A) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53, No response for 'dns.google' (AAAA) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53 in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\dns\lib\Rfc1035StubResolver.php:197
+Stack trace:
+#0 [internal function]: Amp\Dns\Rfc1035StubResolver->Amp\Dns\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asnu', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asow', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for my.telegram.org: Amp\Dns\TimeoutException: No response for 'my.telegram.org' (A) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asov', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main}, Amp\Dns\TimeoutException: No response for 'my.telegram.org' (AAAA) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asow', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main} in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:161
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('asow', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('aspm', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for dns.google: No response for 'dns.google' (A) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53, No response for 'dns.google' (AAAA) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53 in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\dns\lib\Rfc1035StubResolver.php:197
+Stack trace:
+#0 [internal function]: Amp\Dns\Rfc1035StubResolver->Amp\Dns\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('aspm', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('aspi', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for mozilla.cloudflare-dns.com: No response for 'mozilla.cloudflare-dns.com' (A) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53, No response for 'mozilla.cloudflare-dns.com' (AAAA) from any nameserver within 3000 ms after 2 attempts, tried udp://192.168.1.1:53, udp://192.168.1.1:53 in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\dns\lib\Rfc1035StubResolver.php:197
+Stack trace:
+#0 [internal function]: Amp\Dns\Rfc1035StubResolver->Amp\Dns\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('aspi', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:54 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:55 UTC] Enabled PHP logging
+[09-Jul-2022 07:01:55 UTC] Enabled PHP logging
+[09-Jul-2022 07:02:01 UTC] Enabled PHP logging
+[09-Jul-2022 07:02:01 UTC] Enabled PHP logging
+[09-Jul-2022 07:02:04 UTC] Enabled PHP logging
+[09-Jul-2022 07:02:04 UTC] Enabled PHP logging
+[09-Jul-2022 07:02:04 UTC] Enabled PHP logging
+Logger:         	MadelineProto
+Logger:         	Copyright (C) 2016-2022 Daniil Gentili
+Logger:         	Licensed under AGPLv3
+Logger:         	https://github.com/danog/MadelineProto
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adiz', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for my.telegram.org: Amp\Dns\TimeoutException: No response for 'my.telegram.org' (A) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adiz', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main}, Amp\Dns\TimeoutException: No response for 'my.telegram.org' (AAAA) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adiy', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main} in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:161
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adiz', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+[09-Jul-2022 07:03:02 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:02 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:09 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:09 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:13 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:13 UTC] Enabled PHP logging
+[09-Jul-2022 07:03:13 UTC] Enabled PHP logging
+Logger:         	MadelineProto
+Logger:         	Copyright (C) 2016-2022 Daniil Gentili
+Logger:         	Licensed under AGPLv3
+Logger:         	https://github.com/danog/MadelineProto
+ContextConnector: 	Connection failed: Amp\MultiReasonException: Multiple errors encountered; use Amp\MultiReasonException::getReasons() to retrieve the array of exceptions thrown in D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php:544
+Stack trace:
+#0 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adyp', NULL)
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#21 [internal function]: danog\MadelineProto\API->__destruct()
+#22 {main}
+
+Next Amp\Dns\DnsException: All query attempts failed for my.telegram.org: Amp\Dns\TimeoutException: No response for 'my.telegram.org' (A) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adyo', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main}, Amp\Dns\TimeoutException: No response for 'my.telegram.org' (AAAA) from any nameserver after 4 attempts, tried https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve, https://mozilla.cloudflare-dns.com/dns-query, https://dns.google/resolve in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:333
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\Dns\TimeoutException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adyp', NULL)
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#18 [internal function]: danog\MadelineProto\API->__destruct()
+#19 {main} in D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\dns-over-https\lib\Rfc8484StubResolver.php:161
+Stack trace:
+#0 [internal function]: Amp\DoH\Rfc8484StubResolver->Amp\DoH\{closure}()
+#1 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(115): Generator->throw(Object(Amp\MultiReasonException))
+#2 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\MultiReasonException), NULL)
+#3 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#4 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#5 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\MultiReasonException))
+#6 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(544): Amp\Deferred->fail(Object(Amp\MultiReasonException))
+#7 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\ResolutionQueue.php(70): Amp\Promise\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#8 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Internal\ResolutionQueue->__invoke(Object(Amp\Dns\TimeoutException), NULL)
+#9 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Amp\Internal\ResolutionQueue))
+#10 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#11 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#12 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\Dns\TimeoutException), NULL)
+#13 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#14 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Coroutine->resolve(Object(Amp\Failure))
+#15 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Coroutine.php(137): Amp\Coroutine->fail(Object(Amp\Dns\TimeoutException))
+#16 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Failure.php(33): Amp\Coroutine->Amp\{closure}(Object(Amp\TimeoutException), NULL)
+#17 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(143): Amp\Failure->onResolve(Object(Closure))
+#18 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Internal\Placeholder.php(177): Amp\Promise@anonymous->resolve(Object(Amp\Failure))
+#19 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Deferred.php(66): Amp\Promise@anonymous->fail(Object(Amp\TimeoutException))
+#20 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\functions.php(275): Amp\Deferred->fail(Object(Amp\TimeoutException))
+#21 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\NativeDriver.php(142): Amp\Promise\{closure}('adyp', NULL)
+#22 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(138): Amp\Loop\NativeDriver->dispatch(true)
+#23 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop\Driver.php(72): Amp\Loop\Driver->tick()
+#24 D:\0.LaravelProjects\Rootix\onlineShop\vendor\amphp\amp\lib\Loop.php(95): Amp\Loop\Driver->run()
+#25 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Tools.php(294): Amp\Loop::run(Object(Closure))
+#26 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\Async\AsyncConstruct.php(48): danog\MadelineProto\Tools::wait(Object(danog\MadelineProto\Coroutine))
+#27 D:\0.LaravelProjects\Rootix\onlineShop\vendor\danog\madelineproto\src\danog\MadelineProto\API.php(371): danog\MadelineProto\Async\AsyncConstruct->init()
+#28 [internal function]: danog\MadelineProto\API->__destruct()
+#29 {main}
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+ContextConnector: 	OK!
+[09-Jul-2022 07:04:12 UTC] Enabled PHP logging
+[09-Jul-2022 07:04:12 UTC] Enabled PHP logging
