@@ -17,7 +17,7 @@
                 <div id="example2_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     {{--@if($factor->is_paid == 1)--}}
                     <div class="d-flex flex-column align-items-center my-3">
-                        {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate(route('factor.orderShipping',$factor->tracking_code))}}
+                        {{\SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate(route('factor.orderShipping',['code'=>$factor->orderShipping->tracking_code]))}}
                         <span class="my-2">برای رهگیری سفارش اسکن کنید.</span>
                     </div>
 

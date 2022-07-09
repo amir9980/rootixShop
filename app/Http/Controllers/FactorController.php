@@ -169,7 +169,7 @@ class FactorController extends Controller
             OrderShipping::create([
                 'factor_id' => $factor->id,
                 'tracking_code' => Str::random(10),
-                'ordered_description' =>__('logs.order_ordered_description',[
+                'ordered_description' => __('logs.order_ordered_log',[
                     'user'=>$user->username,
                     'date'=>Jalalian::forge($factor->created_at)
                 ])
@@ -356,17 +356,14 @@ class FactorController extends Controller
         return view('factors.searchOrderShipping');
     }
 
-    public function orderShipping(Request $request, $code = null)
+    public function orderShipping(Request $request)
     {
         $request->validate([
             'code' => 'required|string|max:20'
         ]);
 
-        if (is_null($code)) {
-            $code = $request->code;
-        }
 
-        $shipping = OrderShipping::where('tracking_code', '=', $code)->firstOrFail();
+        $shipping = OrderShipping::where('tracking_code', '=', $request->code)->firstOrFail();
 
         return view('factors.orderShipping', compact('shipping'));
     }
@@ -388,7 +385,7 @@ class FactorController extends Controller
             case 'ordered':
                 $shipping->update([
                     'status' => 'checked',
-                    'checked_description' =>__('logs.order_checked_description',[
+                    'checked_description' =>__('logs.order_checked_log',[
                         'user'=>$shipping->factor->user->username,
                         'admin'=>$request->user()->username,
                         'date'=>Jalalian::forge(now())
@@ -401,7 +398,7 @@ class FactorController extends Controller
                 }
                 $shipping->update([
                     'status' => 'sent',
-                    'sent_description' => __('logs.order_sent_description',[
+                    'sent_description' => __('logs.order_sent_log',[
                         'user'=>$shipping->factor->user->username,
                         'date'=>Jalalian::forge(now())
                     ]),
@@ -411,7 +408,7 @@ class FactorController extends Controller
             case 'sent':
                 $shipping->update([
                     'status' => 'delivered',
-                    'delivered_description' => __('logs.order_delivered_description',[
+                    'delivered_description' => __('logs.order_delivered_log',[
                         'user'=>$shipping->factor->user->username,
                         'date'=>Jalalian::forge(now())
                     ]),
@@ -419,7 +416,6 @@ class FactorController extends Controller
                 break;
             case 'delivered':
                 return back()->withErrors(['امکان ویرایش وضعیت وجود ندارد!']);
-                break;
         }
 
         return redirect()->route('admin.factor.index')->with('message','تغییر وضعیت با موفقیت اعمال شد!');
