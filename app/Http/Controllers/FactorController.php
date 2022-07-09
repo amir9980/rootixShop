@@ -406,6 +406,7 @@ class FactorController extends Controller
                 ]);
                 break;
             case 'sent':
+
                 $shipping->update([
                     'status' => 'delivered',
                     'delivered_description' => __('logs.order_delivered_log',[
