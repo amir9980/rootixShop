@@ -15,7 +15,7 @@
                         <h4>ثبت سفارش</h4>
                     </div>
                     <div class="card-body">
-                        {{$shipping->ordered_description}}
+                        {{$shipping->firstWhere('type','ordered')->description}}
                     </div>
 
                 </div>
@@ -27,8 +27,8 @@
                         <h4>تایید سفارش</h4>
                     </div>
                     <div class="card-body">
-                        @if($shipping->checked_description)
-                            {{$shipping->checked_description}}
+                        @if($shipping->contains('type','checked'))
+                            {{$shipping->firstWhere('type','checked')->description}}
                         @else
                             <p>موردی جهت نمایش وجود ندارد!</p>
                         @endif
@@ -44,8 +44,8 @@
                         <h4>ارسال سفارش</h4>
                     </div>
                     <div class="card-body">
-                        @if($shipping->sent_description)
-                            {{$shipping->sent_description}}
+                        @if($shipping->contains('type','sent'))
+                            {{$shipping->firstWhere('type','sent')->description}}
                         @else
                             <p>موردی جهت نمایش وجود ندارد!</p>
                         @endif
@@ -60,8 +60,8 @@
                         <h4>تحویل سفارش</h4>
                     </div>
                     <div class="card-body">
-                        @if($shipping->delivered_description)
-                            {{$shipping->delivered_description}}
+                        @if($shipping->contains('type','delivered'))
+                            {{$shipping->firstWhere('type','delivered')->description}}
                         @else
                             <p>موردی جهت نمایش وجود ندارد!</p>
                         @endif

@@ -9,7 +9,7 @@ class OrderShipping extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['factor_id','status','ordered_description','checked_description','sent_description','delivered_description','tracking_code','postal_tracking_code'];
+    protected $fillable = ['factor_id','type','description','extra_field'];
 
     public function factor(){
         return $this->belongsTo(factorMaster::class,'factor_id');

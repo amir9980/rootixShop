@@ -121,6 +121,7 @@ class FactorController extends Controller
             $factor = factorMaster::create([
                 'user_id' => $user->id,
                 'total_price' => $total,
+                'tracking_code' => Str::random(10),
                 'payment_method' => $request->paymentMethod,
                 'address_id' => $address->id,
             ]);
@@ -168,10 +169,9 @@ class FactorController extends Controller
 
             OrderShipping::create([
                 'factor_id' => $factor->id,
-                'tracking_code' => Str::random(10),
-                'ordered_description' => __('logs.order_ordered_log',[
-                    'user'=>$user->username,
-                    'date'=>Jalalian::forge($factor->created_at)
+                'description' => __('logs.order_ordered_log', [
+                    'user' => $user->username,
+                    'date' => Jalalian::forge($factor->created_at)
                 ])
             ]);
 
@@ -363,63 +363,69 @@ class FactorController extends Controller
         ]);
 
 
-        $shipping = OrderShipping::where('tracking_code', '=', $request->code)->firstOrFail();
+        $factor = factorMaster::where('tracking_code', '=', $request->code)->firstOrFail();
+        $shipping = $factor->orderShipping;
 
         return view('factors.orderShipping', compact('shipping'));
     }
 
-    public function statusConfirmation(Request $request, OrderShipping $shipping)
+    public function statusConfirmation(Request $request, $factorId)
     {
-
+        $factor = factorMaster::find($factorId)->firstOrFail();
+        $shipping = $factor->orderShipping;
         return view('admin.factors.statusConfirmation', compact('shipping'));
     }
 
-    public function status(Request $request, OrderShipping $shipping)
+    public function status(Request $request, $factorId)
     {
         $request->validate([
             'extraDescription' => 'nullable|string|max:500',
             'postalTrackingCode' => 'nullable|string|max:30'
         ]);
 
-        switch ($shipping->status) {
-            case 'ordered':
-                $shipping->update([
-                    'status' => 'checked',
-                    'checked_description' =>__('logs.order_checked_log',[
-                        'user'=>$shipping->factor->user->username,
-                        'admin'=>$request->user()->username,
-                        'date'=>Jalalian::forge(now())
-                    ]),
-                ]);
-                break;
-            case 'checked':
-                if (!$request->has('postalTrackingCode') || empty($request->postalTrackingCode)){
-                    return back()->withErrors(['شماره پیگیری پستی وارد نشده است!']);
-                }
-                $shipping->update([
-                    'status' => 'sent',
-                    'sent_description' => __('logs.order_sent_log',[
-                        'user'=>$shipping->factor->user->username,
-                        'date'=>Jalalian::forge(now())
-                    ]),
-                    'postal_tracking_code'=>$request->postalTrackingCode
-                ]);
-                break;
-            case 'sent':
 
-                $shipping->update([
-                    'status' => 'delivered',
-                    'delivered_description' => __('logs.order_delivered_log',[
-                        'user'=>$shipping->factor->user->username,
-                        'date'=>Jalalian::forge(now())
-                    ]),
-                ]);
-                break;
-            case 'delivered':
-                return back()->withErrors(['امکان ویرایش وضعیت وجود ندارد!']);
+
+        $shipping = factorMaster::findOrFail($factorId)->orderShipping;
+//        dd($shipping);
+
+        if ($shipping->contains('type', 'delivered')) {
+            return back()->withErrors(['امکان ویرایش وضعیت به دلیل اتمام سفارش وجود ندارد!']);
+
+        } elseif ($shipping->contains('type', 'sent')) {
+            OrderShipping::create([
+                'type' => 'delivered',
+                'factor_id' => $factorId,
+                'description' => __('logs.order_delivered_log', [
+                    'user' => $shipping->first()->factor->user->username,
+                    'date' => Jalalian::forge(now())
+                ]),
+            ]);
+        } elseif ($shipping->contains('type', 'checked')) {
+            if (!$request->has('postalTrackingCode') || empty($request->postalTrackingCode)) {
+                return back()->withErrors(['شماره پیگیری پستی وارد نشده است!']);
+            }
+            OrderShipping::create([
+                'type' => 'sent',
+                'factor_id' => $factorId,
+                'description' => __('logs.order_sent_log', [
+                    'user' => $shipping->first()->factor->user->username,
+                    'date' => Jalalian::forge(now())
+                ]),
+                'extra_field' => $request->postalTrackingCode
+            ]);
+        } elseif ($shipping->contains('type', 'ordered')) {
+            OrderShipping::create([
+                'type' => 'checked',
+                'factor_id' => $factorId,
+                'description' => __('logs.order_checked_log', [
+                    'user' => $shipping->first()->factor->user->username,
+                    'admin' => $request->user()->username,
+                    'date' => Jalalian::forge(now())
+                ]),
+            ]);
         }
 
-        return redirect()->route('admin.factor.index')->with('message','تغییر وضعیت با موفقیت اعمال شد!');
+        return redirect()->route('admin.factor.index')->with('message', 'تغییر وضعیت با موفقیت اعمال شد!');
     }
 
 

@@ -9,9 +9,10 @@ class factorMaster extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','discount_token_id','address_id','payment_method','state','city','address','is_paid','total_price'];
+    protected $fillable = ['user_id','discount_token_id','tracking_code','address_id','payment_method','state','city','address','is_paid','total_price'];
 
-    public function user(){
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(user::class,'user_id','id');
     }
 
@@ -36,6 +37,6 @@ class factorMaster extends Model
     }
 
     public function orderShipping(){
-        return $this->hasOne(OrderShipping::class,'factor_id');
+        return $this->hasMany(OrderShipping::class,'factor_id');
     }
 }

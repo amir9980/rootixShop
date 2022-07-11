@@ -134,13 +134,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($factor->orderShipping->status == 'delivered')
+                                                @if($factor->orderShipping->contains('type','delivered'))
                                                     <span class="badge badge-success">تحویل داده شده</span>
-                                                @elseif($factor->orderShipping->status == 'sent')
+                                                @elseif($factor->orderShipping->contains('type','sent'))
                                                     <span class="badge badge-warning">ارسال شده</span>
-                                                @elseif($factor->orderShipping->status == 'checked')
+                                                @elseif($factor->orderShipping->contains('type','checked'))
                                                     <span class="badge badge-warning">تایید شده</span>
-                                                @elseif($factor->orderShipping->status == 'ordered')
+                                                @elseif($factor->orderShipping->contains('type','ordered'))
                                                     <span class="badge badge-warning">ثبت شده</span>
                                                 @endif
                                             </td>
@@ -150,7 +150,7 @@
                                                                                   aria-hidden="true"></i>مشاهده
                                                 </a>
 
-                                                <a href="{{route('admin.shipping.statusConfirmation',$factor->orderShipping->id)}}"
+                                                <a href="{{route('admin.shipping.statusConfirmation',$factor->id)}}"
                                                    class="btn btn-sm btn-danger"><i class="fa fa-list-ul d-block"
                                                                                   aria-hidden="true"></i>تغییر وضعیت
                                                 </a>
