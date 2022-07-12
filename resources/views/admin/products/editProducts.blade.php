@@ -30,13 +30,13 @@
 
                 <div class="row">
                     <div class="form-group col-md-12 col-lg-6">
-                        <label for="price">قیمت</label>
+                        <label for="price">قیمت محصول</label>
                         <input class="form-control numberInput" type="text" name="price" value="{{$product->price}}">
                     </div>
                     <div class="form-group col-md-12 col-lg-6">
-                        <label for="old_price">قیمت قبلی</label>
-                        <input class="form-control numberInput" type="text" name="old_price"
-                               value="{{$product->old_price}}">
+                        <label for="off_price">قیمت تخفیف خورده</label>
+                        <input class="form-control numberInput" type="text" name="off_price"
+                               value="{{$product->off_price}}">
                     </div>
                 </div>
 
@@ -45,29 +45,29 @@
                 <div class="form-group">
                     <label for="status">وضعیت</label>
                     <select class="form-control" name="status">
-                        <option value="1" @if($product->status=='Active')selected @endif>فعال</option>
-                        <option value="2" @if($product->status=='Inactive')selected @endif>غیرفعال</option>
-                        <option value="3" @if($product->status=='Deleted')selected @endif>حذف شده</option>
+                        <option value="Active" @if($product->status=='Active')selected @endif>فعال</option>
+                        <option value="Inactive" @if($product->status=='Inactive')selected @endif>غیرفعال</option>
+                        <option value="Deleted" @if($product->status=='Deleted')selected @endif>حذف شده</option>
                     </select>
                 </div>
-
                 <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="img">تصویر</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="images[]" multiple>
-                                <label class="custom-file-label" for="images">انتخاب فایل</label>
-                            </div>
-                        </div>
+                    <div class="form-group col-md-4 d-flex h-100 imgInputs">
+                        <label for="img">تصاویر</label>
+
+                                <input id="productImagesInput" type="file" hidden
+                                       name="images[]" onchange="appendImage(this)">
+                                <div class="form-control row d-flex mr-3" id="productImagesSelect"
+                                     onclick="document.getElementById('productImagesInput').click()">
+                                </div>
                     </div>
                     <div class="form-group col-md-8">
-                        <label > تصویر شاخص:</label>
+                        <label> تصویر شاخص:</label>
                         <div class="row">
-                        @foreach($product->images as $image)
+                            @foreach($product->images as $image)
                                 <div class="col-md-3 col-sm-4 d-flex flex-column">
                                     {{--<label >حذف تصویر:</label>--}}
-                                    <input type="radio" name="thumb" value="{{$image->path}}" {{$product->thumbnail == $image->path ? 'checked':''}}>
+                                    <input type="radio" name="thumb"
+                                           value="{{$image->path}}" {{$product->thumbnail == $image->path ? 'checked':''}}>
                                     <img src="{{route('images.product',$image->path)}}" alt="alt" width="100%">
                                     {{--<button class="btn btn-sm btn-danger" type="button" value="{{$image}}" onclick="sendDeleteImgRequest(this)">حذف</button>--}}
                                 </div>
@@ -90,34 +90,54 @@
 
     </div>
 
-    {{--<div class="d-flex col-lg-3">--}}
+
+@endsection
+
+@section('script')
+
+    <script>
 
 
-    {{--<form action="{{route('product.update',$product)}}" method="post" enctype="multipart/form-data">--}}
-    {{--@csrf--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="title">title:</label>--}}
-    {{--<input type="text" name="title" value="{{$product->title}}">--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="description">description:</label>--}}
-    {{--<textarea name="description" cols="30" rows="10">{{$product->description}}</textarea>--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="price">price:</label>--}}
-    {{--<input type="number" name="price" value="{{$product->price}}">--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="old_price">old price:</label>--}}
-    {{--<input type="number" name="old_price" value="{{$product->old_price}}">--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="img">picture:</label>--}}
-    {{--<input type="file" name="img">--}}
-    {{--</div>--}}
-    {{--<input type="submit" name="submit" value="update" class="btn btn-success">--}}
-    {{--</form>--}}
-    {{--</div>--}}
+                function appendImage(input) {
+                    let currentFile = input.files[0];
+                    input.removeAttribute('id');
+                    input.removeAttribute('onchange');
+                    let url = window.URL.createObjectURL(currentFile);
+                    let img = new Image(120, 120);
+                    img.src = url;
 
+                    let imgInput = document.createElement("input");
+                    imgInput.name = "images[]";
+                    imgInput.setAttribute('type', 'file');
+                    imgInput.setAttribute('onchange', 'appendImage(this)');
+                    imgInput.setAttribute('hidden', true);
+                    imgInput.setAttribute('id', "productImagesInput");
+
+                    let span = document.createElement("span");
+                    span.textContent = "حذف";
+                    span.classList.add("position-absolute");
+                    span.classList.add("text-danger");
+                    span.setAttribute('onclick', 'deleteImage(this,event)');
+
+
+                    let div = document.createElement("div");
+                    div.classList.add("col-md-6");
+                    div.classList.add("position-relative");
+                    div.appendChild(input);
+                    div.appendChild(img);
+                    div.appendChild(span);
+
+                    $(".imgInputs").prepend(imgInput);
+                    $("#productImagesSelect").prepend(div);
+
+                    // console.log(img);
+                }
+
+                function deleteImage(span,event){
+                    event.stopPropagation();
+                    span.closest("div").remove();
+                }
+
+    </script>
 
 @endsection

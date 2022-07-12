@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->string('thumbnail')->default('default.png');
             $table->unsignedFloat('price');
-            $table->unsignedFloat('old_price')->nullable();
+            $table->unsignedFloat('off_price')->nullable();
             $table->string('shop')->default('rootixShop');
             $table->float('rate')->default(0);
             $table->unsignedInteger('rate_count')->default(0);

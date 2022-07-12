@@ -18,7 +18,7 @@ class ProductFactory extends Factory
             'title'=>$this->faker->text(10),
             'description'=>$this->faker->sentence(20),
             'price'=>$this->faker->numberBetween(1000,100000),
-            'old_price'=>$this->faker->numberBetween(1000,100000),
+            'off_price'=>$this->faker->numberBetween(1000,100000),
             'status'=>['Active','Inactive','Deleted'][array_rand([1,2,3],1)],
             'details'=>[
                 'colors'=>[Str::random(5),Str::random(5),Str::random(5)],

@@ -50,6 +50,9 @@
             right: 0.5rem;
             cursor: pointer;
         }
+        #productImagesSelect{
+            cursor: pointer;
+        }
 
     </style>
 </head>

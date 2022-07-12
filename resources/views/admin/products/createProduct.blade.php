@@ -30,27 +30,30 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="form-group col-md-12 col-lg-6">
-                        <label for="price">قیمت</label>
+                <div class="row align-items-center flex-start">
+                    <div class="form-group col-md-12 col-lg-4">
+                        <label for="price">قیمت محصول</label>
                         <input class="form-control numberInput" type="text" name="price" required placeholder="تومان">
                     </div>
-                    <div class="form-group col-md-12 col-lg-6">
-                        <label for="old_price">قیمت قبلی</label>
-                        <input class="form-control numberInput" type="text" name="old_price" placeholder="تومان">
+                    <div class="col-lg-2">
+                    <button class="btn btn-sm btn-info " type="button" data-toggle="collapse" data-target="#offPriceDiv">اضافه کردن قیمت تخفیف خورده</button>
+                    </div>
+                    <div id="offPriceDiv" class="collapse form-group col-md-12 col-lg-3 mr-lg-3 my-xs-3 my-lg-0">
+                        <label for="off_price">قیمت تخفیف خورده</label>
+                        <input class="form-control numberInput" type="text" name="off_price" placeholder="تومان">
                     </div>
                 </div>
 
 
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
-                            <label for="images">تصویر</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="images[]" multiple>
-                                    <label class="custom-file-label" for="images">انتخاب فایل</label>
-                                </div>
+                        <div class="form-group col-md-4 d-flex h-100 imgInputs">
+                            <label for="img">تصاویر</label>
+
+                            <input id="productImagesInput" type="file" hidden
+                                   name="images[]" onchange="appendImage(this)">
+                            <div class="form-control row d-flex mr-3" id="productImagesSelect"
+                                 onclick="document.getElementById('productImagesInput').click()">
                             </div>
                         </div>
 
@@ -73,30 +76,57 @@
 
     </div>
 
+@endsection
 
-    {{--<form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">--}}
-    {{--@csrf--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="title">title:</label>--}}
-    {{--<input type="text" name="title" required>--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="description">description:</label>--}}
-    {{--<textarea name="description" cols="30" rows="10"></textarea>--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="price">price:</label>--}}
-    {{--<input type="number" name="price" required>--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="old_price">old price:</label>--}}
-    {{--<input type="number" name="old_price">--}}
-    {{--</div>--}}
-    {{--<div class="form-group">--}}
-    {{--<label for="img">picture:</label>--}}
-    {{--<input type="file" name="img">--}}
-    {{--</div>--}}
-    {{--<input type="submit" name="submit" value="store" class="btn btn-success">--}}
-    {{--</form>--}}
+
+
+
+
+@section('script')
+
+    <script>
+
+
+        function appendImage(input) {
+            let currentFile = input.files[0];
+            input.removeAttribute('id');
+            input.removeAttribute('onchange');
+            let url = window.URL.createObjectURL(currentFile);
+            let img = new Image(120, 120);
+            img.src = url;
+
+            let imgInput = document.createElement("input");
+            imgInput.name = "images[]";
+            imgInput.setAttribute('type', 'file');
+            imgInput.setAttribute('onchange', 'appendImage(this)');
+            imgInput.setAttribute('hidden', true);
+            imgInput.setAttribute('id', "productImagesInput");
+
+            let span = document.createElement("span");
+            span.textContent = "حذف";
+            span.classList.add("position-absolute");
+            span.classList.add("text-danger");
+            span.setAttribute('onclick', 'deleteImage(this,event)');
+
+
+            let div = document.createElement("div");
+            div.classList.add("col-md-6");
+            div.classList.add("position-relative");
+            div.appendChild(input);
+            div.appendChild(img);
+            div.appendChild(span);
+
+            $(".imgInputs").prepend(imgInput);
+            $("#productImagesSelect").prepend(div);
+
+            // console.log(img);
+        }
+
+        function deleteImage(span,event){
+            event.stopPropagation();
+            span.closest("div").remove();
+        }
+
+    </script>
 
 @endsection

@@ -92,13 +92,13 @@ class ProductController extends Controller
 
         //        value is in number format like 10,000 so:
         $request['price'] = str_replace(',', '', $request->price);
-        $request['old_price'] = str_replace(',', '', $request->old_price);
+        $request['off_price'] = str_replace(',', '', $request->off_price);
 
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
-            'old_price' => 'nullable|numeric',
+            'off_price' => 'nullable|numeric',
             'images.*' => 'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
@@ -106,19 +106,19 @@ class ProductController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
             'price' => $request['price'],
-            'old_price' => $request['old_price'],
+            'off_price' => !empty($request['off_price'])?$request['off_price']:null,
         ]);
 
         if ($request->has('images') && !empty($request->file('images'))) {
+            $images = [];
             foreach ($request->file('images') as $image) {
                 $fileName = $this->uploadImage($image);
-                $product->images()->create([
-                    'path' => $fileName,
-                ]);
+                $images[] = ['path'=>$fileName , 'product_id'=>$product->id];
             }
+            FileUpload::insert($images);
         }
 
-        $product->thumbnail = $product->images->first()->path;
+        $product->thumbnail = $product->images()->first()->path;
         $product->save();
 
         return redirect(route('product.index'))->with('message', 'محصول با موفقیت ایجاد شد!');
@@ -157,36 +157,35 @@ class ProductController extends Controller
 
         //        value is in number format like 10,000 so:
         $request['price'] = str_replace(',', '', $request->price);
-        $request['old_price'] = str_replace(',', '', $request->old_price);
+        $request['off_price'] = str_replace(',', '', $request->off_price);
 
 
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
-            'old_price' => 'required|numeric',
+            'off_price' => 'nullable|numeric',
             'status' => 'required|string|in:Active,Inactive,Deleted',
             'images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
 
         if ($request->has('images') && !empty($request->file('images'))) {
+            $images = [];
             foreach ($request->file('images') as $image) {
                 $fileName = $this->uploadImage($image);
-                FileUpload::create([
-                    'path' => $fileName,
-                    'product_id' => $product->id
-                ]);
+                $images[] = ['path'=>$fileName , 'product_id'=>$product->id];
             }
+            FileUpload::insert($images);
         }
 
-        $thumb = $request->has('thumb') && !is_null($request->thumb) ? $request->thumb : $product->images->first()->path;
+        $thumb = $request->has('thumb') && !is_null($request->thumb) ? $request->thumb : $product->images()->first()->path;
 
         $product->update([
             'title' => $request['title'],
             'description' => $request['description'],
             'price' => $request['price'],
-            'old_price' => $request['old_price'],
+            'off_price' => !empty($request['off_price'])?$request['off_price']:null,
             'status' => $request['status'],
             'thumbnail' => $thumb
         ]);

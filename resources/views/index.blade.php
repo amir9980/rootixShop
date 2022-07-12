@@ -71,8 +71,12 @@
                         <div class="card-body position-relative">
                             <h5 class="card-title">{{$product->title}}</h5>
                             <p class="card-text">{{\Illuminate\Support\Str::limit($product->description,20)}}</p>
-                            <p>&nbsp;{{number_format($product->price)}}&nbsp;<del
-                                        class="text-danger">{{number_format($product->old_price)}}</del>
+                            <p>
+
+                                @if(!is_null(($product->off_price )))
+                                    <del class="text-danger">{{number_format($product->off_price)}}</del>
+                                @endif
+                                &nbsp;{{number_format($product->price)}}
                                 تومان
                             </p>
                         </div>
@@ -106,9 +110,6 @@
         </div>
 
     @endif
-
-
-
 
 @endsection
 

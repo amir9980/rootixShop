@@ -36,7 +36,7 @@
 
                         <div class="row justify-content-between align-items-center">
                             <div class="col-md-4">
-                                <del class="text-danger text-bold">{{number_format($product->old_price)}}</del>
+                                <del class="text-danger text-bold">{{number_format($product->off_price)}}</del>
                                 <span class="h5 text-bold">{{number_format($product->price)}}&nbsp;تومان</span>
 
                             </div>

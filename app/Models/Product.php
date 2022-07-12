@@ -9,7 +9,7 @@ class product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','description','price','old_price','thumbnail','status','delete_reason'];
+    protected $fillable = ['title','description','price','off_price','thumbnail','status','delete_reason'];
     protected $casts = ['details'=>'array'];
 
     public function rates(){

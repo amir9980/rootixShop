@@ -144,28 +144,30 @@ class FactorController extends Controller
             DB::table('factor_details')->insert($details);
             cart::where('user_id', $factor->user_id)->delete();
 
-            $log = __('logs.factor_report', ['userId' => $user->id,
-                'userName' => $user->username,
-                'state' => $factor->address->state,
-                'city' => $factor->address->city,
-                'address' => $factor->address->address,
-                'paymentMethod' => $factor->payment_method,
-                'date' => Jalalian::forge(now()),
-                'factorId' => $factor->id,
-                'price' => $factor->total_price]);
 
 
-            $user->wallet -= $factor->total_price;
-            $factor->is_paid = 1;
-            $user->save();
+            if ($request->paymentMethod != "cash"){
 
-            $factor->reports()->create([
-                'status' => 'paid',
-                'type' => 'decrease',
-                'value' => $factor->total_price,
-                'log' => $log,
-            ]);
+                $user->wallet -= $factor->total_price;
+                $factor->is_paid = 1;
 
+                $log = __('logs.factor_report', ['userId' => $user->id,
+                    'userName' => $user->username,
+                    'state' => $factor->address->state,
+                    'city' => $factor->address->city,
+                    'address' => $factor->address->address,
+                    'paymentMethod' => $factor->payment_method,
+                    'date' => Jalalian::forge(now()),
+                    'factorId' => $factor->id,
+                    'price' => $factor->total_price]);
+
+                $factor->reports()->create([
+                    'status' => 'paid',
+                    'type' => 'decrease',
+                    'value' => $factor->total_price,
+                    'log' => $log,
+                ]);
+            }
 
             OrderShipping::create([
                 'factor_id' => $factor->id,
@@ -175,6 +177,7 @@ class FactorController extends Controller
                 ])
             ]);
 
+            $user->save();
             $factor->save();
 
             DB::commit();
