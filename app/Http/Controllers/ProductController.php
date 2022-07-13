@@ -67,8 +67,8 @@ class ProductController extends Controller
         $products = $products->paginate(15)->withQueryString();
 
         $iteration = ($products->currentPage() - 1) * $products->perPage();
-        $cart = \Illuminate\Support\Facades\Auth::user()->cart;
-        return view('admin.products.index', ['products' => $products, 'cart' => $cart, 'iteration' => $iteration]);
+
+        return view('admin.products.index', ['products' => $products, 'iteration' => $iteration]);
     }
 
     /**
@@ -275,6 +275,6 @@ class ProductController extends Controller
 
     public function deleteImg()
     {
-        return response()->json(['message' => 'done']);
+//        return response()->json(['message' => 'done']);
     }
 }

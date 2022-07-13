@@ -131,7 +131,7 @@
                                                    class="btn btn-sm btn-success"><i class="fa fa-edit d-block"></i>ویرایش
                                                 </a>
                                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                                        data-target="#{{$product->title.'DeleteModal'}}"><i
+                                                        data-target="#{{$iteration.'DeleteModal'}}"><i
                                                             class="fa fa-remove d-block"></i>حذف
                                                 </button>
                                             </td>
@@ -140,7 +140,7 @@
 
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="{{$product->title.'DeleteModal'}}" tabindex="-1"
+                                        <div class="modal fade" id="{{$iteration.'DeleteModal'}}" tabindex="-1"
                                              role="dialog" aria-labelledby="DeleteModal" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">

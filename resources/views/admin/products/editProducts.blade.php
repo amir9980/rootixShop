@@ -31,12 +31,12 @@
                 <div class="row">
                     <div class="form-group col-md-12 col-lg-6">
                         <label for="price">قیمت محصول</label>
-                        <input class="form-control numberInput" type="text" name="price" value="{{$product->price}}">
+                        <input class="form-control numberInput" type="text" name="price" value="{{number_format($product->price)}}">
                     </div>
                     <div class="form-group col-md-12 col-lg-6">
                         <label for="off_price">قیمت تخفیف خورده</label>
                         <input class="form-control numberInput" type="text" name="off_price"
-                               value="{{$product->off_price}}">
+                               value="{{!is_null($product->off_price)?number_format($product->off_price):null}}">
                     </div>
                 </div>
 
