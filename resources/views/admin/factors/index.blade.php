@@ -18,14 +18,12 @@
 
                             <div class="row">
 
-                                <label for="from_price">قیمت از:</label>
+                                <label for="from_price">قیمت:</label>
                                 <div class="col-md-2">
                                     <div class="input-group align-items-center">
                                         <input type="text" class="form-control numberInput" placeholder="از"
                                                name="from_price"
                                                value="{{number_format((float)request()->query('from_price'))}}">
-                                        <label for="to_price">تا:</label>
-
                                         <input type="text" class="form-control numberInput" placeholder="تا"
                                                name="to_price"
                                                value="{{number_format((float)request()->query('to_price'))}}">
