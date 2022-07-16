@@ -35,7 +35,6 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         Relation::morphMap([
-            'user' => user::class,
             'factor' => factorMaster::class,
             'wallet' => WalletPayment::class,
         ]);

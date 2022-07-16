@@ -15,9 +15,16 @@ class DiscountTokenController extends Controller
      */
     public function index(Request $request)
     {
+        // dates are in jalali:
+        $request['start_date'] = convert($request->start_date);
+        $request['expire_date'] = convert($request->expire_date);
+
+
         $request->validate([
             'access'=>'nullable|string|in:public,private',
-            'percentage'=>'nullable|numeric'
+            'percentage'=>'nullable|numeric',
+            'start_date' => 'nullable|regex:/....\/..\/../',
+            'expire_date' => 'nullable|regex:/....\/..\/../',
         ]);
 
         $tokens = DiscountToken::query();
@@ -31,11 +38,11 @@ class DiscountTokenController extends Controller
         }
 
         if ($request->has('start_date') && !empty($request->start_date)){
-            $tokens->where('start_date','>',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->start_date) . ' 00:00:00'));
+            $tokens->where('start_date','>',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->start_date . ' 00:00:00'));
         }
 
         if ($request->has('expire_date') && !empty($request->expire_date)){
-            $tokens->where('expire_date','<',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 00:00:00'));
+            $tokens->where('expire_date','<',\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->expire_date . ' 00:00:00'));
         }
 
 

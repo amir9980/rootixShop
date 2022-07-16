@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\FileUpload;
 use App\Models\product;

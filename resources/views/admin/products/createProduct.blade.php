@@ -25,8 +25,8 @@
                 <!-- textarea -->
                 <div class="form-group">
                     <label for="description">توضیحات</label>
-                    <textarea class="form-control" rows="3" name="description" placeholder="توضیحات محصول را وارد کنبد"
-                              required></textarea>
+                    <textarea class="form-control" id="body" rows="3" name="description" placeholder="توضیحات محصول را وارد کنبد"
+                              ></textarea>
                 </div>
 
 
@@ -83,6 +83,17 @@
 
 
 @section('script')
+
+    <script src="{{asset('ckeditor5/ckeditor.js')}}"></script>
+
+    <script>
+
+        ClassicEditor
+            .create( document.querySelector( '#body' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 
     <script>
 

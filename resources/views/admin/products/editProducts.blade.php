@@ -24,7 +24,7 @@
                 <!-- textarea -->
                 <div class="form-group">
                     <label for="description">توضیحات</label>
-                    <textarea class="form-control" rows="3" name="description">{{$product->description}}</textarea>
+                    <textarea class="form-control" rows="3" id="body" name="description">{{$product->description}}</textarea>
                 </div>
 
 
@@ -94,6 +94,17 @@
 @endsection
 
 @section('script')
+
+    <script src="{{asset('ckeditor5/ckeditor.js')}}"></script>
+
+    <script>
+
+        ClassicEditor
+            .create( document.querySelector( '#body' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 
     <script>
 

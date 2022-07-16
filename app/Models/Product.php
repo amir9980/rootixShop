@@ -27,4 +27,8 @@ class product extends Model
     public function bookmarks(){
         return $this->belongsToMany(User::class,'bookmarks','product_id','user_id');
     }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class,'category_product','product_id','category_id');
+    }
 }

@@ -29,12 +29,16 @@ class ProductController extends Controller
         $request['from_price'] = str_replace(',', '', $request->from_price);
         $request['to_price'] = str_replace(',', '', $request->to_price);
 
+        // dates too:
+        $request['from_date'] = convert($request->from_date);
+        $request['to_date'] = convert($request->to_date);
+
         $request->validate([
             'title' => 'nullable|max:255',
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
-            'from_date' => 'nullable',
-            'to_date' => 'nullable',
+            'from_date' => 'nullable|regex:/....\/..\/../',
+            'to_date' => 'nullable|regex:/....\/..\/../',
             'status' => 'nullable|string|in:Active,Inactive,Deleted',
 
         ]);
@@ -58,10 +62,10 @@ class ProductController extends Controller
             $products = $products->where('price', '<=', $request->to_price);
         }
         if ($request->has('from_date') && !empty($request->from_date)) {
-            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+            $products = $products->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->from_date . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+            $products = $products->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->to_date . ' 23:59:59'));
         }
 
         $products = $products->paginate(15)->withQueryString();
@@ -179,7 +183,11 @@ class ProductController extends Controller
             FileUpload::insert($images);
         }
 
-        $thumb = $request->has('thumb') && !is_null($request->thumb) ? $request->thumb : $product->images()->first()->path;
+        if ($request->has('thumb') && !is_null($request->thumb)){
+            $thumb = $request->thumb;
+        }else {
+            $thumb = $product->thumbnail;
+        }
 
         $product->update([
             'title' => $request['title'],
@@ -189,7 +197,6 @@ class ProductController extends Controller
             'status' => $request['status'],
             'thumbnail' => $thumb
         ]);
-
 
         return redirect(route('product.index'))->with('message', 'محصول با موفقیت ویرایش شد!');
     }

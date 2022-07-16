@@ -201,10 +201,16 @@ class FactorController extends Controller
         $request['from_price'] = str_replace(',', '', $request->from_price);
         $request['to_price'] = str_replace(',', '', $request->to_price);
 
+        // dates too:
+        $request['from_date'] = convert($request->from_date);
+        $request['to_date'] = convert($request->to_date);
+
         //validation
         $request->validate([
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
+            'from_date' => 'nullable|regex:/....\/..\/../',
+            'to_date' => 'nullable|regex:/....\/..\/../',
         ]);
 
 
@@ -226,10 +232,10 @@ class FactorController extends Controller
         }
 
         if ($request->has('from_date') && !empty($request->from_date)) {
-            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->from_date . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->to_date . ' 23:59:59'));
         }
 
         $factors = $factors->latest()->paginate(15);
@@ -245,10 +251,17 @@ class FactorController extends Controller
         $request['from_price'] = str_replace(',', '', $request->from_price);
         $request['to_price'] = str_replace(',', '', $request->to_price);
 
+        // dates too:
+        $request['from_date'] = convert($request->from_date);
+        $request['to_date'] = convert($request->to_date);
+
+
         //validation
         $request->validate([
             'from_price' => 'nullable|numeric',
             'to_price' => 'nullable|numeric',
+            'from_date' => 'nullable|regex:/....\/..\/../',
+            'to_date' => 'nullable|regex:/....\/..\/../',
         ]);
 
         $factors = factorMaster::query();
@@ -271,10 +284,10 @@ class FactorController extends Controller
         }
 
         if ($request->has('from_date') && !empty($request->from_date)) {
-            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+            $factors = $factors->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->from_date . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+            $factors = $factors->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->to_date . ' 23:59:59'));
         }
 
         $factors = $factors->latest()->paginate(15);

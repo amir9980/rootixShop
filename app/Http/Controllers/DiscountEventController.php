@@ -18,9 +18,15 @@ class DiscountEventController extends Controller
      */
     public function index(Request $request)
     {
-//        dd($request->all());
+
+        // dates are in jalali:
+        $request['start_date'] = convert($request->start_date);
+        $request['expire_date'] = convert($request->expire_date);
+
         $request->validate([
             'percentage'=>'nullable|numeric',
+            'start_date' => 'nullable|regex:/....\/..\/../',
+            'expire_date' => 'nullable|regex:/....\/..\/../',
         ]);
 
         $events = DiscountEvent::query();
@@ -29,10 +35,10 @@ class DiscountEventController extends Controller
             $events = $events->where('percentage', '=', $request->percentage);
         }
         if ($request->has('start_date') && !empty($request->start_date)) {
-            $events = $events->where('start_date', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->start_date) . ' 00:00:00'));
+            $events = $events->where('start_date', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->start_date . ' 00:00:00'));
         }
         if ($request->has('expire_date') && !empty($request->expire_date)) {
-            $events = $events->where('expire_date', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->expire_date) . ' 23:59:59'));
+            $events = $events->where('expire_date', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->expire_date . ' 23:59:59'));
         }
 
         $events = $events->orderBy('id','DESC')->paginate(15);

@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\DiscountTokenController;
 use App\Http\Controllers\DiscountEventController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -48,7 +49,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('product/{product}/update', [ProductController::class, 'update'])->name('product.update');
     Route::post('product/{product}/delete', [ProductController::class, 'destroy'])->name('product.destroy');
     Route::post('product/{product}/status', [ProductController::class, 'status'])->name('product.status');
-    Route::post('product/deleteImg', [ProductController::class, 'deleteImg'])->name('product.img.delete');
+//    Route::post('product/deleteImg', [ProductController::class, 'deleteImg'])->name('product.img.delete');
 
     Route::resource('discountToken', DiscountTokenController::class);
     Route::resource('discountEvent', DiscountEventController::class);
@@ -61,7 +62,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('shipping/{shipping}/status', [FactorController::class, 'statusConfirmation'])->name('admin.shipping.statusConfirmation');
     Route::put('shipping/{shipping}/status', [FactorController::class, 'status'])->name('admin.shipping.status');
 
+    Route::resource('category',CategoryController::class)->except(['index','show']);
+
 });
+
+Route::get('category',[CategoryController::class,'index'])->name('category.index');
+Route::get('category/{category}',[CategoryController::class,'show'])->name('category.show');
 
 
 Route::get('product/{product}', [ProductController::class, 'show'])->name('product.show');
@@ -102,28 +108,28 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 Route::post('payment/{user}/store', [WalletPaymentController::class, 'store'])->name('payment.store')->middleware(['auth']);
 
 
-Route::match(['get', 'post'], '/telegram', function () {
-    $settings = (new \danog\MadelineProto\Settings\Database\Mysql)
-        ->setUri('localhost:3306')
-        ->setPassword('')
-    ->setDatabase('onlineshop')
-    ->setUsername('root');
-//    $sql = new danog\MadelineProto\Db\MysqlArray();
-//    $sql->initStartup();
+//Route::match(['get', 'post'], '/telegram', function () {
+//    $settings = (new \danog\MadelineProto\Settings\Database\Mysql)
+//        ->setUri('localhost:3306')
+//        ->setPassword('')
+//    ->setDatabase('onlineshop')
+//    ->setUsername('root')->set(true);
+////    $sql = new danog\MadelineProto\Db\MysqlArray();
+////    $sql->initStartup();
+////
+////    $sql->initConnection($settings);
+////    var_dump($settings->getTable());
+////    echo 'i';
+////    die();
 //
-//    $sql->initConnection($settings);
-//    var_dump($settings->getTable());
-//    echo 'i';
-//    die();
-
-
-    echo 'inja';
-    $client = new \danog\MadelineProto\API('session.client1',$settings);
-    $client->start();
-    echo 'inja1';
-
-    $me = $client->getSelf();
-    echo 'inja2';
-
-    echo "Hi".$me['first_name'];
-});
+//
+//    echo 'inja';
+//    $client = new \danog\MadelineProto\API('session.client1',$settings);
+//    $client->start();
+//    echo 'inja1';
+//
+//    $me = $client->getSelf();
+//    echo 'inja2';
+//
+//    echo "Hi".$me['first_name'];
+//});

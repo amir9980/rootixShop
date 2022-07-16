@@ -28,6 +28,33 @@
 
             </ul>
         </li>
+
+{{--        <li class="nav-item has-treeview">--}}
+{{--            <a href="#" class="nav-link">--}}
+{{--                <i class="fa fa-shopping-bag" aria-hidden="true">&nbsp;</i>--}}
+{{--                <p>--}}
+{{--                    دسته بندی ها--}}
+{{--                    <i class="right fa fa-angle-left"></i>--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--            <ul class="nav nav-treeview" style="display: none;">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('category.index')}}" class="nav-link">--}}
+{{--                        <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                        <p>نمایش دسته بندی ها</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('category.create')}}" class="nav-link">--}}
+{{--                        <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                        <p>ایجاد دسته بندی</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+{{--            </ul>--}}
+{{--        </li>--}}
+
+
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                 <i class="fa fa-user-circle" aria-hidden="true">&nbsp;</i>

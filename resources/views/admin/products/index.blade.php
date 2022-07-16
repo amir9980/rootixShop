@@ -45,11 +45,11 @@
                         <div class="col-md-2">
                             <select class="form-control" name="status">
                                 <option value="">انتخاب کنید...</option>
-                                <option value="1" @if(request()->query('status')==1) selected @endif>فعال
+                                <option value="Active" @if(request()->query('status')=="Active") selected @endif>فعال
                                 </option>
-                                <option value="2" @if(request()->query('status')==2) selected @endif>غیرفعال
+                                <option value="Inactive" @if(request()->query('status')=="Inactive") selected @endif>غیرفعال
                                 </option>
-                                <option value="3" @if(request()->query('status')==3) selected @endif>حذف شده
+                                <option value="Deleted" @if(request()->query('status')=="Deleted") selected @endif>حذف شده
                                 </option>
                             </select>
                         </div>

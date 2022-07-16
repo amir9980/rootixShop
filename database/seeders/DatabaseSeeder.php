@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DiscountTokenSeeder::class,
             DiscountEventSeeder::class,
+            CategorySeeder::class,
             ]);
     }
 }

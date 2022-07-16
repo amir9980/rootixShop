@@ -21,6 +21,15 @@
         </li>
 
         <li class="nav-item">
+            <a href="{{route('category.index')}}" class="nav-link">
+                <i class="fa fa-shopping-cart" aria-hidden="true">&nbsp;</i>
+                <p>دسته بندی ها</p>
+            </a>
+        </li>
+
+
+
+        <li class="nav-item">
             <a href="{{route('users.charge')}}" class="nav-link">
                 <i class="fa fa-credit-card-alt" aria-hidden="true">&nbsp;</i>
 

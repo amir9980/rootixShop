@@ -16,6 +16,17 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // dates are in jalali:
+        $request['from_date'] = convert($request->from_date);
+        $request['to_date'] = convert($request->to_date);
+
+        $request->validate([
+            'role'=>'nullable|string|in:admin,user',
+            'email'=>'nullable|email',
+            'username'=>'nullable|string|max:50',
+            'from_date' => 'nullable|regex:/....\/..\/../',
+            'to_date' => 'nullable|regex:/....\/..\/../',
+        ]);
 
         $users = user::query();
 
@@ -36,10 +47,10 @@ class UserController extends Controller
         }
 
         if ($request->has('from_date') && !empty($request->from_date)) {
-            $users = $users->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->from_date) . ' 00:00:00'));
+            $users = $users->where('created_at', '>=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->from_date . ' 00:00:00'));
         }
         if ($request->has('to_date') && !empty($request->to_date)) {
-            $users = $users->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', convert($request->to_date) . ' 23:59:59'));
+            $users = $users->where('created_at', '<=', \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $request->to_date . ' 23:59:59'));
         }
 
         $users = $users->paginate(15)->withQueryString();;
